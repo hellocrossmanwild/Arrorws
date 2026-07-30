@@ -1,0 +1,4701 @@
+{
+  "players": [
+    {
+      "id": "player-tom",
+      "displayName": "Tom",
+      "isBot": false,
+      "botProfileId": null,
+      "userId": null,
+      "createdAt": "2026-06-20T09:00:00.000Z"
+    },
+    {
+      "id": "player-guest",
+      "displayName": "Player 2",
+      "isBot": false,
+      "botProfileId": null,
+      "userId": null,
+      "createdAt": "2026-06-20T09:00:00.000Z"
+    },
+    {
+      "id": "bot-pub",
+      "displayName": "Pub player",
+      "isBot": true,
+      "botProfileId": "pub",
+      "userId": null,
+      "createdAt": "2026-06-20T09:00:00.000Z"
+    },
+    {
+      "id": "bot-county",
+      "displayName": "County",
+      "isBot": true,
+      "botProfileId": "county",
+      "userId": null,
+      "createdAt": "2026-06-20T09:00:00.000Z"
+    },
+    {
+      "id": "bot-tour-card",
+      "displayName": "Tour card",
+      "isBot": true,
+      "botProfileId": "tour-card",
+      "userId": null,
+      "createdAt": "2026-06-20T09:00:00.000Z"
+    },
+    {
+      "id": "bot-elite",
+      "displayName": "Elite",
+      "isBot": true,
+      "botProfileId": "elite",
+      "userId": null,
+      "createdAt": "2026-06-20T09:00:00.000Z"
+    }
+  ],
+  "botProfiles": [
+    {
+      "id": "pub",
+      "name": "Pub player",
+      "targetAverage": 45,
+      "description": "Enthusiastic. Finds treble 20 by accident",
+      "scoringSigmaMm": 14.92,
+      "doubleSigmaMm": 23.18
+    },
+    {
+      "id": "county",
+      "name": "County",
+      "targetAverage": 75,
+      "description": "Solid scoring, shaky on the doubles",
+      "scoringSigmaMm": 9.3,
+      "doubleSigmaMm": 11.13
+    },
+    {
+      "id": "tour-card",
+      "name": "Tour card",
+      "targetAverage": 95,
+      "description": "Punishes a missed double",
+      "scoringSigmaMm": 6.55,
+      "doubleSigmaMm": 7.25
+    },
+    {
+      "id": "elite",
+      "name": "Elite",
+      "targetAverage": 105,
+      "description": "Assume the leg is over in fifteen darts",
+      "scoringSigmaMm": 5.47,
+      "doubleSigmaMm": 6.32
+    }
+  ],
+  "sessions": [
+    {
+      "id": "session-1",
+      "playerId": "player-tom",
+      "startedAt": "2026-07-02T18:30:00.000Z",
+      "endedAt": "2026-07-02T19:15:00.000Z",
+      "note": null
+    },
+    {
+      "id": "session-2",
+      "playerId": "player-tom",
+      "startedAt": "2026-07-09T19:00:00.000Z",
+      "endedAt": "2026-07-09T19:40:00.000Z",
+      "note": "new flights"
+    },
+    {
+      "id": "session-3",
+      "playerId": "player-tom",
+      "startedAt": "2026-07-16T18:45:00.000Z",
+      "endedAt": "2026-07-16T19:35:00.000Z",
+      "note": null
+    },
+    {
+      "id": "session-4",
+      "playerId": "player-tom",
+      "startedAt": "2026-07-23T20:00:00.000Z",
+      "endedAt": "2026-07-23T20:45:00.000Z",
+      "note": null
+    },
+    {
+      "id": "session-5",
+      "playerId": "player-tom",
+      "startedAt": "2026-07-28T18:15:00.000Z",
+      "endedAt": "2026-07-28T18:20:00.000Z",
+      "note": null
+    }
+  ],
+  "games": [
+    {
+      "id": "game-1",
+      "sessionId": "session-1",
+      "mode": "x01",
+      "config": {
+        "startingScore": 501,
+        "legsToWin": 1
+      },
+      "participantPlayerIds": [
+        "player-tom"
+      ],
+      "startedAt": "2026-07-02T18:32:00.000Z",
+      "endedAt": "2026-07-02T18:34:50.361Z",
+      "abandoned": false
+    },
+    {
+      "id": "game-2",
+      "sessionId": "session-1",
+      "mode": "bobs-27",
+      "config": {},
+      "participantPlayerIds": [
+        "player-tom"
+      ],
+      "startedAt": "2026-07-02T18:48:00.000Z",
+      "endedAt": "2026-07-02T18:52:33.619Z",
+      "abandoned": false
+    },
+    {
+      "id": "game-3",
+      "sessionId": "session-2",
+      "mode": "x01",
+      "config": {
+        "startingScore": 501,
+        "legsToWin": 1
+      },
+      "participantPlayerIds": [
+        "player-tom"
+      ],
+      "startedAt": "2026-07-09T19:03:00.000Z",
+      "endedAt": "2026-07-09T19:05:39.810Z",
+      "abandoned": false
+    },
+    {
+      "id": "game-4",
+      "sessionId": "session-2",
+      "mode": "around-the-clock",
+      "config": {},
+      "participantPlayerIds": [
+        "player-tom"
+      ],
+      "startedAt": "2026-07-09T19:22:00.000Z",
+      "endedAt": "2026-07-09T19:25:51.113Z",
+      "abandoned": false
+    },
+    {
+      "id": "game-5",
+      "sessionId": "session-3",
+      "mode": "x01",
+      "config": {
+        "startingScore": 501,
+        "legsToWin": 1
+      },
+      "participantPlayerIds": [
+        "player-tom",
+        "bot-county"
+      ],
+      "startedAt": "2026-07-16T18:49:00.000Z",
+      "endedAt": "2026-07-16T18:53:01.709Z",
+      "abandoned": false
+    },
+    {
+      "id": "game-6",
+      "sessionId": "session-3",
+      "mode": "random-checkout",
+      "config": {
+        "rngSeed": 20260716
+      },
+      "participantPlayerIds": [
+        "player-tom"
+      ],
+      "startedAt": "2026-07-16T19:11:00.000Z",
+      "endedAt": "2026-07-16T19:17:24.374Z",
+      "abandoned": false
+    },
+    {
+      "id": "game-7",
+      "sessionId": "session-4",
+      "mode": "x01",
+      "config": {
+        "startingScore": 501,
+        "legsToWin": 1
+      },
+      "participantPlayerIds": [
+        "player-tom",
+        "player-guest"
+      ],
+      "startedAt": "2026-07-23T20:05:00.000Z",
+      "endedAt": "2026-07-23T20:09:37.057Z",
+      "abandoned": false
+    },
+    {
+      "id": "game-8",
+      "sessionId": "session-4",
+      "mode": "doubles-round-the-board",
+      "config": {},
+      "participantPlayerIds": [
+        "player-tom"
+      ],
+      "startedAt": "2026-07-23T20:30:00.000Z",
+      "endedAt": null,
+      "abandoned": true
+    }
+  ],
+  "legs": [
+    {
+      "id": "leg-game-1-0",
+      "gameId": "game-1",
+      "index": 0,
+      "startingScore": 501,
+      "startingPlayerId": "player-tom",
+      "winnerPlayerId": "player-tom"
+    },
+    {
+      "id": "leg-game-2-0",
+      "gameId": "game-2",
+      "index": 0,
+      "startingScore": 27,
+      "startingPlayerId": "player-tom",
+      "winnerPlayerId": "player-tom"
+    },
+    {
+      "id": "leg-game-3-0",
+      "gameId": "game-3",
+      "index": 0,
+      "startingScore": 501,
+      "startingPlayerId": "player-tom",
+      "winnerPlayerId": "player-tom"
+    },
+    {
+      "id": "leg-game-4-0",
+      "gameId": "game-4",
+      "index": 0,
+      "startingScore": null,
+      "startingPlayerId": "player-tom",
+      "winnerPlayerId": "player-tom"
+    },
+    {
+      "id": "leg-game-5-0",
+      "gameId": "game-5",
+      "index": 0,
+      "startingScore": 501,
+      "startingPlayerId": "player-tom",
+      "winnerPlayerId": "bot-county"
+    },
+    {
+      "id": "leg-game-6-0",
+      "gameId": "game-6",
+      "index": 0,
+      "startingScore": null,
+      "startingPlayerId": "player-tom",
+      "winnerPlayerId": "player-tom"
+    },
+    {
+      "id": "leg-game-7-0",
+      "gameId": "game-7",
+      "index": 0,
+      "startingScore": 501,
+      "startingPlayerId": "player-tom",
+      "winnerPlayerId": "player-tom"
+    },
+    {
+      "id": "leg-game-8-0",
+      "gameId": "game-8",
+      "index": 0,
+      "startingScore": null,
+      "startingPlayerId": "player-tom",
+      "winnerPlayerId": null
+    }
+  ],
+  "visits": [
+    {
+      "id": "visit-game-1-1",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-1-2",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-1-3",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-1-4",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-1-5",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-1-6",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-1-7",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 6,
+      "bust": false
+    },
+    {
+      "id": "visit-game-1-8",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 7,
+      "bust": false
+    },
+    {
+      "id": "visit-game-1-9",
+      "legId": "leg-game-1-0",
+      "playerId": "player-tom",
+      "index": 8,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-1",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-2",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-3",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-4",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-5",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-6",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-7",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 6,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-8",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 7,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-9",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 8,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-10",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 9,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-11",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 10,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-12",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 11,
+      "bust": false
+    },
+    {
+      "id": "visit-game-2-13",
+      "legId": "leg-game-2-0",
+      "playerId": "player-tom",
+      "index": 12,
+      "bust": false
+    },
+    {
+      "id": "visit-game-3-1",
+      "legId": "leg-game-3-0",
+      "playerId": "player-tom",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-3-2",
+      "legId": "leg-game-3-0",
+      "playerId": "player-tom",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-3-3",
+      "legId": "leg-game-3-0",
+      "playerId": "player-tom",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-3-4",
+      "legId": "leg-game-3-0",
+      "playerId": "player-tom",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-3-5",
+      "legId": "leg-game-3-0",
+      "playerId": "player-tom",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-3-6",
+      "legId": "leg-game-3-0",
+      "playerId": "player-tom",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-3-7",
+      "legId": "leg-game-3-0",
+      "playerId": "player-tom",
+      "index": 6,
+      "bust": true
+    },
+    {
+      "id": "visit-game-3-8",
+      "legId": "leg-game-3-0",
+      "playerId": "player-tom",
+      "index": 7,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-1",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-2",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-3",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-4",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-5",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-6",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-7",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 6,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-8",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 7,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-9",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 8,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-10",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 9,
+      "bust": false
+    },
+    {
+      "id": "visit-game-4-11",
+      "legId": "leg-game-4-0",
+      "playerId": "player-tom",
+      "index": 10,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-1",
+      "legId": "leg-game-5-0",
+      "playerId": "player-tom",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-2",
+      "legId": "leg-game-5-0",
+      "playerId": "bot-county",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-3",
+      "legId": "leg-game-5-0",
+      "playerId": "player-tom",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-4",
+      "legId": "leg-game-5-0",
+      "playerId": "bot-county",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-5",
+      "legId": "leg-game-5-0",
+      "playerId": "player-tom",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-6",
+      "legId": "leg-game-5-0",
+      "playerId": "bot-county",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-7",
+      "legId": "leg-game-5-0",
+      "playerId": "player-tom",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-8",
+      "legId": "leg-game-5-0",
+      "playerId": "bot-county",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-9",
+      "legId": "leg-game-5-0",
+      "playerId": "player-tom",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-10",
+      "legId": "leg-game-5-0",
+      "playerId": "bot-county",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-11",
+      "legId": "leg-game-5-0",
+      "playerId": "player-tom",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-5-12",
+      "legId": "leg-game-5-0",
+      "playerId": "bot-county",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-1",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-2",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-3",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-4",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-5",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-6",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-7",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 6,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-8",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 7,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-9",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 8,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-10",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 9,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-11",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 10,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-12",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 11,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-13",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 12,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-14",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 13,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-15",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 14,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-16",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 15,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-17",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 16,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-18",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 17,
+      "bust": false
+    },
+    {
+      "id": "visit-game-6-19",
+      "legId": "leg-game-6-0",
+      "playerId": "player-tom",
+      "index": 18,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-1",
+      "legId": "leg-game-7-0",
+      "playerId": "player-tom",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-2",
+      "legId": "leg-game-7-0",
+      "playerId": "player-guest",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-3",
+      "legId": "leg-game-7-0",
+      "playerId": "player-tom",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-4",
+      "legId": "leg-game-7-0",
+      "playerId": "player-guest",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-5",
+      "legId": "leg-game-7-0",
+      "playerId": "player-tom",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-6",
+      "legId": "leg-game-7-0",
+      "playerId": "player-guest",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-7",
+      "legId": "leg-game-7-0",
+      "playerId": "player-tom",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-8",
+      "legId": "leg-game-7-0",
+      "playerId": "player-guest",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-9",
+      "legId": "leg-game-7-0",
+      "playerId": "player-tom",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-10",
+      "legId": "leg-game-7-0",
+      "playerId": "player-guest",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-11",
+      "legId": "leg-game-7-0",
+      "playerId": "player-tom",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-12",
+      "legId": "leg-game-7-0",
+      "playerId": "player-guest",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-7-13",
+      "legId": "leg-game-7-0",
+      "playerId": "player-tom",
+      "index": 6,
+      "bust": false
+    },
+    {
+      "id": "visit-game-8-1",
+      "legId": "leg-game-8-0",
+      "playerId": "player-tom",
+      "index": 0,
+      "bust": false
+    },
+    {
+      "id": "visit-game-8-2",
+      "legId": "leg-game-8-0",
+      "playerId": "player-tom",
+      "index": 1,
+      "bust": false
+    },
+    {
+      "id": "visit-game-8-3",
+      "legId": "leg-game-8-0",
+      "playerId": "player-tom",
+      "index": 2,
+      "bust": false
+    },
+    {
+      "id": "visit-game-8-4",
+      "legId": "leg-game-8-0",
+      "playerId": "player-tom",
+      "index": 3,
+      "bust": false
+    },
+    {
+      "id": "visit-game-8-5",
+      "legId": "leg-game-8-0",
+      "playerId": "player-tom",
+      "index": 4,
+      "bust": false
+    },
+    {
+      "id": "visit-game-8-6",
+      "legId": "leg-game-8-0",
+      "playerId": "player-tom",
+      "index": 5,
+      "bust": false
+    },
+    {
+      "id": "visit-game-8-7",
+      "legId": "leg-game-8-0",
+      "playerId": "player-tom",
+      "index": 6,
+      "bust": false
+    },
+    {
+      "id": "visit-game-8-8",
+      "legId": "leg-game-8-0",
+      "playerId": "player-tom",
+      "index": 7,
+      "bust": false
+    }
+  ],
+  "darts": [
+    {
+      "id": "dart-game-1-1",
+      "visitId": "visit-game-1-1",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:19.100Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-1-2",
+      "visitId": "visit-game-1-1",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:20.244Z",
+      "latencyMs": 1144
+    },
+    {
+      "id": "dart-game-1-3",
+      "visitId": "visit-game-1-1",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:22.652Z",
+      "latencyMs": 2408
+    },
+    {
+      "id": "dart-game-1-4",
+      "visitId": "visit-game-1-2",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:35.669Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-1-5",
+      "visitId": "visit-game-1-2",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:36.987Z",
+      "latencyMs": 1318
+    },
+    {
+      "id": "dart-game-1-6",
+      "visitId": "visit-game-1-2",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:38.829Z",
+      "latencyMs": 1842
+    },
+    {
+      "id": "dart-game-1-7",
+      "visitId": "visit-game-1-3",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:53.970Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-1-8",
+      "visitId": "visit-game-1-3",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:55.154Z",
+      "latencyMs": 1184
+    },
+    {
+      "id": "dart-game-1-9",
+      "visitId": "visit-game-1-3",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:32:56.819Z",
+      "latencyMs": 1665
+    },
+    {
+      "id": "dart-game-1-10",
+      "visitId": "visit-game-1-4",
+      "index": 0,
+      "segment": 3,
+      "ring": "S",
+      "score": 3,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:12.495Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-1-11",
+      "visitId": "visit-game-1-4",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:14.988Z",
+      "latencyMs": 2493
+    },
+    {
+      "id": "dart-game-1-12",
+      "visitId": "visit-game-1-4",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:16.429Z",
+      "latencyMs": 1441
+    },
+    {
+      "id": "dart-game-1-13",
+      "visitId": "visit-game-1-5",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:35.153Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-1-14",
+      "visitId": "visit-game-1-5",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:36.536Z",
+      "latencyMs": 1383
+    },
+    {
+      "id": "dart-game-1-15",
+      "visitId": "visit-game-1-5",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:37.724Z",
+      "latencyMs": 1188
+    },
+    {
+      "id": "dart-game-1-16",
+      "visitId": "visit-game-1-6",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:55.213Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-1-17",
+      "visitId": "visit-game-1-6",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:57.407Z",
+      "latencyMs": 2194
+    },
+    {
+      "id": "dart-game-1-18",
+      "visitId": "visit-game-1-6",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:33:59.479Z",
+      "latencyMs": 2072
+    },
+    {
+      "id": "dart-game-1-19",
+      "visitId": "visit-game-1-7",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:34:13.346Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-1-20",
+      "visitId": "visit-game-1-7",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:34:14.395Z",
+      "latencyMs": 1049
+    },
+    {
+      "id": "dart-game-1-21",
+      "visitId": "visit-game-1-7",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:34:15.649Z",
+      "latencyMs": 1254
+    },
+    {
+      "id": "dart-game-1-22",
+      "visitId": "visit-game-1-8",
+      "index": 0,
+      "segment": 19,
+      "ring": "T",
+      "score": 57,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:34:30.926Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-1-23",
+      "visitId": "visit-game-1-8",
+      "index": 1,
+      "segment": 4,
+      "ring": "S",
+      "score": 4,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:34:31.625Z",
+      "latencyMs": 699
+    },
+    {
+      "id": "dart-game-1-24",
+      "visitId": "visit-game-1-8",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:34:32.779Z",
+      "latencyMs": 1154
+    },
+    {
+      "id": "dart-game-1-25",
+      "visitId": "visit-game-1-9",
+      "index": 0,
+      "segment": 10,
+      "ring": "D",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-02T18:34:45.361Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-1",
+      "visitId": "visit-game-2-1",
+      "index": 0,
+      "segment": 1,
+      "ring": "D",
+      "score": 2,
+      "targetSegment": 1,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:15.661Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-2",
+      "visitId": "visit-game-2-1",
+      "index": 1,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 1,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:17.247Z",
+      "latencyMs": 1586
+    },
+    {
+      "id": "dart-game-2-3",
+      "visitId": "visit-game-2-1",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 1,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:18.334Z",
+      "latencyMs": 1087
+    },
+    {
+      "id": "dart-game-2-4",
+      "visitId": "visit-game-2-2",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 2,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:39.754Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-5",
+      "visitId": "visit-game-2-2",
+      "index": 1,
+      "segment": 2,
+      "ring": "D",
+      "score": 4,
+      "targetSegment": 2,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:40.379Z",
+      "latencyMs": 625
+    },
+    {
+      "id": "dart-game-2-6",
+      "visitId": "visit-game-2-2",
+      "index": 2,
+      "segment": 3,
+      "ring": "S",
+      "score": 3,
+      "targetSegment": 2,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:42.352Z",
+      "latencyMs": 1973
+    },
+    {
+      "id": "dart-game-2-7",
+      "visitId": "visit-game-2-3",
+      "index": 0,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 3,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:55.299Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-8",
+      "visitId": "visit-game-2-3",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 3,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:57.265Z",
+      "latencyMs": 1966
+    },
+    {
+      "id": "dart-game-2-9",
+      "visitId": "visit-game-2-3",
+      "index": 2,
+      "segment": 2,
+      "ring": "S",
+      "score": 2,
+      "targetSegment": 3,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:48:59.558Z",
+      "latencyMs": 2293
+    },
+    {
+      "id": "dart-game-2-10",
+      "visitId": "visit-game-2-4",
+      "index": 0,
+      "segment": 4,
+      "ring": "D",
+      "score": 8,
+      "targetSegment": 4,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:49:18.692Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-11",
+      "visitId": "visit-game-2-4",
+      "index": 1,
+      "segment": 4,
+      "ring": "D",
+      "score": 8,
+      "targetSegment": 4,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:49:20.467Z",
+      "latencyMs": 1775
+    },
+    {
+      "id": "dart-game-2-12",
+      "visitId": "visit-game-2-4",
+      "index": 2,
+      "segment": 2,
+      "ring": "S",
+      "score": 2,
+      "targetSegment": 4,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:49:21.462Z",
+      "latencyMs": 995
+    },
+    {
+      "id": "dart-game-2-13",
+      "visitId": "visit-game-2-5",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 5,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:49:41.932Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-14",
+      "visitId": "visit-game-2-5",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 5,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:49:44.073Z",
+      "latencyMs": 2141
+    },
+    {
+      "id": "dart-game-2-15",
+      "visitId": "visit-game-2-5",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 5,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:49:44.948Z",
+      "latencyMs": 875
+    },
+    {
+      "id": "dart-game-2-16",
+      "visitId": "visit-game-2-6",
+      "index": 0,
+      "segment": 6,
+      "ring": "D",
+      "score": 12,
+      "targetSegment": 6,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:49:57.919Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-17",
+      "visitId": "visit-game-2-6",
+      "index": 1,
+      "segment": 6,
+      "ring": "S",
+      "score": 6,
+      "targetSegment": 6,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:49:58.963Z",
+      "latencyMs": 1044
+    },
+    {
+      "id": "dart-game-2-18",
+      "visitId": "visit-game-2-6",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 6,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:00.667Z",
+      "latencyMs": 1704
+    },
+    {
+      "id": "dart-game-2-19",
+      "visitId": "visit-game-2-7",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 7,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:18.915Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-20",
+      "visitId": "visit-game-2-7",
+      "index": 1,
+      "segment": 12,
+      "ring": "S",
+      "score": 12,
+      "targetSegment": 7,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:20.728Z",
+      "latencyMs": 1813
+    },
+    {
+      "id": "dart-game-2-21",
+      "visitId": "visit-game-2-7",
+      "index": 2,
+      "segment": 9,
+      "ring": "S",
+      "score": 9,
+      "targetSegment": 7,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:22.398Z",
+      "latencyMs": 1670
+    },
+    {
+      "id": "dart-game-2-22",
+      "visitId": "visit-game-2-8",
+      "index": 0,
+      "segment": 8,
+      "ring": "D",
+      "score": 16,
+      "targetSegment": 8,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:41.401Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-23",
+      "visitId": "visit-game-2-8",
+      "index": 1,
+      "segment": 4,
+      "ring": "S",
+      "score": 4,
+      "targetSegment": 8,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:43.856Z",
+      "latencyMs": 2455
+    },
+    {
+      "id": "dart-game-2-24",
+      "visitId": "visit-game-2-8",
+      "index": 2,
+      "segment": 4,
+      "ring": "S",
+      "score": 4,
+      "targetSegment": 8,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:44.687Z",
+      "latencyMs": 831
+    },
+    {
+      "id": "dart-game-2-25",
+      "visitId": "visit-game-2-9",
+      "index": 0,
+      "segment": 12,
+      "ring": "S",
+      "score": 12,
+      "targetSegment": 9,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:58.116Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-26",
+      "visitId": "visit-game-2-9",
+      "index": 1,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 9,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:50:59.447Z",
+      "latencyMs": 1331
+    },
+    {
+      "id": "dart-game-2-27",
+      "visitId": "visit-game-2-9",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 9,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:51:01.943Z",
+      "latencyMs": 2496
+    },
+    {
+      "id": "dart-game-2-28",
+      "visitId": "visit-game-2-10",
+      "index": 0,
+      "segment": 10,
+      "ring": "S",
+      "score": 10,
+      "targetSegment": 10,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:51:20.570Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-29",
+      "visitId": "visit-game-2-10",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 10,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:51:21.301Z",
+      "latencyMs": 731
+    },
+    {
+      "id": "dart-game-2-30",
+      "visitId": "visit-game-2-10",
+      "index": 2,
+      "segment": 10,
+      "ring": "D",
+      "score": 20,
+      "targetSegment": 10,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:51:23.184Z",
+      "latencyMs": 1883
+    },
+    {
+      "id": "dart-game-2-31",
+      "visitId": "visit-game-2-11",
+      "index": 0,
+      "segment": 8,
+      "ring": "S",
+      "score": 8,
+      "targetSegment": 11,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:51:39.496Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-32",
+      "visitId": "visit-game-2-11",
+      "index": 1,
+      "segment": 14,
+      "ring": "S",
+      "score": 14,
+      "targetSegment": 11,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:51:40.242Z",
+      "latencyMs": 746
+    },
+    {
+      "id": "dart-game-2-33",
+      "visitId": "visit-game-2-11",
+      "index": 2,
+      "segment": 11,
+      "ring": "S",
+      "score": 11,
+      "targetSegment": 11,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:51:41.414Z",
+      "latencyMs": 1172
+    },
+    {
+      "id": "dart-game-2-34",
+      "visitId": "visit-game-2-12",
+      "index": 0,
+      "segment": 9,
+      "ring": "S",
+      "score": 9,
+      "targetSegment": 12,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:52:01.210Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-35",
+      "visitId": "visit-game-2-12",
+      "index": 1,
+      "segment": 12,
+      "ring": "S",
+      "score": 12,
+      "targetSegment": 12,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:52:02.731Z",
+      "latencyMs": 1521
+    },
+    {
+      "id": "dart-game-2-36",
+      "visitId": "visit-game-2-12",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 12,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:52:04.017Z",
+      "latencyMs": 1286
+    },
+    {
+      "id": "dart-game-2-37",
+      "visitId": "visit-game-2-13",
+      "index": 0,
+      "segment": 13,
+      "ring": "S",
+      "score": 13,
+      "targetSegment": 13,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:52:24.775Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-2-38",
+      "visitId": "visit-game-2-13",
+      "index": 1,
+      "segment": 4,
+      "ring": "S",
+      "score": 4,
+      "targetSegment": 13,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:52:26.871Z",
+      "latencyMs": 2096
+    },
+    {
+      "id": "dart-game-2-39",
+      "visitId": "visit-game-2-13",
+      "index": 2,
+      "segment": 6,
+      "ring": "S",
+      "score": 6,
+      "targetSegment": 13,
+      "targetRing": "D",
+      "thrownAt": "2026-07-02T18:52:28.619Z",
+      "latencyMs": 1748
+    },
+    {
+      "id": "dart-game-3-1",
+      "visitId": "visit-game-3-1",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:03:18.771Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-3-2",
+      "visitId": "visit-game-3-1",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:03:20.221Z",
+      "latencyMs": 1450
+    },
+    {
+      "id": "dart-game-3-3",
+      "visitId": "visit-game-3-1",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:03:21.544Z",
+      "latencyMs": 1323
+    },
+    {
+      "id": "dart-game-3-4",
+      "visitId": "visit-game-3-2",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:03:37.280Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-3-5",
+      "visitId": "visit-game-3-2",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:03:39.246Z",
+      "latencyMs": 1966
+    },
+    {
+      "id": "dart-game-3-6",
+      "visitId": "visit-game-3-2",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:03:41.711Z",
+      "latencyMs": 2465
+    },
+    {
+      "id": "dart-game-3-7",
+      "visitId": "visit-game-3-3",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:03:56.435Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-3-8",
+      "visitId": "visit-game-3-3",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:03:57.991Z",
+      "latencyMs": 1556
+    },
+    {
+      "id": "dart-game-3-9",
+      "visitId": "visit-game-3-3",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:00.358Z",
+      "latencyMs": 2367
+    },
+    {
+      "id": "dart-game-3-10",
+      "visitId": "visit-game-3-4",
+      "index": 0,
+      "segment": 19,
+      "ring": "S",
+      "score": 19,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:15.329Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-3-11",
+      "visitId": "visit-game-3-4",
+      "index": 1,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:16.691Z",
+      "latencyMs": 1362
+    },
+    {
+      "id": "dart-game-3-12",
+      "visitId": "visit-game-3-4",
+      "index": 2,
+      "segment": 1,
+      "ring": "D",
+      "score": 2,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:17.765Z",
+      "latencyMs": 1074
+    },
+    {
+      "id": "dart-game-3-13",
+      "visitId": "visit-game-3-5",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:35.387Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-3-14",
+      "visitId": "visit-game-3-5",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:36.078Z",
+      "latencyMs": 691
+    },
+    {
+      "id": "dart-game-3-15",
+      "visitId": "visit-game-3-5",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:37.832Z",
+      "latencyMs": 1754
+    },
+    {
+      "id": "dart-game-3-16",
+      "visitId": "visit-game-3-6",
+      "index": 0,
+      "segment": 19,
+      "ring": "T",
+      "score": 57,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:53.061Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-3-17",
+      "visitId": "visit-game-3-6",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:55.485Z",
+      "latencyMs": 2424
+    },
+    {
+      "id": "dart-game-3-18",
+      "visitId": "visit-game-3-6",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:04:56.648Z",
+      "latencyMs": 1163
+    },
+    {
+      "id": "dart-game-3-19",
+      "visitId": "visit-game-3-7",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:05:15.335Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-3-20",
+      "visitId": "visit-game-3-7",
+      "index": 1,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:05:17.148Z",
+      "latencyMs": 1813
+    },
+    {
+      "id": "dart-game-3-21",
+      "visitId": "visit-game-3-8",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:05:32.053Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-3-22",
+      "visitId": "visit-game-3-8",
+      "index": 1,
+      "segment": 16,
+      "ring": "S",
+      "score": 16,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:05:33.122Z",
+      "latencyMs": 1069
+    },
+    {
+      "id": "dart-game-3-23",
+      "visitId": "visit-game-3-8",
+      "index": 2,
+      "segment": 8,
+      "ring": "D",
+      "score": 16,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-09T19:05:34.810Z",
+      "latencyMs": 1688
+    },
+    {
+      "id": "dart-game-4-1",
+      "visitId": "visit-game-4-1",
+      "index": 0,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 1,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:22:21.203Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-2",
+      "visitId": "visit-game-4-1",
+      "index": 1,
+      "segment": 18,
+      "ring": "S",
+      "score": 18,
+      "targetSegment": 2,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:22:21.881Z",
+      "latencyMs": 678
+    },
+    {
+      "id": "dart-game-4-3",
+      "visitId": "visit-game-4-1",
+      "index": 2,
+      "segment": 2,
+      "ring": "S",
+      "score": 2,
+      "targetSegment": 2,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:22:23.275Z",
+      "latencyMs": 1394
+    },
+    {
+      "id": "dart-game-4-4",
+      "visitId": "visit-game-4-2",
+      "index": 0,
+      "segment": 3,
+      "ring": "S",
+      "score": 3,
+      "targetSegment": 3,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:22:38.884Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-5",
+      "visitId": "visit-game-4-2",
+      "index": 1,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 4,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:22:39.917Z",
+      "latencyMs": 1033
+    },
+    {
+      "id": "dart-game-4-6",
+      "visitId": "visit-game-4-2",
+      "index": 2,
+      "segment": 4,
+      "ring": "S",
+      "score": 4,
+      "targetSegment": 4,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:22:42.007Z",
+      "latencyMs": 2090
+    },
+    {
+      "id": "dart-game-4-7",
+      "visitId": "visit-game-4-3",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 5,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:22:58.826Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-8",
+      "visitId": "visit-game-4-3",
+      "index": 1,
+      "segment": 6,
+      "ring": "S",
+      "score": 6,
+      "targetSegment": 6,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:01.308Z",
+      "latencyMs": 2482
+    },
+    {
+      "id": "dart-game-4-9",
+      "visitId": "visit-game-4-3",
+      "index": 2,
+      "segment": 10,
+      "ring": "S",
+      "score": 10,
+      "targetSegment": 7,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:03.292Z",
+      "latencyMs": 1984
+    },
+    {
+      "id": "dart-game-4-10",
+      "visitId": "visit-game-4-4",
+      "index": 0,
+      "segment": 7,
+      "ring": "S",
+      "score": 7,
+      "targetSegment": 7,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:15.293Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-11",
+      "visitId": "visit-game-4-4",
+      "index": 1,
+      "segment": 8,
+      "ring": "S",
+      "score": 8,
+      "targetSegment": 8,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:16.247Z",
+      "latencyMs": 954
+    },
+    {
+      "id": "dart-game-4-12",
+      "visitId": "visit-game-4-4",
+      "index": 2,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 9,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:17.927Z",
+      "latencyMs": 1680
+    },
+    {
+      "id": "dart-game-4-13",
+      "visitId": "visit-game-4-5",
+      "index": 0,
+      "segment": 9,
+      "ring": "S",
+      "score": 9,
+      "targetSegment": 9,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:32.290Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-14",
+      "visitId": "visit-game-4-5",
+      "index": 1,
+      "segment": 10,
+      "ring": "S",
+      "score": 10,
+      "targetSegment": 10,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:33.927Z",
+      "latencyMs": 1637
+    },
+    {
+      "id": "dart-game-4-15",
+      "visitId": "visit-game-4-5",
+      "index": 2,
+      "segment": 11,
+      "ring": "S",
+      "score": 11,
+      "targetSegment": 11,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:34.796Z",
+      "latencyMs": 869
+    },
+    {
+      "id": "dart-game-4-16",
+      "visitId": "visit-game-4-6",
+      "index": 0,
+      "segment": 12,
+      "ring": "S",
+      "score": 12,
+      "targetSegment": 12,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:53.714Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-17",
+      "visitId": "visit-game-4-6",
+      "index": 1,
+      "segment": 9,
+      "ring": "S",
+      "score": 9,
+      "targetSegment": 13,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:54.490Z",
+      "latencyMs": 776
+    },
+    {
+      "id": "dart-game-4-18",
+      "visitId": "visit-game-4-6",
+      "index": 2,
+      "segment": 13,
+      "ring": "S",
+      "score": 13,
+      "targetSegment": 13,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:23:55.784Z",
+      "latencyMs": 1294
+    },
+    {
+      "id": "dart-game-4-19",
+      "visitId": "visit-game-4-7",
+      "index": 0,
+      "segment": 14,
+      "ring": "S",
+      "score": 14,
+      "targetSegment": 14,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:24:17.334Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-20",
+      "visitId": "visit-game-4-7",
+      "index": 1,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 15,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:24:19.647Z",
+      "latencyMs": 2313
+    },
+    {
+      "id": "dart-game-4-21",
+      "visitId": "visit-game-4-7",
+      "index": 2,
+      "segment": 15,
+      "ring": "S",
+      "score": 15,
+      "targetSegment": 15,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:24:21.020Z",
+      "latencyMs": 1373
+    },
+    {
+      "id": "dart-game-4-22",
+      "visitId": "visit-game-4-8",
+      "index": 0,
+      "segment": 16,
+      "ring": "S",
+      "score": 16,
+      "targetSegment": 16,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:24:36.033Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-23",
+      "visitId": "visit-game-4-8",
+      "index": 1,
+      "segment": 17,
+      "ring": "S",
+      "score": 17,
+      "targetSegment": 17,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:24:37.049Z",
+      "latencyMs": 1016
+    },
+    {
+      "id": "dart-game-4-24",
+      "visitId": "visit-game-4-8",
+      "index": 2,
+      "segment": 2,
+      "ring": "S",
+      "score": 2,
+      "targetSegment": 18,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:24:39.143Z",
+      "latencyMs": 2094
+    },
+    {
+      "id": "dart-game-4-25",
+      "visitId": "visit-game-4-9",
+      "index": 0,
+      "segment": 18,
+      "ring": "S",
+      "score": 18,
+      "targetSegment": 18,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:24:57.948Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-26",
+      "visitId": "visit-game-4-9",
+      "index": 1,
+      "segment": 19,
+      "ring": "S",
+      "score": 19,
+      "targetSegment": 19,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:25:00.351Z",
+      "latencyMs": 2403
+    },
+    {
+      "id": "dart-game-4-27",
+      "visitId": "visit-game-4-9",
+      "index": 2,
+      "segment": 3,
+      "ring": "S",
+      "score": 3,
+      "targetSegment": 20,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:25:01.471Z",
+      "latencyMs": 1120
+    },
+    {
+      "id": "dart-game-4-28",
+      "visitId": "visit-game-4-10",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": 20,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:25:22.183Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-4-29",
+      "visitId": "visit-game-4-10",
+      "index": 1,
+      "segment": 25,
+      "ring": "S",
+      "score": 25,
+      "targetSegment": 25,
+      "targetRing": "S",
+      "thrownAt": "2026-07-09T19:25:23.743Z",
+      "latencyMs": 1560
+    },
+    {
+      "id": "dart-game-4-30",
+      "visitId": "visit-game-4-10",
+      "index": 2,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 25,
+      "targetRing": "D",
+      "thrownAt": "2026-07-09T19:25:24.934Z",
+      "latencyMs": 1191
+    },
+    {
+      "id": "dart-game-4-31",
+      "visitId": "visit-game-4-11",
+      "index": 0,
+      "segment": 25,
+      "ring": "D",
+      "score": 50,
+      "targetSegment": 25,
+      "targetRing": "D",
+      "thrownAt": "2026-07-09T19:25:46.113Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-1",
+      "visitId": "visit-game-5-1",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:49:14.400Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-2",
+      "visitId": "visit-game-5-1",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:49:16.585Z",
+      "latencyMs": 2185
+    },
+    {
+      "id": "dart-game-5-3",
+      "visitId": "visit-game-5-1",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:49:18.815Z",
+      "latencyMs": 2230
+    },
+    {
+      "id": "dart-game-5-4",
+      "visitId": "visit-game-5-2",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:49:31.279Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-5",
+      "visitId": "visit-game-5-2",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:49:33.521Z",
+      "latencyMs": 2242
+    },
+    {
+      "id": "dart-game-5-6",
+      "visitId": "visit-game-5-2",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:49:34.911Z",
+      "latencyMs": 1390
+    },
+    {
+      "id": "dart-game-5-7",
+      "visitId": "visit-game-5-3",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:49:50.064Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-8",
+      "visitId": "visit-game-5-3",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:49:52.048Z",
+      "latencyMs": 1984
+    },
+    {
+      "id": "dart-game-5-9",
+      "visitId": "visit-game-5-3",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:49:54.301Z",
+      "latencyMs": 2253
+    },
+    {
+      "id": "dart-game-5-10",
+      "visitId": "visit-game-5-4",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:50:07.320Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-11",
+      "visitId": "visit-game-5-4",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:50:09.348Z",
+      "latencyMs": 2028
+    },
+    {
+      "id": "dart-game-5-12",
+      "visitId": "visit-game-5-4",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:50:10.371Z",
+      "latencyMs": 1023
+    },
+    {
+      "id": "dart-game-5-13",
+      "visitId": "visit-game-5-5",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:50:30.864Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-14",
+      "visitId": "visit-game-5-5",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:50:33.321Z",
+      "latencyMs": 2457
+    },
+    {
+      "id": "dart-game-5-15",
+      "visitId": "visit-game-5-5",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:50:35.604Z",
+      "latencyMs": 2283
+    },
+    {
+      "id": "dart-game-5-16",
+      "visitId": "visit-game-5-6",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:50:57.045Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-17",
+      "visitId": "visit-game-5-6",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:50:58.738Z",
+      "latencyMs": 1693
+    },
+    {
+      "id": "dart-game-5-18",
+      "visitId": "visit-game-5-6",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:50:59.965Z",
+      "latencyMs": 1227
+    },
+    {
+      "id": "dart-game-5-19",
+      "visitId": "visit-game-5-7",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:51:18.128Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-20",
+      "visitId": "visit-game-5-7",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:51:19.272Z",
+      "latencyMs": 1144
+    },
+    {
+      "id": "dart-game-5-21",
+      "visitId": "visit-game-5-7",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:51:20.548Z",
+      "latencyMs": 1276
+    },
+    {
+      "id": "dart-game-5-22",
+      "visitId": "visit-game-5-8",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:51:33.390Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-23",
+      "visitId": "visit-game-5-8",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:51:34.698Z",
+      "latencyMs": 1308
+    },
+    {
+      "id": "dart-game-5-24",
+      "visitId": "visit-game-5-8",
+      "index": 2,
+      "segment": 16,
+      "ring": "S",
+      "score": 16,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:51:35.545Z",
+      "latencyMs": 847
+    },
+    {
+      "id": "dart-game-5-25",
+      "visitId": "visit-game-5-9",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:51:56.585Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-26",
+      "visitId": "visit-game-5-9",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:51:59.012Z",
+      "latencyMs": 2427
+    },
+    {
+      "id": "dart-game-5-27",
+      "visitId": "visit-game-5-9",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:52:01.012Z",
+      "latencyMs": 2000
+    },
+    {
+      "id": "dart-game-5-28",
+      "visitId": "visit-game-5-10",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:52:14.876Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-29",
+      "visitId": "visit-game-5-10",
+      "index": 1,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:52:16.434Z",
+      "latencyMs": 1558
+    },
+    {
+      "id": "dart-game-5-30",
+      "visitId": "visit-game-5-10",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T18:52:17.148Z",
+      "latencyMs": 714
+    },
+    {
+      "id": "dart-game-5-31",
+      "visitId": "visit-game-5-11",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:52:38.384Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-32",
+      "visitId": "visit-game-5-11",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:52:40.451Z",
+      "latencyMs": 2067
+    },
+    {
+      "id": "dart-game-5-33",
+      "visitId": "visit-game-5-11",
+      "index": 2,
+      "segment": 3,
+      "ring": "S",
+      "score": 3,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-16T18:52:42.111Z",
+      "latencyMs": 1660
+    },
+    {
+      "id": "dart-game-5-34",
+      "visitId": "visit-game-5-12",
+      "index": 0,
+      "segment": 3,
+      "ring": "S",
+      "score": 3,
+      "targetSegment": 1,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T18:52:54.239Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-5-35",
+      "visitId": "visit-game-5-12",
+      "index": 1,
+      "segment": 16,
+      "ring": "D",
+      "score": 32,
+      "targetSegment": 16,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T18:52:56.709Z",
+      "latencyMs": 2470
+    },
+    {
+      "id": "dart-game-6-1",
+      "visitId": "visit-game-6-1",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:11:13.134Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-2",
+      "visitId": "visit-game-6-1",
+      "index": 1,
+      "segment": 13,
+      "ring": "T",
+      "score": 39,
+      "targetSegment": 13,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:11:15.031Z",
+      "latencyMs": 1897
+    },
+    {
+      "id": "dart-game-6-3",
+      "visitId": "visit-game-6-1",
+      "index": 2,
+      "segment": 16,
+      "ring": "D",
+      "score": 32,
+      "targetSegment": 16,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:11:16.124Z",
+      "latencyMs": 1093
+    },
+    {
+      "id": "dart-game-6-4",
+      "visitId": "visit-game-6-2",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:11:35.094Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-5",
+      "visitId": "visit-game-6-2",
+      "index": 1,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:11:35.781Z",
+      "latencyMs": 687
+    },
+    {
+      "id": "dart-game-6-6",
+      "visitId": "visit-game-6-2",
+      "index": 2,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:11:37.454Z",
+      "latencyMs": 1673
+    },
+    {
+      "id": "dart-game-6-7",
+      "visitId": "visit-game-6-3",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:11:50.344Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-8",
+      "visitId": "visit-game-6-3",
+      "index": 1,
+      "segment": 11,
+      "ring": "T",
+      "score": 33,
+      "targetSegment": 11,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:11:52.048Z",
+      "latencyMs": 1704
+    },
+    {
+      "id": "dart-game-6-9",
+      "visitId": "visit-game-6-3",
+      "index": 2,
+      "segment": 20,
+      "ring": "D",
+      "score": 40,
+      "targetSegment": 20,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:11:54.540Z",
+      "latencyMs": 2492
+    },
+    {
+      "id": "dart-game-6-10",
+      "visitId": "visit-game-6-4",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 25,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:12:09.101Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-11",
+      "visitId": "visit-game-6-4",
+      "index": 1,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 5,
+      "targetRing": "S",
+      "thrownAt": "2026-07-16T19:12:10.404Z",
+      "latencyMs": 1303
+    },
+    {
+      "id": "dart-game-6-12",
+      "visitId": "visit-game-6-4",
+      "index": 2,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 4,
+      "targetRing": "S",
+      "thrownAt": "2026-07-16T19:12:11.494Z",
+      "latencyMs": 1090
+    },
+    {
+      "id": "dart-game-6-13",
+      "visitId": "visit-game-6-5",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:12:32.909Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-14",
+      "visitId": "visit-game-6-5",
+      "index": 1,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 17,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:12:33.656Z",
+      "latencyMs": 747
+    },
+    {
+      "id": "dart-game-6-15",
+      "visitId": "visit-game-6-5",
+      "index": 2,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:12:35.867Z",
+      "latencyMs": 2211
+    },
+    {
+      "id": "dart-game-6-16",
+      "visitId": "visit-game-6-6",
+      "index": 0,
+      "segment": 7,
+      "ring": "T",
+      "score": 21,
+      "targetSegment": 7,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:12:53.199Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-17",
+      "visitId": "visit-game-6-6",
+      "index": 1,
+      "segment": 20,
+      "ring": "D",
+      "score": 40,
+      "targetSegment": 20,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:12:55.278Z",
+      "latencyMs": 2079
+    },
+    {
+      "id": "dart-game-6-18",
+      "visitId": "visit-game-6-6",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 14,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:12:56.720Z",
+      "latencyMs": 1442
+    },
+    {
+      "id": "dart-game-6-19",
+      "visitId": "visit-game-6-7",
+      "index": 0,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 11,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:12.644Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-20",
+      "visitId": "visit-game-6-7",
+      "index": 1,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:14.000Z",
+      "latencyMs": 1356
+    },
+    {
+      "id": "dart-game-6-21",
+      "visitId": "visit-game-6-7",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 14,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:14.816Z",
+      "latencyMs": 816
+    },
+    {
+      "id": "dart-game-6-22",
+      "visitId": "visit-game-6-8",
+      "index": 0,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:30.910Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-23",
+      "visitId": "visit-game-6-8",
+      "index": 1,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:31.754Z",
+      "latencyMs": 844
+    },
+    {
+      "id": "dart-game-6-24",
+      "visitId": "visit-game-6-8",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:33.979Z",
+      "latencyMs": 2225
+    },
+    {
+      "id": "dart-game-6-25",
+      "visitId": "visit-game-6-9",
+      "index": 0,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:51.046Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-26",
+      "visitId": "visit-game-6-9",
+      "index": 1,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:52.251Z",
+      "latencyMs": 1205
+    },
+    {
+      "id": "dart-game-6-27",
+      "visitId": "visit-game-6-9",
+      "index": 2,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:13:53.458Z",
+      "latencyMs": 1207
+    },
+    {
+      "id": "dart-game-6-28",
+      "visitId": "visit-game-6-10",
+      "index": 0,
+      "segment": 3,
+      "ring": "T",
+      "score": 9,
+      "targetSegment": 3,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:14:12.447Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-29",
+      "visitId": "visit-game-6-10",
+      "index": 1,
+      "segment": 20,
+      "ring": "D",
+      "score": 40,
+      "targetSegment": 20,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:14:13.475Z",
+      "latencyMs": 1028
+    },
+    {
+      "id": "dart-game-6-30",
+      "visitId": "visit-game-6-10",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 13,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:14:14.271Z",
+      "latencyMs": 796
+    },
+    {
+      "id": "dart-game-6-31",
+      "visitId": "visit-game-6-11",
+      "index": 0,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 10,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:14:27.302Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-32",
+      "visitId": "visit-game-6-11",
+      "index": 1,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:14:29.429Z",
+      "latencyMs": 2127
+    },
+    {
+      "id": "dart-game-6-33",
+      "visitId": "visit-game-6-11",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 10,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:14:31.334Z",
+      "latencyMs": 1905
+    },
+    {
+      "id": "dart-game-6-34",
+      "visitId": "visit-game-6-12",
+      "index": 0,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 17,
+      "targetRing": "S",
+      "thrownAt": "2026-07-16T19:14:43.526Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-35",
+      "visitId": "visit-game-6-12",
+      "index": 1,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 16,
+      "targetRing": "S",
+      "thrownAt": "2026-07-16T19:14:45.770Z",
+      "latencyMs": 2244
+    },
+    {
+      "id": "dart-game-6-36",
+      "visitId": "visit-game-6-12",
+      "index": 2,
+      "segment": 19,
+      "ring": "T",
+      "score": 57,
+      "targetSegment": 19,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:14:47.093Z",
+      "latencyMs": 1323
+    },
+    {
+      "id": "dart-game-6-37",
+      "visitId": "visit-game-6-13",
+      "index": 0,
+      "segment": 16,
+      "ring": "D",
+      "score": 32,
+      "targetSegment": 16,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:15:08.062Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-38",
+      "visitId": "visit-game-6-13",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:15:09.236Z",
+      "latencyMs": 1174
+    },
+    {
+      "id": "dart-game-6-39",
+      "visitId": "visit-game-6-13",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 19,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:15:11.554Z",
+      "latencyMs": 2318
+    },
+    {
+      "id": "dart-game-6-40",
+      "visitId": "visit-game-6-14",
+      "index": 0,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:15:31.254Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-41",
+      "visitId": "visit-game-6-14",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 1,
+      "targetRing": "S",
+      "thrownAt": "2026-07-16T19:15:33.325Z",
+      "latencyMs": 2071
+    },
+    {
+      "id": "dart-game-6-42",
+      "visitId": "visit-game-6-14",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 18,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:15:35.558Z",
+      "latencyMs": 2233
+    },
+    {
+      "id": "dart-game-6-43",
+      "visitId": "visit-game-6-15",
+      "index": 0,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 3,
+      "targetRing": "S",
+      "thrownAt": "2026-07-16T19:15:57.300Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-44",
+      "visitId": "visit-game-6-15",
+      "index": 1,
+      "segment": 25,
+      "ring": "D",
+      "score": 50,
+      "targetSegment": 25,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:15:59.372Z",
+      "latencyMs": 2072
+    },
+    {
+      "id": "dart-game-6-45",
+      "visitId": "visit-game-6-15",
+      "index": 2,
+      "segment": 20,
+      "ring": "D",
+      "score": 40,
+      "targetSegment": 20,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:16:00.839Z",
+      "latencyMs": 1467
+    },
+    {
+      "id": "dart-game-6-46",
+      "visitId": "visit-game-6-16",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:16:18.489Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-47",
+      "visitId": "visit-game-6-16",
+      "index": 1,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:16:19.685Z",
+      "latencyMs": 1196
+    },
+    {
+      "id": "dart-game-6-48",
+      "visitId": "visit-game-6-16",
+      "index": 2,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:16:22.139Z",
+      "latencyMs": 2454
+    },
+    {
+      "id": "dart-game-6-49",
+      "visitId": "visit-game-6-17",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:16:37.840Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-50",
+      "visitId": "visit-game-6-17",
+      "index": 1,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:16:38.490Z",
+      "latencyMs": 650
+    },
+    {
+      "id": "dart-game-6-51",
+      "visitId": "visit-game-6-17",
+      "index": 2,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:16:39.832Z",
+      "latencyMs": 1342
+    },
+    {
+      "id": "dart-game-6-52",
+      "visitId": "visit-game-6-18",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:17:01.260Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-53",
+      "visitId": "visit-game-6-18",
+      "index": 1,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:17:01.973Z",
+      "latencyMs": 713
+    },
+    {
+      "id": "dart-game-6-54",
+      "visitId": "visit-game-6-18",
+      "index": 2,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:17:02.771Z",
+      "latencyMs": 798
+    },
+    {
+      "id": "dart-game-6-55",
+      "visitId": "visit-game-6-19",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": 20,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:17:17.472Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-6-56",
+      "visitId": "visit-game-6-19",
+      "index": 1,
+      "segment": 9,
+      "ring": "T",
+      "score": 27,
+      "targetSegment": 9,
+      "targetRing": "T",
+      "thrownAt": "2026-07-16T19:17:18.205Z",
+      "latencyMs": 733
+    },
+    {
+      "id": "dart-game-6-57",
+      "visitId": "visit-game-6-19",
+      "index": 2,
+      "segment": 20,
+      "ring": "D",
+      "score": 40,
+      "targetSegment": 20,
+      "targetRing": "D",
+      "thrownAt": "2026-07-16T19:17:19.374Z",
+      "latencyMs": 1169
+    },
+    {
+      "id": "dart-game-7-1",
+      "visitId": "visit-game-7-1",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:05:12.411Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-2",
+      "visitId": "visit-game-7-1",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:05:13.804Z",
+      "latencyMs": 1393
+    },
+    {
+      "id": "dart-game-7-3",
+      "visitId": "visit-game-7-1",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:05:14.455Z",
+      "latencyMs": 651
+    },
+    {
+      "id": "dart-game-7-4",
+      "visitId": "visit-game-7-2",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:05:34.462Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-5",
+      "visitId": "visit-game-7-2",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:05:36.560Z",
+      "latencyMs": 2098
+    },
+    {
+      "id": "dart-game-7-6",
+      "visitId": "visit-game-7-2",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:05:37.400Z",
+      "latencyMs": 840
+    },
+    {
+      "id": "dart-game-7-7",
+      "visitId": "visit-game-7-3",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:05:57.231Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-8",
+      "visitId": "visit-game-7-3",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:05:59.394Z",
+      "latencyMs": 2163
+    },
+    {
+      "id": "dart-game-7-9",
+      "visitId": "visit-game-7-3",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:06:01.169Z",
+      "latencyMs": 1775
+    },
+    {
+      "id": "dart-game-7-10",
+      "visitId": "visit-game-7-4",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:06:21.607Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-11",
+      "visitId": "visit-game-7-4",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:06:23.321Z",
+      "latencyMs": 1714
+    },
+    {
+      "id": "dart-game-7-12",
+      "visitId": "visit-game-7-4",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:06:25.501Z",
+      "latencyMs": 2180
+    },
+    {
+      "id": "dart-game-7-13",
+      "visitId": "visit-game-7-5",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:06:40.669Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-14",
+      "visitId": "visit-game-7-5",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:06:42.257Z",
+      "latencyMs": 1588
+    },
+    {
+      "id": "dart-game-7-15",
+      "visitId": "visit-game-7-5",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:06:43.882Z",
+      "latencyMs": 1625
+    },
+    {
+      "id": "dart-game-7-16",
+      "visitId": "visit-game-7-6",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:02.692Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-17",
+      "visitId": "visit-game-7-6",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:03.539Z",
+      "latencyMs": 847
+    },
+    {
+      "id": "dart-game-7-18",
+      "visitId": "visit-game-7-6",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:05.617Z",
+      "latencyMs": 2078
+    },
+    {
+      "id": "dart-game-7-19",
+      "visitId": "visit-game-7-7",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:19.942Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-20",
+      "visitId": "visit-game-7-7",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:22.259Z",
+      "latencyMs": 2317
+    },
+    {
+      "id": "dart-game-7-21",
+      "visitId": "visit-game-7-7",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:23.235Z",
+      "latencyMs": 976
+    },
+    {
+      "id": "dart-game-7-22",
+      "visitId": "visit-game-7-8",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:38.096Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-23",
+      "visitId": "visit-game-7-8",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:38.866Z",
+      "latencyMs": 770
+    },
+    {
+      "id": "dart-game-7-24",
+      "visitId": "visit-game-7-8",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:40.151Z",
+      "latencyMs": 1285
+    },
+    {
+      "id": "dart-game-7-25",
+      "visitId": "visit-game-7-9",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:07:59.608Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-26",
+      "visitId": "visit-game-7-9",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:08:01.233Z",
+      "latencyMs": 1625
+    },
+    {
+      "id": "dart-game-7-27",
+      "visitId": "visit-game-7-9",
+      "index": 2,
+      "segment": 16,
+      "ring": "S",
+      "score": 16,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:08:03.662Z",
+      "latencyMs": 2429
+    },
+    {
+      "id": "dart-game-7-28",
+      "visitId": "visit-game-7-10",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:08:25.603Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-29",
+      "visitId": "visit-game-7-10",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:08:27.661Z",
+      "latencyMs": 2058
+    },
+    {
+      "id": "dart-game-7-30",
+      "visitId": "visit-game-7-10",
+      "index": 2,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:08:28.937Z",
+      "latencyMs": 1276
+    },
+    {
+      "id": "dart-game-7-31",
+      "visitId": "visit-game-7-11",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:08:46.151Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-32",
+      "visitId": "visit-game-7-11",
+      "index": 1,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:08:47.283Z",
+      "latencyMs": 1132
+    },
+    {
+      "id": "dart-game-7-33",
+      "visitId": "visit-game-7-11",
+      "index": 2,
+      "segment": 15,
+      "ring": "S",
+      "score": 15,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:08:48.169Z",
+      "latencyMs": 886
+    },
+    {
+      "id": "dart-game-7-34",
+      "visitId": "visit-game-7-12",
+      "index": 0,
+      "segment": 20,
+      "ring": "S",
+      "score": 20,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:09:09.251Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-35",
+      "visitId": "visit-game-7-12",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:09:10.648Z",
+      "latencyMs": 1397
+    },
+    {
+      "id": "dart-game-7-36",
+      "visitId": "visit-game-7-12",
+      "index": 2,
+      "segment": 1,
+      "ring": "S",
+      "score": 1,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:09:12.083Z",
+      "latencyMs": 1435
+    },
+    {
+      "id": "dart-game-7-37",
+      "visitId": "visit-game-7-13",
+      "index": 0,
+      "segment": 20,
+      "ring": "T",
+      "score": 60,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:09:30.144Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-7-38",
+      "visitId": "visit-game-7-13",
+      "index": 1,
+      "segment": 20,
+      "ring": "D",
+      "score": 40,
+      "targetSegment": null,
+      "targetRing": null,
+      "thrownAt": "2026-07-23T20:09:32.057Z",
+      "latencyMs": 1913
+    },
+    {
+      "id": "dart-game-8-1",
+      "visitId": "visit-game-8-1",
+      "index": 0,
+      "segment": 1,
+      "ring": "D",
+      "score": 2,
+      "targetSegment": 1,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:15.374Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-8-2",
+      "visitId": "visit-game-8-1",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 2,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:17.545Z",
+      "latencyMs": 2171
+    },
+    {
+      "id": "dart-game-8-3",
+      "visitId": "visit-game-8-1",
+      "index": 2,
+      "segment": 2,
+      "ring": "D",
+      "score": 4,
+      "targetSegment": 2,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:19.204Z",
+      "latencyMs": 1659
+    },
+    {
+      "id": "dart-game-8-4",
+      "visitId": "visit-game-8-2",
+      "index": 0,
+      "segment": 0,
+      "ring": "MISS",
+      "score": 0,
+      "targetSegment": 3,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:32.589Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-8-5",
+      "visitId": "visit-game-8-2",
+      "index": 1,
+      "segment": 3,
+      "ring": "S",
+      "score": 3,
+      "targetSegment": 3,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:33.807Z",
+      "latencyMs": 1218
+    },
+    {
+      "id": "dart-game-8-6",
+      "visitId": "visit-game-8-2",
+      "index": 2,
+      "segment": 3,
+      "ring": "D",
+      "score": 6,
+      "targetSegment": 3,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:34.536Z",
+      "latencyMs": 729
+    },
+    {
+      "id": "dart-game-8-7",
+      "visitId": "visit-game-8-3",
+      "index": 0,
+      "segment": 4,
+      "ring": "S",
+      "score": 4,
+      "targetSegment": 4,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:50.241Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-8-8",
+      "visitId": "visit-game-8-3",
+      "index": 1,
+      "segment": 4,
+      "ring": "S",
+      "score": 4,
+      "targetSegment": 4,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:52.572Z",
+      "latencyMs": 2331
+    },
+    {
+      "id": "dart-game-8-9",
+      "visitId": "visit-game-8-3",
+      "index": 2,
+      "segment": 4,
+      "ring": "D",
+      "score": 8,
+      "targetSegment": 4,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:30:53.350Z",
+      "latencyMs": 778
+    },
+    {
+      "id": "dart-game-8-10",
+      "visitId": "visit-game-8-4",
+      "index": 0,
+      "segment": 12,
+      "ring": "S",
+      "score": 12,
+      "targetSegment": 5,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:12.127Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-8-11",
+      "visitId": "visit-game-8-4",
+      "index": 1,
+      "segment": 5,
+      "ring": "D",
+      "score": 10,
+      "targetSegment": 5,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:13.635Z",
+      "latencyMs": 1508
+    },
+    {
+      "id": "dart-game-8-12",
+      "visitId": "visit-game-8-4",
+      "index": 2,
+      "segment": 6,
+      "ring": "D",
+      "score": 12,
+      "targetSegment": 6,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:15.451Z",
+      "latencyMs": 1816
+    },
+    {
+      "id": "dart-game-8-13",
+      "visitId": "visit-game-8-5",
+      "index": 0,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 7,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:34.032Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-8-14",
+      "visitId": "visit-game-8-5",
+      "index": 1,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 7,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:35.285Z",
+      "latencyMs": 1253
+    },
+    {
+      "id": "dart-game-8-15",
+      "visitId": "visit-game-8-5",
+      "index": 2,
+      "segment": 5,
+      "ring": "S",
+      "score": 5,
+      "targetSegment": 7,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:37.603Z",
+      "latencyMs": 2318
+    },
+    {
+      "id": "dart-game-8-16",
+      "visitId": "visit-game-8-6",
+      "index": 0,
+      "segment": 9,
+      "ring": "S",
+      "score": 9,
+      "targetSegment": 7,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:51.059Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-8-17",
+      "visitId": "visit-game-8-6",
+      "index": 1,
+      "segment": 7,
+      "ring": "D",
+      "score": 14,
+      "targetSegment": 7,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:53.463Z",
+      "latencyMs": 2404
+    },
+    {
+      "id": "dart-game-8-18",
+      "visitId": "visit-game-8-6",
+      "index": 2,
+      "segment": 16,
+      "ring": "S",
+      "score": 16,
+      "targetSegment": 8,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:31:54.186Z",
+      "latencyMs": 723
+    },
+    {
+      "id": "dart-game-8-19",
+      "visitId": "visit-game-8-7",
+      "index": 0,
+      "segment": 8,
+      "ring": "S",
+      "score": 8,
+      "targetSegment": 8,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:32:13.754Z",
+      "latencyMs": null
+    },
+    {
+      "id": "dart-game-8-20",
+      "visitId": "visit-game-8-7",
+      "index": 1,
+      "segment": 8,
+      "ring": "D",
+      "score": 16,
+      "targetSegment": 8,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:32:15.919Z",
+      "latencyMs": 2165
+    },
+    {
+      "id": "dart-game-8-21",
+      "visitId": "visit-game-8-7",
+      "index": 2,
+      "segment": 9,
+      "ring": "S",
+      "score": 9,
+      "targetSegment": 9,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:32:17.638Z",
+      "latencyMs": 1719
+    },
+    {
+      "id": "dart-game-8-22",
+      "visitId": "visit-game-8-8",
+      "index": 0,
+      "segment": 12,
+      "ring": "S",
+      "score": 12,
+      "targetSegment": 9,
+      "targetRing": "D",
+      "thrownAt": "2026-07-23T20:32:31.109Z",
+      "latencyMs": null
+    }
+  ],
+  "practiceGameDefinitions": [
+    {
+      "key": "around-the-clock",
+      "name": "Around the clock",
+      "blurb": "1 to 20, then 25, then bull, in order. Any ring counts",
+      "targetType": "sequence",
+      "rules": {
+        "targetType": "sequence",
+        "targets": [
+          {
+            "type": "segment",
+            "segment": 1,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 2,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 3,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 4,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 5,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 6,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 7,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 8,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 9,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 10,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 11,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 12,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 13,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 14,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 15,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 16,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 17,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 18,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 19,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 20,
+            "ring": null
+          },
+          {
+            "type": "segment",
+            "segment": 25,
+            "ring": "S"
+          },
+          {
+            "type": "segment",
+            "segment": 25,
+            "ring": "D"
+          }
+        ],
+        "requireExactRing": false
+      },
+      "scoringModel": "darts-to-complete",
+      "personalBestDirection": "lower-is-better"
+    },
+    {
+      "key": "doubles-round-the-board",
+      "name": "Doubles round the board",
+      "blurb": "D1 to D20 then bull, in order. Only the double counts",
+      "targetType": "sequence",
+      "rules": {
+        "targetType": "sequence",
+        "targets": [
+          {
+            "type": "segment",
+            "segment": 1,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 2,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 3,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 4,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 5,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 6,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 7,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 8,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 9,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 10,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 11,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 12,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 13,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 14,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 15,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 16,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 17,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 18,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 19,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 20,
+            "ring": "D"
+          },
+          {
+            "type": "segment",
+            "segment": 25,
+            "ring": "D"
+          }
+        ],
+        "requireExactRing": true
+      },
+      "scoringModel": "darts-to-complete",
+      "personalBestDirection": "lower-is-better"
+    },
+    {
+      "key": "bobs-27",
+      "name": "Bob's 27",
+      "blurb": "Doubles under pressure, with a running score. Below zero is out",
+      "targetType": "sequence",
+      "rules": {
+        "targetType": "rounds",
+        "rounds": 20,
+        "targetPerRound": "index"
+      },
+      "scoringModel": "points",
+      "personalBestDirection": "higher-is-better"
+    },
+    {
+      "key": "shanghai",
+      "name": "Shanghai",
+      "blurb": "Single, double and treble of the same number ends it",
+      "targetType": "score",
+      "rules": {
+        "targetType": "rounds",
+        "rounds": 20,
+        "targetPerRound": "index"
+      },
+      "scoringModel": "points",
+      "personalBestDirection": "higher-is-better"
+    },
+    {
+      "key": "halve-it",
+      "name": "Halve it",
+      "blurb": "Miss the round's target and your score halves",
+      "targetType": "score",
+      "rules": {
+        "targetType": "rounds",
+        "rounds": 7,
+        "targetPerRound": "fixed"
+      },
+      "scoringModel": "points",
+      "personalBestDirection": "higher-is-better"
+    },
+    {
+      "key": "checkout-ladder",
+      "name": "Checkout ladder",
+      "blurb": "Start at 41 and climb. Three straight failures ends it",
+      "targetType": "checkout",
+      "rules": {
+        "targetType": "checkout",
+        "start": 41,
+        "mode": "ladder",
+        "attempts": 3
+      },
+      "scoringModel": "points",
+      "personalBestDirection": "higher-is-better"
+    },
+    {
+      "key": "random-checkout",
+      "name": "Random checkout",
+      "blurb": "Twenty cold finishes between 41 and 170",
+      "targetType": "checkout",
+      "rules": {
+        "targetType": "checkout",
+        "start": 41,
+        "mode": "random",
+        "attempts": 20
+      },
+      "scoringModel": "hit-rate",
+      "personalBestDirection": "higher-is-better"
+    },
+    {
+      "key": "scoring-drill",
+      "name": "Scoring drill",
+      "blurb": "Twenty visits at treble 20. Logs the average",
+      "targetType": "score",
+      "rules": {
+        "targetType": "rounds",
+        "rounds": 20,
+        "targetPerRound": "fixed",
+        "fixedTarget": {
+          "type": "segment",
+          "segment": 20,
+          "ring": "T"
+        }
+      },
+      "scoringModel": "points",
+      "personalBestDirection": "higher-is-better"
+    }
+  ],
+  "results": [
+    {
+      "id": "result-game-1-player-tom",
+      "gameId": "game-1",
+      "playerId": "player-tom",
+      "metrics": {
+        "threeDartAverage": 60.12,
+        "firstNineAverage": 57,
+        "dartsThrown": 25,
+        "checkoutPct": 50,
+        "doublesAttempted": 2,
+        "doublesHit": 1,
+        "bestVisit": 85,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 0,
+        "gameScore": null
+      },
+      "computedAt": "2026-07-02T18:34:50.361Z"
+    },
+    {
+      "id": "result-game-2-player-tom",
+      "gameId": "game-2",
+      "playerId": "player-tom",
+      "metrics": {
+        "threeDartAverage": 20.31,
+        "firstNineAverage": 7.67,
+        "dartsThrown": 39,
+        "checkoutPct": 17.95,
+        "doublesAttempted": 39,
+        "doublesHit": 7,
+        "bestVisit": 35,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 0,
+        "gameScore": -23
+      },
+      "computedAt": "2026-07-02T18:52:33.619Z"
+    },
+    {
+      "id": "result-game-3-player-tom",
+      "gameId": "game-3",
+      "playerId": "player-tom",
+      "metrics": {
+        "threeDartAverage": 65.35,
+        "firstNineAverage": 57,
+        "dartsThrown": 23,
+        "checkoutPct": 33.33,
+        "doublesAttempted": 3,
+        "doublesHit": 1,
+        "bestVisit": 100,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 1,
+        "gameScore": null
+      },
+      "computedAt": "2026-07-09T19:05:39.810Z"
+    },
+    {
+      "id": "result-game-4-player-tom",
+      "gameId": "game-4",
+      "playerId": "player-tom",
+      "metrics": {
+        "threeDartAverage": 31.65,
+        "firstNineAverage": 16.33,
+        "dartsThrown": 31,
+        "checkoutPct": 50,
+        "doublesAttempted": 2,
+        "doublesHit": 1,
+        "bestVisit": 50,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 0,
+        "gameScore": 31
+      },
+      "computedAt": "2026-07-09T19:25:51.113Z"
+    },
+    {
+      "id": "result-game-5-player-tom",
+      "gameId": "game-5",
+      "playerId": "player-tom",
+      "metrics": {
+        "threeDartAverage": 58.17,
+        "firstNineAverage": 48.67,
+        "dartsThrown": 18,
+        "checkoutPct": null,
+        "doublesAttempted": 0,
+        "doublesHit": 0,
+        "bestVisit": 100,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 1,
+        "gameScore": null
+      },
+      "computedAt": "2026-07-16T18:53:01.709Z"
+    },
+    {
+      "id": "result-game-5-bot-county",
+      "gameId": "game-5",
+      "playerId": "bot-county",
+      "metrics": {
+        "threeDartAverage": 88.41,
+        "firstNineAverage": 81.67,
+        "dartsThrown": 17,
+        "checkoutPct": 50,
+        "doublesAttempted": 2,
+        "doublesHit": 1,
+        "bestVisit": 125,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 2,
+        "gameScore": null
+      },
+      "computedAt": "2026-07-16T18:53:01.709Z"
+    },
+    {
+      "id": "result-game-6-player-tom",
+      "gameId": "game-6",
+      "playerId": "player-tom",
+      "metrics": {
+        "threeDartAverage": 26.26,
+        "firstNineAverage": 90,
+        "dartsThrown": 57,
+        "checkoutPct": 80,
+        "doublesAttempted": 10,
+        "doublesHit": 8,
+        "bestVisit": 133,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 2,
+        "gameScore": 7
+      },
+      "computedAt": "2026-07-16T19:17:24.374Z"
+    },
+    {
+      "id": "result-game-7-player-tom",
+      "gameId": "game-7",
+      "playerId": "player-tom",
+      "metrics": {
+        "threeDartAverage": 75.15,
+        "firstNineAverage": 63.33,
+        "dartsThrown": 20,
+        "checkoutPct": 100,
+        "doublesAttempted": 1,
+        "doublesHit": 1,
+        "bestVisit": 100,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 1,
+        "gameScore": null
+      },
+      "computedAt": "2026-07-23T20:09:37.057Z"
+    },
+    {
+      "id": "result-game-7-player-guest",
+      "gameId": "game-7",
+      "playerId": "player-guest",
+      "metrics": {
+        "threeDartAverage": 43,
+        "firstNineAverage": 42.33,
+        "dartsThrown": 18,
+        "checkoutPct": null,
+        "doublesAttempted": 0,
+        "doublesHit": 0,
+        "bestVisit": 60,
+        "count180": 0,
+        "count140plus": 0,
+        "count100plus": 0,
+        "gameScore": null
+      },
+      "computedAt": "2026-07-23T20:09:37.057Z"
+    }
+  ]
+}
