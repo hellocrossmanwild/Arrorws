@@ -1,6 +1,7 @@
 # Spec 0004 — Throw pad and live game screen
 
-**Status:** Ready for implementation
+**Status:** Implemented
+**Implemented:** 30 July 2026
 **Phase:** 1 (mock API)
 **Depends on:** Spec 0003, ADR 0004, PRD Sections 7.1 and 7.2
 
@@ -201,3 +202,10 @@ None. Spec 0001 covers everything.
 3. **Test the bust path early.** It is the path that breaks undo, and undo is the path that breaks trust.
 4. **Resist adding animation.** A dart lands in a slot, that is all. Movement on a screen someone glances at between throws is noise. Respect `prefers-reduced-motion` regardless.
 5. There is a working prototype of the pad, including the finish strip and the colour encoding, in the project's design notes. Its layout and interaction model are the intended starting point. It is not production code and should not be copied wholesale.
+
+## Implementation notes (30 July 2026)
+
+- `GET /api/games/:gameId` additionally returns `players` and `botProfiles` so the live screen needs one fetch; the contract is otherwise as specified.
+- A small ✕ quit control sits at the end of the player rail; leaving an unfinished game marks it abandoned.
+- In bot games, undo is disabled while the bot throws and when the human's current visit is empty, so a completed bot visit can never be disturbed (spec 0006 criterion). In solo and two-player games undo walks the full tail as specified.
+- API calls are serialised through a queue so server ordering always matches the optimistic local log.

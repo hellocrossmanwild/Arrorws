@@ -1,6 +1,7 @@
 # Spec 0003 — Scoring engine
 
-**Status:** Ready for implementation
+**Status:** Implemented
+**Implemented:** 30 July 2026
 **Phase:** 1 (mock API)
 **Depends on:** Spec 0001, Spec 0002, ADR 0003, PRD Section 4
 
@@ -181,3 +182,8 @@ None. Spec 0001 defines the shapes this spec consumes.
 3. **Do not optimise the fold.** It runs over roughly twenty items. Clarity wins.
 4. **The checkout preference order is in this spec for a reason.** It is not the shortest route, it is the route a darts player takes. Do not replace it with a generic shortest-path search.
 5. Real reference values to sanity check against: 501 in nine darts is T20 T20 T20, T20 T20 T20, T20 T19 D12 (or T17 T18 D18). A 60 finish is T20 then D0, which is illegal, so 60 must return 20 then D20.
+
+## Implementation notes (30 July 2026)
+
+- `findCheckout` uses iterative deepening (shortest route first) over the spec's preference orders; setup darts for a two-dart finish are chosen against each preferred finishing double in turn. This satisfies every pinned route (170 = T20 T20 BULL, 96 = T20 D18, 60 = 20 D20) and returns exactly the impossible set as null. One consequence: 41 returns 1 then D20 rather than 9 then D16 — deliberate, since D20 outranks D16 in the spec's finishing order.
+- The annotated replay (`lib/scoring/annotate.ts`) is shared by stats, the results cache and the history replay endpoint.

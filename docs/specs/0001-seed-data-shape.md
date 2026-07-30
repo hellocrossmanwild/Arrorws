@@ -1,6 +1,7 @@
 # Spec 0001 — Seed Data Shape
 
-**Status:** Ready for implementation
+**Status:** Implemented
+**Implemented:** 30 July 2026
 **Phase:** 1 (mock API)
 **Depends on:** PRD Section 4 (Data Model), ADR 0001 (Mock-first build), ADR 0003 (Dart event log)
 
@@ -208,3 +209,9 @@ The store is a singleton, initialised on first import by deep-cloning `seed.json
 3. **Write the dart logs by hand from a real leg, not randomly.** A leg that goes 180, 140, 100, 81 checkout is realistic. A leg of random numbers is not, and it will make every screen look wrong in a way that is hard to diagnose.
 4. **The seed is demo data and it will be looked at a lot.** Make Tom's averages plausible for a decent club player, somewhere in the high 50s to mid 60s, not 100.
 5. **Do not invent the bot sigma values or the practice game rule shapes.** Both are owned by later specs. Leaving them null and flagged is correct.
+
+## Implementation notes (30 July 2026)
+
+- The seed is generated deterministically by `scripts/generate-seed.ts` (`pnpm seed:generate`) and committed as `mocks/data/seed.json`. The dart logs are hand-authored in the script; ids, visit boundaries, timestamps, practice targets and the `results` rows are derived through the same pure engines the app uses, so the seed is legal by construction and the validation test recomputes `results` exactly.
+- Because specs 0001-0007 were implemented in one build, `botProfiles` ship with the calibrated sigma values from spec 0006 rather than the interim nulls, and `practiceGameDefinitions.rules` are populated per spec 0005.
+- Runtime-created store ids use a `-r` infix (`session-r1`) so they can never collide with seeded ids.

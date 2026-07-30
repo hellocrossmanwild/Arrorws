@@ -1,6 +1,7 @@
 # Spec 0007 — Stats, history and the doubles heatmap
 
-**Status:** Draft
+**Status:** Implemented
+**Implemented:** 30 July 2026
 **Phase:** 1 (mock API)
 **Depends on:** Spec 0003, Spec 0004, Spec 0005, Spec 0006, ADR 0003, PRD Sections 7.5 and 7.6
 
@@ -136,3 +137,9 @@ None. Everything here is derived. `results` remains a cache and remains non-auth
 2. **Board order, not numeric order.** This is the one thing that makes this heatmap different from a bar chart, and it is the first thing that will get "tidied up" by someone who does not play darts.
 3. **Recompute rather than trust the cache** wherever performance allows in Phase 1. The cache exists for Phase 2 query performance, not for correctness.
 4. This spec is `Draft` rather than `Ready for implementation` because two open questions in PRD Section 13 land here: whether bot legs and two player legs count toward Tom's own stats. The filters above assume yes-with-a-toggle. Confirm before building.
+
+## Implementation notes (30 July 2026)
+
+- The two PRD Section 13 questions are implemented as assumed: bot legs and two-player legs count toward Tom's stats, on by default, filterable off. The filters slice the game list before any dart log is read; per-session averages are recombined from totals, never averaged from averages.
+- Headline, trend and counts are computed from x01 logs; the heatmap uses exact recorded targets, plus inferred x01 attempts when the source filter is "Everything" (the screen states which is active and whether attempts are inferred).
+- The heatmap colour ramp is a single-hue brass overlay whose opacity encodes rate; sub-threshold cells (< 5 attempts) show "not enough data".
