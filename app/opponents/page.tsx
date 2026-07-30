@@ -67,7 +67,7 @@ export default function OpponentsPage() {
         <select
           value={legsToWin}
           onChange={(e) => setLegsToWin(Number(e.target.value))}
-          className="border border-wire/60 bg-bed px-2 py-1 text-chalk"
+          className="border border-wire/60 bg-bed px-2 py-1.5 text-base text-chalk"
         >
           {[1, 2, 3, 5].map((n) => (
             <option key={n} value={n}>

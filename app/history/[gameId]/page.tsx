@@ -52,20 +52,20 @@ export default function GameReplayPage({
         {visits.map((v, i) => (
           <div
             key={i}
-            className={cn("flex items-center gap-3 bg-bed px-3 py-2", v.bust && "opacity-80")}
+            className={cn("flex items-center gap-2 bg-bed px-2 py-2", v.bust && "opacity-80")}
             data-testid={`replay-visit-${i}`}
           >
             {players.length > 1 && (
-              <span className="w-14 flex-none truncate text-xs text-tung">
+              <span className="w-11 flex-none truncate text-[11px] text-tung">
                 {nameOf(v.visit.playerId)}
               </span>
             )}
-            <div className="flex flex-1 gap-1.5">
+            <div className="flex flex-1 gap-1">
               {v.darts.map((d) => (
                 <span
                   key={d.id}
                   className={cn(
-                    "grid h-8 w-12 place-items-center font-mono text-xs",
+                    "grid h-7 w-10 flex-none place-items-center font-mono text-[11px]",
                     d.ring === "D" ? "bg-dbl" : d.ring === "T" ? "bg-trb" : "bg-slate2"
                   )}
                 >
@@ -73,13 +73,13 @@ export default function GameReplayPage({
                 </span>
               ))}
             </div>
-            <span className="w-10 flex-none text-right font-mono text-xs text-tung">
+            <span className="w-9 flex-none text-right font-mono text-[11px] text-tung">
               {v.bust ? "BUST" : v.visitScore}
             </span>
             {!isPractice && (
               <span
                 className={cn(
-                  "w-12 flex-none text-right font-mono text-sm",
+                  "w-10 flex-none text-right font-mono text-sm tabular-nums",
                   v.checkout ? "text-wire" : "text-chalk"
                 )}
               >

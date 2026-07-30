@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { usePathname } from "next/navigation"
 import { MOCK_USERS, useMockAuthStore } from "@/lib/auth/mock-auth"
 import { cn } from "@/lib/utils/cn"
 
@@ -13,8 +14,11 @@ const STATES = [
 /** Dev-only floating toggle to switch auth states. Not rendered in production. */
 export function MockAuthToggle() {
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
   const { state, setState } = useMockAuthStore()
   if (process.env.NODE_ENV !== "development") return null
+  // Never obstruct the pad.
+  if (pathname?.startsWith("/play/")) return null
 
   const current =
     state.type === "anonymous" ? "anonymous" : state.user.role === "admin" ? "admin" : "player"

@@ -166,7 +166,7 @@ export default function StatsPage() {
         <select
           value={filters.range}
           onChange={(e) => setFilters((f) => ({ ...f, range: e.target.value as DateRange }))}
-          className="border border-wire/60 bg-bed px-2 py-1 text-chalk"
+          className="border border-wire/60 bg-bed px-2 py-1.5 text-base text-chalk"
           data-testid="filter-range"
         >
           <option value="all">All time</option>
