@@ -13,7 +13,9 @@ export default defineConfig({
       : undefined,
   },
   webServer: {
-    command: "pnpm dev",
+    // E2e runs against the mock backend so the suite is hermetic and never
+    // touches a real database (ADR 0005).
+    command: "NEXT_PUBLIC_ENABLE_MOCKS=1 pnpm dev",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

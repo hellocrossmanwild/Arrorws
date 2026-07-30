@@ -21,7 +21,7 @@ Two things about this product that are easy to get wrong and are worth holding i
 
 This is the most important thing to understand about how this project is structured.
 
-### Phase 1 (current): Frontend with mock API
+### Phase 1 (done): Frontend with mock API
 
 - The entire frontend is being built first, against a mock API
 - Mock API is implemented with **MSW (Mock Service Worker)** intercepting `fetch()` calls in the browser
@@ -30,7 +30,9 @@ This is the most important thing to understand about how this project is structu
 - There is **no real backend**: no Postgres, no Clerk
 - Auth is mocked via a dev-only toggle (`/lib/auth/mock-auth.ts`) that lets us switch between anonymous, player and admin states
 
-### Phase 2: Real backend integration
+### Phase 2 (current — backend landed, Clerk pending): Real backend integration
+
+> Status 30 July 2026: real API routes, Neon and Drizzle are live (see ADR 0005). `/mocks` was retained as an opt-in fixture for hermetic tests and zero-setup dev (`NEXT_PUBLIC_ENABLE_MOCKS=1`) rather than deleted. Clerk is the outstanding item — it needs keys from Tom's Clerk account; `lib/auth` is still the only auth import site.
 
 - MSW handlers are deleted
 - Real Next.js API routes are added under `/app/api`
@@ -240,6 +242,7 @@ The existing ADRs are:
 - **ADR 0002** — Stack selection
 - **ADR 0003** — The dart event log is the single source of truth
 - **ADR 0004** — Modifier pad as the only input method
+- **ADR 0005** — Phase 2 backend: Neon + Drizzle behind the unchanged contract, mocks retained as a test fixture
 
 When making any non-trivial decision (choice of library, architecture pattern, data model change), create an ADR. They live forever and explain the "why" behind the code. Use `docs/decisions/TEMPLATE.md` as the starting point.
 
@@ -375,7 +378,7 @@ When starting a new session on this project:
 3. Read `docs/PERFORMANCE.md` before any UI work
 4. Check `docs/specs/` for the spec you're working on, and respect the build order above
 5. Check `docs/decisions/` for any recent ADRs that affect your work
-6. Confirm the current phase (1, 2, or 3). Currently **Phase 1**
+6. Confirm the current phase (1, 2, or 3). Currently **Phase 2** (backend landed, Clerk pending — see ADR 0005)
 7. Confirm what's in scope vs. out of scope before writing any code
 
 ---

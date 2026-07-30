@@ -80,12 +80,18 @@ export function finaliseGame(game: Game, darts: Dart[], state: GameState): void 
   }
 }
 
-/** Reuse the player's open session, or open a new one. */
+/** Reuse an open session under three hours old; close stale ones. Matches lib/server/service.ts. */
+const SESSION_STALE_MS = 3 * 60 * 60 * 1000
+
 export function ensureSession(playerId: string): string {
   const open = store.sessions
     .list({ playerId } as { playerId: string })
-    .find((s) => s.endedAt === null)
-  if (open) return open.id
+    .filter((s) => s.endedAt === null)
+  const now = Date.now()
+  for (const session of open) {
+    if (now - Date.parse(session.startedAt) < SESSION_STALE_MS) return session.id
+    store.sessions.update(session.id, { endedAt: new Date().toISOString() })
+  }
   return store.sessions.create({
     playerId,
     startedAt: new Date().toISOString(),

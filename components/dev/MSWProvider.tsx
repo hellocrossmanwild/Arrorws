@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react"
 
 /**
- * Starts the MSW worker in development and holds rendering until it is
- * intercepting, so the first data fetches cannot race the worker.
- * In production this renders children immediately (Phase 2 removes it
- * along with the rest of /mocks).
+ * Starts the MSW worker when mocks are enabled (NEXT_PUBLIC_ENABLE_MOCKS=1)
+ * and holds rendering until it is intercepting, so the first data fetches
+ * cannot race the worker. When mocks are off this renders children
+ * immediately and the app talks to the real API routes.
  */
 export function MSWProvider({ children }: { children: React.ReactNode }) {
-  const needsWorker = process.env.NODE_ENV === "development"
+  const needsWorker = process.env.NEXT_PUBLIC_ENABLE_MOCKS === "1"
   const [ready, setReady] = useState(!needsWorker)
 
   useEffect(() => {
