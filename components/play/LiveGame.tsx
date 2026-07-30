@@ -251,7 +251,11 @@ export function LiveGame({ initial }: { initial: GameResponse }) {
   const clearKey = state.darts.length + state.undoCount * 1000
 
   return (
-    <div className="fixed inset-0 z-30 flex flex-col bg-slate2 text-chalk">
+    <div className="fixed inset-0 z-30 flex flex-col bg-slate2 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] text-chalk">
+      {/* The throwing UI is portrait only (PRD 7.2). */}
+      <div className="absolute inset-0 z-50 hidden place-items-center bg-slate2 px-8 text-center [@media(orientation:landscape)_and_(max-height:500px)]:grid">
+        <p className="font-mono text-sm text-tung">Turn the phone back to portrait to keep throwing.</p>
+      </div>
       <div className="relative">
         <PlayerRail
           players={players}

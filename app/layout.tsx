@@ -10,12 +10,26 @@ export const metadata: Metadata = {
   title: "Arrows",
   description:
     "A per-dart darts scoring app for solo practice, with practice games, a simulated opponent, and stats that show which doubles you actually miss.",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "Arrows",
+    statusBarStyle: "black-translucent",
+  },
+  icons: {
+    icon: "/icon-512.png",
+    apple: "/apple-touch-icon.png",
+  },
 }
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // Pinch zoom is deliberately off: the throwing UI is a control surface
+  // used one-handed mid-visit, and accidental zoom is worse than no zoom.
   maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
   themeColor: "#15181C",
 }
 
