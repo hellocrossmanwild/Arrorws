@@ -24,7 +24,7 @@ export default function PracticePage() {
         Practice
       </h1>
       <div className="flex flex-col gap-px bg-wire/40">
-        {(data?.definitions ?? []).map((def) => {
+        {(data?.definitions ?? []).filter((def) => !def.trainingOnly).map((def) => {
           const best = data?.personalBests[def.key]
           return (
             <Link

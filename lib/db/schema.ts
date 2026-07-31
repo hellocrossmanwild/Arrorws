@@ -91,6 +91,18 @@ export const practiceGameDefinitions = pgTable("practice_game_definitions", {
   rules: jsonb("rules").notNull(),
   scoringModel: text("scoring_model").notNull(),
   personalBestDirection: text("personal_best_direction").notNull(),
+  trainingOnly: boolean("training_only").notNull().default(false),
+})
+
+export const trainingSessions = pgTable("training_sessions", {
+  id: text("id").primaryKey(),
+  programId: text("program_id").notNull(),
+  sessionIndex: integer("session_index").notNull(),
+  week: integer("week").notNull(),
+  kind: text("kind").notNull(),
+  startedAt: text("started_at").notNull(),
+  completedAt: text("completed_at"),
+  blockGameIds: jsonb("block_game_ids").notNull(),
 })
 
 export const results = pgTable("results", {

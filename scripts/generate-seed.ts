@@ -138,6 +138,36 @@ const practiceGameDefinitions: PracticeGameDefinition[] = [
     personalBestDirection: "higher-is-better",
   },
   {
+    key: "jdc-challenge",
+    name: "JDC Challenge",
+    blurb: "The graded assessment: Shanghai 10-15, every double, Shanghai 15-20",
+    targetType: "score",
+    rules: { targetType: "rounds", rounds: 33, targetPerRound: "index" },
+    scoringModel: "points",
+    personalBestDirection: "higher-is-better",
+    trainingOnly: true,
+  },
+  {
+    key: "target-switching",
+    name: "Target switching",
+    blurb: "Warm-up rounds cycling 20, 19, 18",
+    targetType: "score",
+    rules: { targetType: "rounds", rounds: 6, targetPerRound: "index" },
+    scoringModel: "points",
+    personalBestDirection: "higher-is-better",
+    trainingOnly: true,
+  },
+  {
+    key: "pressure-doubles",
+    name: "Pressure doubles",
+    blurb: "Two clean hits on each finishing double before you can stop",
+    targetType: "sequence",
+    rules: { targetType: "rounds", rounds: 4, targetPerRound: "index" },
+    scoringModel: "darts-to-complete",
+    personalBestDirection: "lower-is-better",
+    trainingOnly: true,
+  },
+  {
     key: "scoring-drill",
     name: "Scoring drill",
     blurb: "Twenty visits at treble 20. Logs the average",
@@ -579,6 +609,7 @@ const seed: SeedData = {
   darts,
   practiceGameDefinitions,
   results,
+  trainingSessions: [],
 }
 
 const out = join(__dirname, "..", "mocks", "data", "seed.json")

@@ -80,6 +80,17 @@ CREATE TABLE IF NOT EXISTS practice_game_definitions (
   personal_best_direction text NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS training_sessions (
+  id text PRIMARY KEY,
+  program_id text NOT NULL,
+  session_index integer NOT NULL,
+  week integer NOT NULL,
+  kind text NOT NULL,
+  started_at text NOT NULL,
+  completed_at text,
+  block_game_ids jsonb NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS results (
   id text PRIMARY KEY,
   game_id text NOT NULL,
@@ -95,3 +106,5 @@ CREATE INDEX IF NOT EXISTS idx_darts_visit ON darts (visit_id);
 CREATE INDEX IF NOT EXISTS idx_darts_seq ON darts (seq);
 CREATE INDEX IF NOT EXISTS idx_sessions_player_open ON sessions (player_id, ended_at);
 CREATE INDEX IF NOT EXISTS idx_results_game ON results (game_id);
+
+ALTER TABLE practice_game_definitions ADD COLUMN IF NOT EXISTS training_only boolean NOT NULL DEFAULT false;

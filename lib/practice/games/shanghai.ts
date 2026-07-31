@@ -17,7 +17,7 @@ export const shanghai: PracticeEngine = {
   key: "shanghai",
 
   initial(config) {
-    const rounds = (config as PracticeConfig | null)?.rounds === 7 ? 7 : 20
+    const rounds = (config as PracticeConfig | null)?.rounds === 7 ? 7 : 20 // 7 or 20 only
     return withDerived({
       currentTarget: null,
       targetLabel: "",

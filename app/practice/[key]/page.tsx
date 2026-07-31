@@ -51,6 +51,21 @@ const RULES: Record<PracticeGameKey, string[]> = {
     "Nothing else counts.",
     "The score is your three-dart average.",
   ],
+  "jdc-challenge": [
+    "Shanghai 10 to 15, one dart at every double, Shanghai 15 to 20.",
+    "Shanghai a number and it scores 100.",
+    "Graded White to Black at 850.",
+  ],
+  "target-switching": [
+    "Six rounds of three darts.",
+    "The target cycles 20, 19, 18.",
+    "Any ring of the number scores its value.",
+  ],
+  "pressure-doubles": [
+    "D16, D20, D18, D10 in order.",
+    "Two clean hits on each before you may move on.",
+    "Fewest darts wins.",
+  ],
 }
 
 export default function PracticeGamePage({

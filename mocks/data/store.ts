@@ -8,6 +8,7 @@ import type {
   PracticeGameDefinition,
   SeedData,
   Session,
+  TrainingSession,
   Visit,
 } from "@/lib/types"
 import seedJson from "./seed.json"
@@ -30,6 +31,7 @@ export interface MockStore {
   darts: Collection<Dart>
   practiceGameDefinitions: Collection<PracticeGameDefinition & { id: string }>
   results: Collection<GameResult>
+  trainingSessions: Collection<TrainingSession>
 }
 
 let idCounter = 0
@@ -94,6 +96,7 @@ function hydrate(): MockStore {
       "definition"
     ),
     results: makeCollection(seed.results, "result"),
+    trainingSessions: makeCollection(seed.trainingSessions ?? [], "training", (a, b) => a.sessionIndex - b.sessionIndex),
   }
 }
 

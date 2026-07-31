@@ -49,8 +49,9 @@ describe("seed shape", () => {
     }
   })
 
-  test("all eight practice game definitions are present with rules", () => {
-    expect(data.practiceGameDefinitions).toHaveLength(8)
+  test("all eleven practice game definitions are present with rules, eight visible", () => {
+    expect(data.practiceGameDefinitions).toHaveLength(11)
+    expect(data.practiceGameDefinitions.filter((d) => !d.trainingOnly)).toHaveLength(8)
     for (const d of data.practiceGameDefinitions) {
       expect(Object.keys(d.rules).length).toBeGreaterThan(0)
       expect(["lower-is-better", "higher-is-better"]).toContain(d.personalBestDirection)

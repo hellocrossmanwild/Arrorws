@@ -9,6 +9,9 @@ export type PracticeGameKey =
   | "checkout-ladder"
   | "random-checkout"
   | "scoring-drill"
+  | "jdc-challenge"
+  | "target-switching"
+  | "pressure-doubles"
 
 export type GameMode = "x01" | PracticeGameKey
 
@@ -21,8 +24,10 @@ export interface X01Config {
 export interface PracticeConfig {
   rngSeed?: number
   doublesOnly?: boolean // around-the-clock hidden variant
-  rounds?: 7 | 20 // shanghai
+  rounds?: number // shanghai (7 | 20), target-switching (any)
   showFinish?: boolean // random-checkout
+  doubles?: number[] // pressure-doubles
+  hitsRequired?: number // pressure-doubles
 }
 
 export type GameConfig = X01Config | PracticeConfig
@@ -71,6 +76,8 @@ export interface PracticeGameDefinition {
   rules: PracticeRules | Record<string, never>
   scoringModel: "darts-to-complete" | "points" | "hit-rate"
   personalBestDirection: "lower-is-better" | "higher-is-better"
+  /** Training-block engines are hidden from the practice picker (ADR 0007). */
+  trainingOnly?: boolean
 }
 
 /** Machine-readable rule config per targetType. Defined in spec 0005. */
