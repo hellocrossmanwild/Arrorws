@@ -24,6 +24,13 @@ export type {
   Metrics,
 } from "./game-state"
 export type { User } from "./user"
+export type {
+  TrainingBlock,
+  TrainingSessionKind,
+  TrainingSessionTemplate,
+  TrainingProgram,
+  TrainingSession,
+} from "./training"
 
 /** The top-level shape of mocks/data/seed.json. Flat collections joined by id. */
 export interface SeedData {
@@ -36,4 +43,5 @@ export interface SeedData {
   darts: import("./dart").Dart[]
   practiceGameDefinitions: import("./game").PracticeGameDefinition[]
   results: import("./game").GameResult[]
+  trainingSessions: import("./training").TrainingSession[]
 }

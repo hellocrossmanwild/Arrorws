@@ -67,6 +67,11 @@ There is no subscriber role and no lapsed role, because there is nothing to subs
 - Session history and a trend line of average over time
 - Per-double heatmap showing hit rate on every double from D1 to D20 plus bull
 
+**Training** *(added 31 July 2026, ADR 0007 — reverses the original exclusion below)*
+- One built-in four-week Foundation programme: queue-model sessions composed of warm-up, main and finisher blocks built from the practice engines
+- Weekly target and weekly streak; fortnightly JDC Challenge assessment with White-to-Black grading
+- One bot match-sim session per week
+
 **Platform**
 - Mobile-first responsive web app, portrait only in the throwing UI
 - Screen wake lock while a game is live
@@ -83,7 +88,7 @@ There is no subscriber role and no lapsed role, because there is nothing to subs
 - Cricket, Killer and other multiplayer pub games. Two player is 501 only in Phase 1
 - Voice input
 - Any paid tier, billing, or Stripe integration
-- Coaching content, drill programmes, or anything that tells the user what to practise next
+- Coaching content or technique advice. ~~Drill programmes~~ — reversed by ADR 0007: the training programme is now in scope. Adaptive "what to practise next" suggestions remain out until the backlog item lands
 
 ---
 
@@ -222,6 +227,8 @@ A derived cache, written when a game ends. Never the source of truth. Must be re
 | `/login` | Login |
 | `/signup` | Create account |
 | `/admin` | Admin dashboard |
+| `/training` | Training programme overview, streak, next session |
+| `/training/run/[id]` | Session runner: block-by-block progress |
 
 ---
 
@@ -244,7 +251,7 @@ See ADR 0004. Both a frequency-first "board pad" and a "modifier pad" with stick
 ## 7. Pages and Screens
 
 ### 7.1 Home (`/`)
-- Four entry points, thumb sized, nothing else: **501 solo**, **501 vs bot**, **Two player**, **Practice**
+- Five entry points, thumb sized, nothing else: **Training**, **501 solo**, **501 vs bot**, **Two player**, **Practice** (was four; ADR 0007)
 - Below them, one line of context: last session average and date
 - No marketing, no onboarding carousel. This screen exists to get out of the way
 

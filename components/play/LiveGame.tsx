@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "r
 import { useRouter } from "next/navigation"
 import type { Dart, PracticeConfig, PracticeGameKey, PracticeState, Segment } from "@/lib/types"
 import { getPracticeGames } from "@/lib/api/practice"
+import { recordTrainingBlock } from "@/lib/api/training"
 import type { GameResponse } from "@/lib/api/games"
 import { abandonGame, startNextLeg, throwDart, undoDart } from "@/lib/api/games"
 import { deriveGameState, findCheckout, labelOf, scoreOf } from "@/lib/scoring"
@@ -62,7 +63,18 @@ function reducer(state: LiveState, action: Action): LiveState {
 
 let tempCounter = 0
 
-export function LiveGame({ initial }: { initial: GameResponse }) {
+export interface TrainingReturn {
+  sessionId: string
+  blockIndex: number
+}
+
+export function LiveGame({
+  initial,
+  trainingReturn,
+}: {
+  initial: GameResponse
+  trainingReturn?: TrainingReturn
+}) {
   const router = useRouter()
   const { game, players } = initial
   const isPractice = isPracticeKey(game.mode)
@@ -219,9 +231,22 @@ export function LiveGame({ initial }: { initial: GameResponse }) {
     enqueue(() => startNextLeg(game.id).catch(() => {}))
   }
 
+  const finishTo = trainingReturn ? `/training/run/${trainingReturn.sessionId}` : null
+
+  const finishSession = useCallback(() => {
+    if (trainingReturn) {
+      // Record which game fulfilled the block, then return to the runner.
+      recordTrainingBlock(trainingReturn.sessionId, trainingReturn.blockIndex, game.id)
+        .catch(() => toast("Could not record the block"))
+        .finally(() => router.push(finishTo!))
+      return
+    }
+    router.push(isPractice ? "/practice" : "/")
+  }, [trainingReturn, game.id, router, finishTo, isPractice])
+
   const quit = () => {
     if (!complete) void abandonGame(game.id).catch(() => {})
-    router.push("/")
+    router.push(finishTo ?? "/")
   }
 
   const winnerState = gameState.winnerPlayerId
@@ -351,8 +376,8 @@ export function LiveGame({ initial }: { initial: GameResponse }) {
             { label: "3-dart avg", value: winnerState.threeDartAverage.toFixed(2) },
             { label: "Checkout", value: checkoutLabel || "—" },
           ]}
-          actionLabel="Done"
-          onAction={() => router.push("/")}
+          actionLabel={trainingReturn ? "Back to session" : "Done"}
+          onAction={finishSession}
         />
       )}
 
@@ -361,7 +386,8 @@ export function LiveGame({ initial }: { initial: GameResponse }) {
           gameId={game.id}
           practiceKey={practiceKey!}
           practiceState={practiceState}
-          onDone={() => router.push("/practice")}
+          doneLabel={trainingReturn ? "Back to session" : "Done"}
+          onDone={finishSession}
         />
       )}
     </div>
@@ -377,11 +403,13 @@ function PracticeCompleteSheet({
   gameId,
   practiceKey,
   practiceState,
+  doneLabel,
   onDone,
 }: {
   gameId: string
   practiceKey: PracticeGameKey
   practiceState: PracticeState
+  doneLabel: string
   onDone: () => void
 }) {
   const [isBest, setIsBest] = useState(false)
@@ -419,7 +447,7 @@ function PracticeCompleteSheet({
     <LegCompleteSheet
       title={practiceState.eliminated ? "Eliminated" : "Drill complete"}
       figures={figures}
-      actionLabel="Done"
+      actionLabel={doneLabel}
       onAction={onDone}
       note={isBest ? "New personal best." : undefined}
     />

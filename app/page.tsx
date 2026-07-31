@@ -51,8 +51,14 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center gap-3 px-4 py-8">
+      <Link
+        href="/training"
+        className="flex min-h-[72px] items-center bg-chalk px-6 font-display text-2xl text-slate2"
+      >
+        Training
+      </Link>
       <button
-        className="min-h-[72px] bg-chalk px-6 text-left font-display text-2xl text-slate2"
+        className="min-h-[72px] px-6 text-left font-display text-2xl shadow-[inset_0_0_0_1px_theme(colors.wire)]"
         onClick={() => start([playerId])}
       >
         501 solo

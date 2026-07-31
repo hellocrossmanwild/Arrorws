@@ -1,12 +1,16 @@
 "use client"
 
 import { use, useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { getGame, type GameResponse } from "@/lib/api/games"
 import { LiveGame } from "@/components/play/LiveGame"
 
 export default function PlayPage({ params }: { params: Promise<{ gameId: string }> }) {
   const { gameId } = use(params)
+  const searchParams = useSearchParams()
+  const trainingSessionId = searchParams.get("trainingSession")
+  const trainingBlock = searchParams.get("block")
   const [data, setData] = useState<GameResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -38,5 +42,9 @@ export default function PlayPage({ params }: { params: Promise<{ gameId: string 
     // Same geometry as the loaded screen: nothing shifts when data lands.
     return <div className="fixed inset-0 z-30 bg-slate2" data-testid="play-loading" />
   }
-  return <LiveGame initial={data} />
+  const trainingReturn =
+    trainingSessionId !== null && trainingBlock !== null
+      ? { sessionId: trainingSessionId, blockIndex: Number(trainingBlock) }
+      : undefined
+  return <LiveGame initial={data} trainingReturn={trainingReturn} />
 }

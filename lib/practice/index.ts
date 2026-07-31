@@ -9,9 +9,13 @@ import { halveIt } from "./games/halve-it"
 import { checkoutLadder } from "./games/checkout-ladder"
 import { randomCheckout } from "./games/random-checkout"
 import { scoringDrill } from "./games/scoring-drill"
+import { jdcChallenge } from "./games/jdc-challenge"
+import { targetSwitching } from "./games/target-switching"
+import { pressureDoubles } from "./games/pressure-doubles"
 
 export type { PracticeEngine, Rng } from "./types"
 export { matchesTarget, labelForTarget, dartTargetFor } from "./types"
+export { gradeForJdcScore, JDC_GRADES } from "./games/jdc-challenge"
 
 const ENGINES: Record<PracticeGameKey, PracticeEngine> = {
   "around-the-clock": aroundTheClock,
@@ -22,6 +26,9 @@ const ENGINES: Record<PracticeGameKey, PracticeEngine> = {
   "checkout-ladder": checkoutLadder,
   "random-checkout": randomCheckout,
   "scoring-drill": scoringDrill,
+  "jdc-challenge": jdcChallenge,
+  "target-switching": targetSwitching,
+  "pressure-doubles": pressureDoubles,
 }
 
 export function getEngine(key: PracticeGameKey): PracticeEngine {
