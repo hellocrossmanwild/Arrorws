@@ -4,20 +4,20 @@ import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "r
 import { useRouter } from "next/navigation"
 import type { Dart, PracticeConfig, PracticeGameKey, PracticeState, Segment } from "@/lib/types"
 import { getPracticeGames } from "@/lib/api/practice"
-import { recordTrainingBlock } from "@/lib/api/training"
+import { getTrainingSession, recordTrainingBlock } from "@/lib/api/training"
 import type { GameResponse } from "@/lib/api/games"
 import { abandonGame, startNextLeg, throwDart, undoDart } from "@/lib/api/games"
 import { deriveGameState, findCheckout, labelOf, scoreOf } from "@/lib/scoring"
-import { dartTargetFor, derivePracticeState, isPracticeKey } from "@/lib/practice"
+import { dartTargetFor, derivePracticeState, hudFor, isPracticeKey } from "@/lib/practice"
+import { GAME_GUIDES } from "@/lib/content/guides"
 import { chooseTarget, sigmaFor, simulateThrow } from "@/lib/bot"
 import { toast } from "@/components/ui/toaster"
 import { PlayerRail } from "./PlayerRail"
+import { PracticeBand } from "./PracticeBand"
 import { ScoreDisplay } from "./ScoreDisplay"
 import { FinishStrip } from "./FinishStrip"
 import { ThrowPad } from "./ThrowPad"
 import { LegCompleteSheet } from "./LegCompleteSheet"
-import { DartSlots } from "./DartSlots"
-import { UndoButton } from "./UndoButton"
 import { useWakeLock } from "./use-wake-lock"
 import { HelpSheet } from "@/components/help/HelpSheet"
 
@@ -88,6 +88,39 @@ export function LiveGame({
     undoCount: 0,
   })
   const [showHelp, setShowHelp] = useState(false)
+  const [personalBest, setPersonalBest] = useState<number | null>(null)
+  const [trainingLabel, setTrainingLabel] = useState<string | null>(null)
+
+  // The PB chip (spec 0010): fetched once, absent until it resolves.
+  useEffect(() => {
+    if (!practiceKey) return
+    let cancelled = false
+    getPracticeGames()
+      .then(({ personalBests }) => {
+        if (!cancelled) setPersonalBest(personalBests[practiceKey]?.score ?? null)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [practiceKey])
+
+  // Training context in the header (spec 0010): which block of the session.
+  useEffect(() => {
+    if (!trainingReturn) return
+    let cancelled = false
+    getTrainingSession(trainingReturn.sessionId)
+      .then(({ template }) => {
+        if (!cancelled)
+          setTrainingLabel(
+            `Training · block ${trainingReturn.blockIndex + 1} of ${template.blocks.length}`
+          )
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [trainingReturn])
 
   const deriveConfig = useMemo(
     () => ({
@@ -106,6 +139,13 @@ export function LiveGame({
     () =>
       practiceKey ? derivePracticeState(state.darts, practiceKey, practiceConfig) : null,
     [state.darts, practiceKey, practiceConfig]
+  )
+  const practiceHud = useMemo(
+    () =>
+      practiceKey && practiceState
+        ? hudFor(practiceKey, practiceState, { darts: state.darts, personalBest })
+        : null,
+    [practiceKey, practiceState, state.darts, personalBest]
   )
 
   const complete = practiceState ? practiceState.complete : gameState.gameComplete
@@ -284,12 +324,27 @@ export function LiveGame({
         <p className="font-mono text-sm text-tung">Turn the phone back to portrait to keep throwing.</p>
       </div>
       <div className="relative">
-        <PlayerRail
-          players={players}
-          states={gameState.players}
-          currentPlayerId={gameState.currentPlayerId}
-          showLegs={!isPractice && deriveConfig.legsToWin > 1}
-        />
+        {isPractice ? (
+          /* Match figures mean nothing mid-drill: the header names the drill instead. */
+          <header
+            className="flex flex-none items-baseline gap-3 bg-bed px-3 py-2 pr-20"
+            data-testid="practice-header"
+          >
+            <span className="truncate text-sm font-semibold">
+              {GAME_GUIDES[game.mode].title}
+            </span>
+            {trainingLabel && (
+              <span className="truncate font-mono text-[11px] text-tung">{trainingLabel}</span>
+            )}
+          </header>
+        ) : (
+          <PlayerRail
+            players={players}
+            states={gameState.players}
+            currentPlayerId={gameState.currentPlayerId}
+            showLegs={deriveConfig.legsToWin > 1}
+          />
+        )}
         <button
           className="absolute right-0 top-0 h-full px-3 font-mono text-xs text-tung"
           onClick={quit}
@@ -308,41 +363,17 @@ export function LiveGame({
         </button>
       </div>
 
-      {isPractice && practiceState ? (
-        <section className="flex-none px-3 pb-2 pt-1">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-wire">
-                {practiceState.progressLabel}
-              </p>
-              <div className="font-display text-[64px] leading-[0.95] tracking-tight" data-testid="practice-target">
-                {practiceState.targetLabel || "Done"}
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-tung">Score</p>
-              <div className="font-display text-3xl tabular-nums" data-testid="practice-score">
-                {game.mode === "scoring-drill" && practiceState.dartsThrown > 0
-                  ? ((practiceState.score / practiceState.dartsThrown) * 3).toFixed(1)
-                  : practiceState.score}
-              </div>
-              {practiceState.attemptRemaining !== undefined && (
-                <p className="font-mono text-xs text-tung" data-testid="attempt-remaining">
-                  {practiceState.attemptRemaining} left
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="mt-2">
-            <DartSlots darts={state.darts.slice(practiceVisitStart(state.darts.length))} />
-          </div>
-          <div className="mt-1.5 flex h-6 items-center justify-between">
-            <span className="font-mono text-xs text-tung">
-              {practiceRoute ? `Finish · ${practiceRoute.map(labelOf).join("  ")}` : ""}
-            </span>
-            <UndoButton onUndo={handleUndo} disabled={undoDisabled} />
-          </div>
-        </section>
+      {isPractice && practiceState && practiceHud ? (
+        <PracticeBand
+          hud={practiceHud}
+          targetLabel={practiceState.targetLabel}
+          visitDarts={state.darts.slice(practiceVisitStart(state.darts.length))}
+          finishLabel={
+            practiceRoute ? `Finish · ${practiceRoute.map(labelOf).join("  ")}` : ""
+          }
+          onUndo={handleUndo}
+          undoDisabled={undoDisabled}
+        />
       ) : (
         <ScoreDisplay
           score={me.score}
