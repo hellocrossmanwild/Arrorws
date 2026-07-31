@@ -1,6 +1,7 @@
 # Spec 0006 — Bot opponent
 
-**Status:** Ready for implementation
+**Status:** Implemented
+**Implemented:** 30 July 2026
 **Phase:** 1 (mock API)
 **Depends on:** Spec 0003, Spec 0004, PRD Section 4 (botProfiles)
 
@@ -165,3 +166,9 @@ None beyond populating `botProfiles.scoringSigmaMm` and `doubleSigmaMm` in the s
 2. **The bull is a double.** For checkout purposes, and for the geometry, and in the strategy.
 3. **Do not hand-tune the sigmas.** Run the calibration script. Hand-tuned values look right for one profile and drift for the rest.
 4. **Keep `/lib/bot` free of any rules knowledge.** It aims, it throws, it returns darts. Whether a dart busts is `/lib/scoring`'s business.
+
+## Implementation notes (30 July 2026)
+
+- Calibrated values live in `lib/bot/calibration.ts` and the seed. Measured over 10,000 legs: pub 45.04 avg / 10.2% checkout, county 74.70 / 26.5%, tour card 95.20 / 39.8%, elite 104.89 / 46.3% — every average within 0.5 and every checkout band met.
+- Model deviation, accepted: the elite profile's 180 rate measures ~1 visit in 11.5, above the spec's guessed 1-in-15-to-25 region. The pure Gaussian model cannot sustain a 105 average with fewer trebles; the average and checkout criteria are the binding ones.
+- The bot is orchestrated client-side by `LiveGame`: each dart is chosen with `chooseTarget`, thrown with `simulateThrow`, and recorded through the same `POST /api/games/:id/darts` path as a human dart, one at a time with a 1.2-2.5s pace and a longer pause before a double.

@@ -1,6 +1,7 @@
 # Spec 0002 — Foundation
 
-**Status:** Draft
+**Status:** Implemented
+**Implemented:** 30 July 2026
 **Phase:** 1 (mock API)
 **Depends on:** Spec 0001 (Seed Data Shape), ADR 0001 (Mock-first build), ADR 0002 (Stack selection)
 
@@ -317,3 +318,10 @@ test("homepage loads", async ({ page }) => {
 4. The mock auth toggle should be tested manually by switching between users and confirming `useUser()` returns the right thing
 5. The smoke test is the only test in this spec — we're not building features yet, just the foundation
 6. If anything in this spec conflicts with CLAUDE.md or any ADR, the ADR/CLAUDE.md wins. Flag the conflict and ask for clarification.
+
+## Implementation notes (30 July 2026)
+
+- `components/ui` holds small hand-written components in the shadcn style (button, toaster) rather than CLI-generated shadcn output; the CLI adds nothing needed in Phase 1 and its generator needs network access at scaffold time. Swapping in real shadcn components later is additive.
+- Zustand is used only for the mock-auth toggle and the toast store, per the note in this spec.
+- `MSWProvider` holds rendering until the worker is intercepting, so first-paint fetches cannot race it (this also makes Playwright stable).
+- Playwright accepts `PLAYWRIGHT_CHROMIUM_PATH` for environments that pre-install a system Chromium.

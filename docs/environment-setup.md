@@ -4,7 +4,9 @@ This is the single reference for all environment variables, secrets, and externa
 
 *Phase 1 projects don't need most of this — MSW + seed.json cover everything locally. This document gets real once Phase 2 begins and real services are wired in.*
 
-> ⚠️ **Placeholders.** The GitHub repo, the Vercel project and the domain do not exist yet. Every `<REPO_URL>` and `<DOMAIN — not decided yet>` below must be filled in before Phase 2 starts. See PRD Section 13.
+> **Filled in 30 July 2026.** Repo: `hellocrossmanwild/Arrorws`. Vercel project: `arrorws` (git-linked, team `hellocrossman-2942s-projects`). Neon project: `arrows` (`lucky-meadow-02798294`, org "Thomas", branch `main`, database `neondb`). Domain: still undecided — the app lives on the Vercel-assigned `*.vercel.app` URL for now (PRD Section 13).
+>
+> **Required Vercel env var:** `DATABASE_URL` — the pooled Neon connection string for the `arrows` project (Neon console → Connect → pooled). Without it the API routes return 500; the frontend and mock mode still work.
 >
 > **No billing.** Arrows is free. There is no Stripe account and no billing environment variable in any environment. See ADR 0002 and PRD Section 8.
 

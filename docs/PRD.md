@@ -323,15 +323,15 @@ If a paid tier is ever added it needs a new ADR and a PRD revision. Do not build
 | Hosting | Vercel | Hobby tier |
 | Database (Phase 2) | Neon Postgres | Serverless, free tier, branches per environment |
 | ORM (Phase 2) | Drizzle | Type-safe, SQL-first |
-| Auth (Phase 2) | Clerk | Free up to 10k MAU |
+| Auth | None | Dropped — single-user app behind Vercel Deployment Protection. See ADR 0006 |
 | Billing | None | Removed. The product is free. See Section 8 |
 | UI | Tailwind + shadcn/ui | Components copied into repo |
 | Mock API (Phase 1) | MSW | Browser-based fetch interception |
 | Forms | React Hook Form + Zod | Barely used. There are almost no forms in this product |
 | Testing | Vitest + Playwright | |
-| Email (Phase 2) | Resend | Account emails only |
+| Email | None | Dropped with accounts. See ADR 0006 |
 | Errors | Sentry | Free tier |
-| Analytics | PostHog | Free tier |
+| Analytics | None | Dropped. See ADR 0006 |
 
 **Stack override:** Stripe is removed from the standard stack. Everything else is standard. See ADR 0002.
 

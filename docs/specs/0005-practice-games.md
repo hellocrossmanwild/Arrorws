@@ -1,6 +1,7 @@
 # Spec 0005 — Practice games engine and screens
 
-**Status:** Ready for implementation
+**Status:** Implemented
+**Implemented:** 30 July 2026
 **Phase:** 1 (mock API)
 **Depends on:** Spec 0003, Spec 0004, PRD Section 7.3 and 7.4
 
@@ -195,3 +196,10 @@ Update spec 0001's seed to populate this for all eight games.
 2. **Bob's 27 has the nastiest edge cases.** Elimination mid-round, undo across an elimination, and the fact that a round's miss penalty only applies after all three darts. Test it hardest.
 3. **The rng must be injected.** `random-checkout` with a fixed seed must produce the same twenty scores every time, or its tests are worthless.
 4. **Do not add a ninth game because it seems easy.** Eight is the scope.
+
+## Implementation notes (30 July 2026)
+
+- For `score`-type targets with no checkout route mid-attempt (e.g. 39 left with one dart), the recorded aim falls back to the single that leaves an even number of 40 or less — a dart always carries a target.
+- Halve-it's 41 round records an aim hint (fat 20, then the single that completes 41); the bull round accepts the inner bull only.
+- The practice screen renders through `LiveGame` with the target band swapping in for the score band; the pad component is the same `ThrowPad` used by x01 with no fork.
+- "New personal best" is detected by re-fetching `/api/practice-games` after completion and comparing the best score with this run's final score.
