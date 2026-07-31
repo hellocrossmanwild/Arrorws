@@ -32,7 +32,7 @@ This is the most important thing to understand about how this project is structu
 
 ### Phase 2 (current — backend landed, Clerk pending): Real backend integration
 
-> Status 30 July 2026: real API routes, Neon and Drizzle are live (see ADR 0005). `/mocks` was retained as an opt-in fixture for hermetic tests and zero-setup dev (`NEXT_PUBLIC_ENABLE_MOCKS=1`) rather than deleted. Clerk is the outstanding item — it needs keys from Tom's Clerk account; `lib/auth` is still the only auth import site.
+> Status 30 July 2026: real API routes, Neon and Drizzle are live (see ADR 0005). `/mocks` was retained as an opt-in fixture for hermetic tests and zero-setup dev (`NEXT_PUBLIC_ENABLE_MOCKS=1`) rather than deleted. Clerk, Resend and PostHog are dropped — Arrows runs single-user (see ADR 0006); `lib/auth` remains the seam if that ever changes.
 
 - MSW handlers are deleted
 - Real Next.js API routes are added under `/app/api`
@@ -243,6 +243,7 @@ The existing ADRs are:
 - **ADR 0003** — The dart event log is the single source of truth
 - **ADR 0004** — Modifier pad as the only input method
 - **ADR 0005** — Phase 2 backend: Neon + Drizzle behind the unchanged contract, mocks retained as a test fixture
+- **ADR 0006** — Single-user posture: no Clerk, no Resend, no PostHog
 
 When making any non-trivial decision (choice of library, architecture pattern, data model change), create an ADR. They live forever and explain the "why" behind the code. Use `docs/decisions/TEMPLATE.md` as the starting point.
 
@@ -257,16 +258,16 @@ When making any non-trivial decision (choice of library, architecture pattern, d
 | Hosting | Vercel |
 | Database (Phase 2) | Neon Postgres |
 | ORM (Phase 2) | Drizzle |
-| Auth (Phase 2) | Clerk |
+| Auth | None — single-user, Vercel Deployment Protection (ADR 0006) |
 | Billing | None. The product is free |
 | UI components | shadcn/ui (copied into `/components/ui`) |
 | Styling | Tailwind CSS |
 | Mock API (Phase 1) | MSW (Mock Service Worker) |
 | Forms | React Hook Form + Zod |
 | Testing | Vitest (unit/integration), Playwright (e2e) |
-| Email (Phase 2) | Resend |
+| Email | None (ADR 0006) |
 | Errors | Sentry |
-| Analytics | PostHog |
+| Analytics | None — the stats screens are the analytics (ADR 0006) |
 
 **Stack override:** Stripe is removed. There is no billing in this product in any phase. Do not add it, do not scaffold for it. See ADR 0002 and PRD Section 8.
 
@@ -378,7 +379,7 @@ When starting a new session on this project:
 3. Read `docs/PERFORMANCE.md` before any UI work
 4. Check `docs/specs/` for the spec you're working on, and respect the build order above
 5. Check `docs/decisions/` for any recent ADRs that affect your work
-6. Confirm the current phase (1, 2, or 3). Currently **Phase 2** (backend landed, Clerk pending — see ADR 0005)
+6. Confirm the current phase (1, 2, or 3). Currently **Phase 2 complete** (see ADRs 0005 and 0006); Phase 3 is polish
 7. Confirm what's in scope vs. out of scope before writing any code
 
 ---
