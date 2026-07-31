@@ -6,6 +6,7 @@ import { getTraining, startTrainingSession, type TrainingSummary } from "@/lib/a
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils/cn"
+import { TRAINING_EXPLAINER } from "@/lib/content/guides"
 
 /** The training programme overview (spec 0008): queue model, no guilt mechanics. */
 export default function TrainingPage() {
@@ -113,6 +114,21 @@ export default function TrainingPage() {
           </Button>
         </section>
       )}
+
+      {/* ── how it works ─────────────────────────────────────────────── */}
+      <details className="mt-6 bg-bed" data-testid="training-explainer">
+        <summary className="min-h-[44px] cursor-pointer list-none px-4 py-3 font-mono text-[11px] uppercase tracking-[0.16em] text-wire">
+          How training works
+        </summary>
+        <ul className="space-y-2 px-4 pb-4">
+          {TRAINING_EXPLAINER.map((line) => (
+            <li key={line} className="flex gap-2 text-sm text-chalk">
+              <span className="text-wire">·</span>
+              {line}
+            </li>
+          ))}
+        </ul>
+      </details>
 
       {/* ── assessments ──────────────────────────────────────────────── */}
       <section className="mt-6">

@@ -19,6 +19,7 @@ import { LegCompleteSheet } from "./LegCompleteSheet"
 import { DartSlots } from "./DartSlots"
 import { UndoButton } from "./UndoButton"
 import { useWakeLock } from "./use-wake-lock"
+import { HelpSheet } from "@/components/help/HelpSheet"
 
 /**
  * The live game shell (spec 0004). The reducer holds darts, never a score:
@@ -86,6 +87,7 @@ export function LiveGame({
     acknowledgedLegIndex: -1,
     undoCount: 0,
   })
+  const [showHelp, setShowHelp] = useState(false)
 
   const deriveConfig = useMemo(
     () => ({
@@ -296,6 +298,14 @@ export function LiveGame({
         >
           ✕
         </button>
+        <button
+          className="absolute right-9 top-0 h-full px-3 font-mono text-sm text-wire"
+          onClick={() => setShowHelp(true)}
+          data-testid="help-button"
+          aria-label="How to play"
+        >
+          ?
+        </button>
       </div>
 
       {isPractice && practiceState ? (
@@ -379,6 +389,10 @@ export function LiveGame({
           actionLabel={trainingReturn ? "Back to session" : "Done"}
           onAction={finishSession}
         />
+      )}
+
+      {showHelp && (
+        <HelpSheet mode={game.mode} showPadPrimer onClose={() => setShowHelp(false)} />
       )}
 
       {isPractice && practiceState?.complete && (

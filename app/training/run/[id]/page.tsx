@@ -13,6 +13,8 @@ import { usePlayerId } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils/cn"
+import { HelpSheet } from "@/components/help/HelpSheet"
+import type { GameMode } from "@/lib/types"
 
 /** The session runner (spec 0008): block by block, through the ordinary pad. */
 export default function TrainingRunPage({
@@ -26,6 +28,7 @@ export default function TrainingRunPage({
   const [data, setData] = useState<TrainingSessionResponse | null>(null)
   const [error, setError] = useState(false)
   const [busy, setBusy] = useState(false)
+  const [helpMode, setHelpMode] = useState<GameMode | null>(null)
 
   const load = useCallback(() => {
     getTrainingSession(id)
@@ -104,8 +107,15 @@ export default function TrainingRunPage({
               data-testid={`block-${i}`}
             >
               <div>
-                <span className="block text-sm font-semibold">{block.name}</span>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-tung">
+                <button
+                  className="flex min-h-[44px] items-center gap-2 text-left"
+                  onClick={() => setHelpMode(block.mode)}
+                  data-testid={`block-help-${i}`}
+                >
+                  <span className="block text-sm font-semibold">{block.name}</span>
+                  <span className="font-mono text-xs text-wire">?</span>
+                </button>
+                <span className="block font-mono text-[10px] uppercase tracking-widest text-tung">
                   {done
                     ? session.blockGameIds[i] === "skipped"
                       ? "Skipped"
@@ -139,6 +149,8 @@ export default function TrainingRunPage({
       <Link href="/training" className="mt-4 inline-block min-h-[44px] text-sm text-wire">
         Back to training
       </Link>
+
+      {helpMode && <HelpSheet mode={helpMode} onClose={() => setHelpMode(null)} />}
     </div>
   )
 }
