@@ -7,6 +7,7 @@ import { getPracticeGames } from "@/lib/api/practice"
 import { usePlayerId } from "@/lib/auth"
 import type { PracticeConfig, PracticeGameDefinition, PracticeGameKey } from "@/lib/types"
 import { Button } from "@/components/ui/button"
+import { ENTRY_RULE, GAME_GUIDES } from "@/lib/content/guides"
 import { toast } from "@/components/ui/toaster"
 
 /** Rules in three lines maximum, the personal best, and a start button. */
@@ -109,6 +110,7 @@ export default function PracticeGamePage({
   }
 
   const rules = RULES[key as PracticeGameKey]
+  const guide = GAME_GUIDES[key as PracticeGameKey]
   if (!rules) {
     return <div className="p-6 text-tung">No such practice game.</div>
   }
@@ -140,6 +142,45 @@ export default function PracticeGamePage({
       <Button className="mt-6 w-full" onClick={start} data-testid="start-practice">
         Start
       </Button>
+
+      {/* The full guide (spec 0009). The three-line rules and Start stay above the fold. */}
+      {guide && (
+        <div className="mt-8 border-t border-wire/30 pt-5" data-testid="practice-guide">
+          <GuideSection label="How to throw it">
+            <ul className="space-y-2">
+              {guide.how.map((line) => (
+                <li key={line} className="flex gap-2 text-sm text-chalk">
+                  <span className="text-wire">·</span>
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </GuideSection>
+          <GuideSection label="Scoring">
+            <p className="text-sm text-chalk">{guide.scoring}</p>
+          </GuideSection>
+          <GuideSection label="What it trains">
+            <p className="text-sm text-chalk">{guide.trains}</p>
+          </GuideSection>
+          <GuideSection label="Tip">
+            <p className="text-sm text-chalk">{guide.tip}</p>
+          </GuideSection>
+          <p className="mt-4 border-l-2 border-wire pl-3 font-mono text-xs text-tung">
+            {ENTRY_RULE}
+          </p>
+        </div>
+      )}
     </div>
+  )
+}
+
+function GuideSection({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <section className="mt-4 first:mt-0">
+      <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-wire">
+        {label}
+      </p>
+      {children}
+    </section>
   )
 }
