@@ -168,6 +168,11 @@ export async function createGame(body: {
   if (!body.participantPlayerIds?.length) {
     throw new HttpError(400, "participantPlayerIds is required")
   }
+  // The same player cannot occupy two seats: legs would alternate between
+  // them and finaliseGame would write a duplicate results row each.
+  if (new Set(body.participantPlayerIds).size !== body.participantPlayerIds.length) {
+    throw new HttpError(400, "A player cannot appear twice in one game")
+  }
   const playerRows = await db
     .select()
     .from(tables.players)

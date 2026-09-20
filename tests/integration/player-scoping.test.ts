@@ -130,3 +130,57 @@ describe("the whole app scopes to the current player", () => {
     expect(statsAfter.headline).toEqual(statsBefore.headline)
   })
 })
+
+/**
+ * Regressions from the Codex review on PR #6. Each one is a way a player's
+ * darts could end up on someone else's record — the exact failure profiles
+ * exist to prevent.
+ */
+describe("a game can never carry the same player twice", () => {
+  test("duplicate participants are refused", async () => {
+    await expect(
+      createGame("x01", { startingScore: 501, legsToWin: 1 }, [
+        "player-guest",
+        "player-guest",
+      ])
+    ).rejects.toMatchObject({ status: 400 })
+  })
+
+  test("a bot and a human, or two different humans, are still fine", async () => {
+    await expect(
+      createGame("x01", { startingScore: 501, legsToWin: 1 }, ["player-tom", "player-guest"])
+    ).resolves.toBeTruthy()
+    await expect(
+      createGame("x01", { startingScore: 501, legsToWin: 1 }, ["player-tom", "bot-county"])
+    ).resolves.toBeTruthy()
+  })
+})
+
+describe("a training block belongs to the session's owner", () => {
+  test("the game is recorded against the owner, not whoever is selected", async () => {
+    // Alfie starts a session…
+    const { session, template } = await startTrainingSession("player-alfie")
+    expect(session.playerId).toBe("player-alfie")
+
+    // …and the block's game is created for Alfie. The runner reads the owner
+    // off the session, so switching profile in between cannot redirect it.
+    const { game } = await createGame(template.blocks[0].mode, template.blocks[0].config, [
+      session.playerId,
+    ])
+    await recordTrainingBlock(session.id, 0, game.id)
+
+    const [alfie, maisie] = await Promise.all([
+      getSessions(50, undefined, "player-alfie"),
+      getSessions(50, undefined, "player-maisie"),
+    ])
+    const alfieGames = alfie.sessions.flatMap((s) => s.games.map((g) => g.id))
+    const maisieGames = maisie.sessions.flatMap((s) => s.games.map((g) => g.id))
+    expect(alfieGames).toContain(game.id)
+    expect(maisieGames).not.toContain(game.id)
+
+    // And it advanced Alfie's queue, nobody else's.
+    const alfieTraining = await getTraining("player-alfie")
+    expect(alfieTraining.active?.blockGameIds[0]).toBe(game.id)
+    expect((await getTraining("player-maisie")).active).toBeNull()
+  })
+})

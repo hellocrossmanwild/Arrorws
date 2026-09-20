@@ -41,6 +41,9 @@ export const gameHandlers = [
     if (!body.participantPlayerIds?.length) {
       return error(400, "participantPlayerIds is required")
     }
+    if (new Set(body.participantPlayerIds).size !== body.participantPlayerIds.length) {
+      return error(400, "A player cannot appear twice in one game")
+    }
     for (const id of body.participantPlayerIds) {
       if (!store.players.get(id)) return error(400, `Unknown player ${id}`)
     }

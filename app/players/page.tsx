@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/toaster"
 import { ApiError } from "@/lib/api/client"
 import { cn } from "@/lib/utils/cn"
+import { safeNext } from "@/lib/utils/safe-next"
 import { humansOf, usePlayersStore } from "@/lib/players/store"
 
 /**
@@ -28,7 +29,7 @@ export default function PlayersPage() {
 function PlayerPicker() {
   const router = useRouter()
   const params = useSearchParams()
-  const next = params.get("next")
+  const next = safeNext(params.get("next"))
   const playerId = usePlayerId()
   const setPlayer = useSetPlayer()
 
@@ -49,7 +50,7 @@ function PlayerPicker() {
 
   function choose(id: string) {
     setPlayer(id)
-    router.push(next ?? "/")
+    router.push(next)
   }
 
   async function add() {
