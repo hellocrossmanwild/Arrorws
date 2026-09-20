@@ -17,9 +17,14 @@ pnpm dev          # http://localhost:3000
 pnpm test         # Vitest unit + integration (includes 10k-sequence property tests)
 pnpm test:unit    # unit only
 pnpm test:e2e     # Playwright (starts the dev server itself)
+pnpm typecheck    # tsc --noEmit
 pnpm build        # production build, strict TypeScript
 pnpm lint         # ESLint
 ```
+
+GitHub Actions runs all of the above on every pull request
+(`.github/workflows/ci.yml`), plus a check that `mocks/data/seed.json` still
+matches what `pnpm seed:generate` produces.
 
 ## Useful scripts
 

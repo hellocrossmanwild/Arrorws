@@ -303,9 +303,14 @@ Tests live in `/tests`. Mirror the source structure.
 pnpm test          # all tests
 pnpm test:unit     # unit only
 pnpm test:e2e      # playwright
+pnpm typecheck     # tsc --noEmit
 ```
 
-Tests must pass before any PR is merged.
+Tests must pass before any PR is merged. CI enforces it: `.github/workflows/ci.yml`
+runs lint, typecheck, the Vitest suite, a production build and the Playwright
+e2e suite on every pull request, and checks that `mocks/data/seed.json` still
+matches its generator. Before that workflow existed the only check on a PR was
+the Vercel deployment, which builds but never runs a test.
 
 ---
 
