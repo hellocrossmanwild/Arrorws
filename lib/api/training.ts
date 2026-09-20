@@ -9,12 +9,18 @@ export interface TrainingSessionResponse {
   template: TrainingSessionTemplate
 }
 
-export async function getTraining(): Promise<TrainingSummary> {
-  return apiClient("/api/training")
+export async function getTraining(playerId?: string): Promise<TrainingSummary> {
+  const query = playerId ? `?playerId=${encodeURIComponent(playerId)}` : ""
+  return apiClient(`/api/training${query}`)
 }
 
-export async function startTrainingSession(): Promise<TrainingSessionResponse> {
-  return apiClient("/api/training/sessions", { method: "POST" })
+export async function startTrainingSession(
+  playerId?: string
+): Promise<TrainingSessionResponse> {
+  return apiClient("/api/training/sessions", {
+    method: "POST",
+    body: JSON.stringify({ playerId }),
+  })
 }
 
 export async function getTrainingSession(id: string): Promise<TrainingSessionResponse> {

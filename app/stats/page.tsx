@@ -5,6 +5,7 @@ import { getStats, type StatsFilters, type StatsResponse } from "@/lib/api/stats
 import { DoublesHeatmap } from "@/components/stats/DoublesHeatmap"
 import { TrendLine } from "@/components/stats/TrendLine"
 import { cn } from "@/lib/utils/cn"
+import { usePlayerId } from "@/lib/auth"
 
 type DateRange = "all" | "90" | "30"
 
@@ -25,6 +26,7 @@ const DEFAULT_FILTERS: UiFilters = {
 }
 
 export default function StatsPage() {
+  const playerId = usePlayerId()
   const [filters, setFilters] = useState<UiFilters>(() => {
     if (typeof window === "undefined") return DEFAULT_FILTERS
     try {
@@ -50,13 +52,13 @@ export default function StatsPage() {
       const days = Number(filters.range)
       apiFilters.from = new Date(Date.now() - days * 86_400_000).toISOString()
     }
-    getStats(apiFilters)
+    getStats({ ...apiFilters, playerId })
       .then((res) => {
         if (!controller.signal.aborted) setData(res)
       })
       .catch(() => {})
     return () => controller.abort()
-  }, [filters])
+  }, [filters, playerId])
 
   const toggle = (key: "includeBots" | "includeTwoPlayer") =>
     setFilters((f) => ({ ...f, [key]: !f[key] }))

@@ -9,16 +9,18 @@ import { toast } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils/cn"
 import { TRAINING_EXPLAINER } from "@/lib/content/guides"
 import { beltColour } from "@/lib/jdc/belts"
+import { usePlayerId } from "@/lib/auth"
 
 /** The training programme overview (spec 0008): queue model, no guilt mechanics. */
 export default function TrainingPage() {
+  const playerId = usePlayerId()
   const router = useRouter()
   const [data, setData] = useState<TrainingSummary | null>(null)
   const [starting, setStarting] = useState(false)
 
   useEffect(() => {
     let cancelled = false
-    getTraining()
+    getTraining(playerId)
       .then((res) => {
         if (!cancelled) setData(res)
       })
@@ -26,13 +28,13 @@ export default function TrainingPage() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [playerId])
 
   async function start() {
     if (starting) return
     setStarting(true)
     try {
-      const { session } = await startTrainingSession()
+      const { session } = await startTrainingSession(playerId)
       router.push(`/training/run/${session.id}`)
     } catch {
       toast("Could not start the session")

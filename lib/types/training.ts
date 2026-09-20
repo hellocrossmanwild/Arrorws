@@ -37,6 +37,8 @@ export interface TrainingProgram {
  */
 export interface TrainingSession {
   id: string
+  /** Whose programme this session belongs to (spec 0012). */
+  playerId: string
   programId: string
   sessionIndex: number
   week: number

@@ -47,8 +47,9 @@ async function playBlock(block: TrainingBlock, sessionId: string, blockIndex: nu
 
 describe("the training programme", () => {
   // The queue starts empty on a fresh seed. The assessments array is not
-  // part of that: it carries every completed JDC attempt, ad-hoc ones
-  // included (spec 0011), and the seed ships five.
+  // part of that: it carries the *current player's* completed JDC attempts,
+  // ad-hoc ones included (specs 0011, 0012). The seed ships twelve across
+  // three players; five of them are Tom's.
   test("the session queue starts empty with the first scoring session queued", async () => {
     const summary = await getTraining()
     expect(summary.program.id).toBe("foundation")
@@ -60,7 +61,13 @@ describe("the training programme", () => {
     expect(summary.sessionsThisWeek).toBe(0)
     expect(summary.weekStreak).toBe(0)
     expect(summary.assessments.length).toBe(
-      seed.games.filter((g) => g.mode === "jdc-challenge" && g.endedAt && !g.abandoned).length
+      seed.games.filter(
+        (g) =>
+          g.mode === "jdc-challenge" &&
+          g.endedAt &&
+          !g.abandoned &&
+          g.participantPlayerIds.includes("player-tom")
+      ).length
     )
   })
 

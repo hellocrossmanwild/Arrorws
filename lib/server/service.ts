@@ -421,6 +421,68 @@ export async function listPlayers(): Promise<{ players: Player[] }> {
   return { players: (await db.select().from(tables.players)) as Player[] }
 }
 
+/** Trim and validate a profile name. Shared by create and rename. */
+function cleanDisplayName(value: unknown): string {
+  const name = typeof value === "string" ? value.trim().replace(/\s+/g, " ") : ""
+  if (name.length === 0) throw new HttpError(400, "A name is required")
+  if (name.length > 24) throw new HttpError(400, "That name is too long")
+  return name
+}
+
+/**
+ * Add a player profile (spec 0012). Not a user account — a name on the
+ * chalkboard, so everyone throwing at this board gets their own record.
+ */
+export async function createPlayer(body: { displayName: unknown }): Promise<{ player: Player }> {
+  const db = getDb()
+  const displayName = cleanDisplayName(body?.displayName)
+
+  const existing = (await db.select().from(tables.players)) as Player[]
+  if (existing.some((p) => p.displayName.toLowerCase() === displayName.toLowerCase())) {
+    throw new HttpError(409, "There is already a player with that name")
+  }
+
+  const player: Player = {
+    id: `player-${randomUUID()}`,
+    displayName,
+    isBot: false,
+    botProfileId: null,
+    userId: null,
+    createdAt: new Date().toISOString(),
+  }
+  await db.insert(tables.players).values(player)
+  return { player }
+}
+
+/** Rename a player. Their games stay theirs — only the label changes. */
+export async function renamePlayer(
+  playerId: string,
+  body: { displayName: unknown }
+): Promise<{ player: Player }> {
+  const db = getDb()
+  const displayName = cleanDisplayName(body?.displayName)
+
+  const rows = (await db
+    .select()
+    .from(tables.players)
+    .where(eq(tables.players.id, playerId))) as Player[]
+  if (rows.length === 0) throw new HttpError(404, "Player not found")
+  if (rows[0].isBot) throw new HttpError(400, "Bots cannot be renamed")
+
+  const others = ((await db.select().from(tables.players)) as Player[]).filter(
+    (p) => p.id !== playerId
+  )
+  if (others.some((p) => p.displayName.toLowerCase() === displayName.toLowerCase())) {
+    throw new HttpError(409, "There is already a player with that name")
+  }
+
+  await db
+    .update(tables.players)
+    .set({ displayName })
+    .where(eq(tables.players.id, playerId))
+  return { player: { ...rows[0], displayName } }
+}
+
 export async function practiceGames(playerId: string) {
   const db = getDb()
   const definitions = (await db

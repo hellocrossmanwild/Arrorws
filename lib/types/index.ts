@@ -24,7 +24,7 @@ export type {
   Metrics,
 } from "./game-state"
 export type { User } from "./user"
-export type { JdcAttempt, JdcBelt, JdcSummary } from "./jdc"
+export type { JdcAttempt, JdcBelt, JdcFamilyRow, JdcSummary } from "./jdc"
 export type {
   TrainingBlock,
   TrainingSessionKind,

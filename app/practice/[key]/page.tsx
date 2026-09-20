@@ -84,7 +84,7 @@ export default function PracticeGamePage({
 
   useEffect(() => {
     let cancelled = false
-    getPracticeGames()
+    getPracticeGames(playerId)
       .then((res) => {
         if (cancelled) return
         setDefinition(res.definitions.find((d) => d.key === key) ?? null)
@@ -94,7 +94,7 @@ export default function PracticeGamePage({
     return () => {
       cancelled = true
     }
-  }, [key])
+  }, [key, playerId])
 
   async function start() {
     if (starting) return

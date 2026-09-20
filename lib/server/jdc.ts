@@ -1,31 +1,53 @@
 import { asc, eq, inArray } from "drizzle-orm"
 import { getDb, tables } from "@/lib/db"
-import type { Dart, Game, JdcAttempt, JdcSummary, TrainingSession } from "@/lib/types"
+import type {
+  Dart,
+  Game,
+  JdcAttempt,
+  JdcSummary,
+  Player,
+  TrainingSession,
+} from "@/lib/types"
 import { jdcReport } from "@/lib/practice"
-import { buildJdcSummary } from "@/lib/jdc/summary"
+import { buildJdcSummary, buildFamilyBoard } from "@/lib/jdc/summary"
 
 /**
- * The JDC Challenge record (spec 0011). Every figure is derived by
+ * The JDC Challenge record (specs 0011, 0012). Every figure is derived by
  * replaying each attempt's dart log through the engine — the cached
  * `results.metrics.gameScore` is deliberately not read here, so a change
  * to the scoring rules re-scores history rather than leaving it stranded
  * on the old scale (ADR 0003).
+ *
+ * Attempts belong to whoever threw them. `playerId` scopes the record; the
+ * family board carries every player's headline so siblings can see each
+ * other without switching profile.
  */
-export async function jdcSummary(): Promise<JdcSummary> {
+export async function jdcSummary(playerId: string): Promise<JdcSummary> {
   const db = getDb()
 
   const games = (await db.select().from(tables.games)).filter(
     (g) => g.mode === "jdc-challenge" && g.endedAt && !g.abandoned
   ) as Game[]
-  if (games.length === 0) return buildJdcSummary([])
 
-  const gameIds = games.map((g) => g.id)
+  const players = ((await db.select().from(tables.players)) as Player[]).filter(
+    (p) => !p.isBot
+  )
+
+  if (games.length === 0) {
+    return { ...buildJdcSummary([]), playerId, family: buildFamilyBoard(players, []) }
+  }
+
   const dartRows = await db
     .select({ dart: tables.darts, gameId: tables.legs.gameId })
     .from(tables.darts)
     .innerJoin(tables.visits, eq(tables.darts.visitId, tables.visits.id))
     .innerJoin(tables.legs, eq(tables.visits.legId, tables.legs.id))
-    .where(inArray(tables.legs.gameId, gameIds))
+    .where(
+      inArray(
+        tables.legs.gameId,
+        games.map((g) => g.id)
+      )
+    )
     .orderBy(asc(tables.darts.seq))
 
   const byGame = new Map<string, Dart[]>()
@@ -42,7 +64,8 @@ export async function jdcSummary(): Promise<JdcSummary> {
   )
 
   const cumulatives: Record<string, number[]> = {}
-  const attempts = games.map((game): JdcAttempt => {
+  /** Every attempt, tagged with who threw it. */
+  const all: Array<JdcAttempt & { thrownBy: string }> = games.map((game) => {
     const report = jdcReport(byGame.get(game.id) ?? [])
     cumulatives[game.id] = report.cumulative
     return {
@@ -54,8 +77,14 @@ export async function jdcSummary(): Promise<JdcSummary> {
       shanghais: report.shanghais,
       doublesHit: report.doublesHit,
       fromProgramme: programmeGameIds.has(game.id),
+      thrownBy: game.participantPlayerIds[0] ?? "",
     }
   })
 
-  return buildJdcSummary(attempts, cumulatives)
+  const mine = all.filter((a) => a.thrownBy === playerId)
+  return {
+    ...buildJdcSummary(mine, cumulatives),
+    playerId,
+    family: buildFamilyBoard(players, all),
+  }
 }

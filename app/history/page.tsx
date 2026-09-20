@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { getSessions, type SessionSummary } from "@/lib/api/stats"
 import { Button } from "@/components/ui/button"
+import { usePlayerId } from "@/lib/auth"
 
 function formatDuration(session: SessionSummary): string {
   if (!session.endedAt) return "live"
@@ -14,13 +15,14 @@ function formatDuration(session: SessionSummary): string {
 }
 
 export default function HistoryPage() {
+  const playerId = usePlayerId()
   const [sessions, setSessions] = useState<SessionSummary[]>([])
   const [nextCursor, setNextCursor] = useState<string | null>(null)
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     let cancelled = false
-    getSessions(20).then((res) => {
+    getSessions(20, undefined, playerId).then((res) => {
       if (cancelled) return
       setSessions(res.sessions)
       setNextCursor(res.nextCursor)
@@ -29,11 +31,11 @@ export default function HistoryPage() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [playerId])
 
   const loadMore = async () => {
     if (!nextCursor) return
-    const res = await getSessions(20, nextCursor)
+    const res = await getSessions(20, nextCursor, playerId)
     setSessions((s) => [...s, ...res.sessions])
     setNextCursor(res.nextCursor)
   }

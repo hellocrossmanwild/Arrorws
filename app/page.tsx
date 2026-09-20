@@ -21,7 +21,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const controller = new AbortController()
-    getSessions(5)
+    getSessions(5, undefined, playerId)
       .then(({ sessions }) => {
         if (controller.signal.aborted) return
         const withGames = sessions.find((s) => s.gameCount > 0)
