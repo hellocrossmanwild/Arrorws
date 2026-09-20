@@ -16,6 +16,8 @@ import { pressureDoubles } from "./games/pressure-doubles"
 export type { PracticeEngine, Rng } from "./types"
 export { matchesTarget, labelForTarget, dartTargetFor } from "./types"
 export { gradeForJdcScore, JDC_GRADES } from "./games/jdc-challenge"
+export { jdcReport, nextGrade, PART_NAMES, PART_MAXIMUMS, TOTAL_DARTS } from "./games/jdc-report"
+export type { JdcReport, JdcRound, JdcDoubleResult } from "./games/jdc-report"
 export { hudFor } from "./hud"
 export type { PracticeHud, HudChip, HudPip, HudExtras } from "./hud"
 

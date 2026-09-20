@@ -18,9 +18,11 @@ describe("jdc-challenge", () => {
     expect(replay("jdc-challenge", "10 T10").score).toBe(0)
   })
 
-  test("single, double and treble of the number in one round scores 100", () => {
-    const s = replay("jdc-challenge", "10 D10 T10")
-    expect(s.score).toBe(100)
+  test("a shanghai adds 100 on top of the three darts' face value", () => {
+    // 10 + 20 + 30 = 60, plus the 100 bonus
+    expect(replay("jdc-challenge", "10 D10 T10").score).toBe(160)
+    // The bonus needs all three rings: three trebles score face value only
+    expect(replay("jdc-challenge", "T10 T10 T10").score).toBe(90)
   })
 
   test("part transitions land on the right targets", () => {

@@ -143,13 +143,13 @@ export const GAME_GUIDES: Record<GameMode, GameGuide> = {
     title: "JDC Challenge",
     what: "The graded assessment, borrowed from the Junior Darts Corporation academies. Fifty-seven darts, one score, a grade from White to Black.",
     how: [
-      "Part one: three darts at each number from 10 to 15. Hits score their face value; hit the single, double and treble of a number in one round and that round scores 100.",
+      "Part one: three darts at each number from 10 to 15. Hits score their face value; hit the single, double and treble of a number in one round and a further 100 lands on top.",
       "Part two: one dart at every double, D1 up to D20, then one at the bull. Each double hit is worth 50, the bull 100.",
       "Part three: as part one, on 15 to 20.",
     ],
     scoring: "Total points. Grades: White 0, Purple 150, Yellow 300, Green 450, Blue 600, Red 700, Black 850.",
     trains: "It does not train — it measures. Same test every fortnight, so the grade trend is the honest answer to whether the programme is working.",
-    tip: "Do not chase shanghais in parts one and three. Three steady singles beat two wild trebles.",
+    tip: "A shanghai is worth more than three trebles, so it is worth going for — but take the single first. Chasing the treble before you have the single is how a round ends on nothing.",
   },
   "target-switching": {
     title: "Target switching",

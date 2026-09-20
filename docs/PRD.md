@@ -228,6 +228,7 @@ A derived cache, written when a game ends. Never the source of truth. Must be re
 | `/signup` | Create account |
 | `/admin` | Admin dashboard |
 | `/training` | Training programme overview, streak, next session |
+| `/jdc` | The JDC Challenge record: belt ladder, score trend, part breakdown (spec 0011, ADR 0008) |
 | `/training/run/[id]` | Session runner: block-by-block progress |
 
 ---

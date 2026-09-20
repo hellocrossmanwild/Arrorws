@@ -1,5 +1,7 @@
 import type { Dart, PracticeGameKey, PracticeState, Ring } from "@/lib/types"
 import { gradeForJdcScore } from "./games/jdc-challenge"
+import { PART2_TARGETS } from "./games/jdc-challenge"
+import { PART_DARTS, TOTAL_DARTS } from "./games/jdc-report"
 
 /**
  * The per-drill scoreboard (spec 0010). Each practice mode gets its own
@@ -44,6 +46,7 @@ interface EngineInternals {
   rounds?: number
   ringsHit?: Ring[]
   consecutiveFailures?: number
+  part?: number
   hitsOnCurrent?: number
   hitsRequired?: number
   doubles?: number[]
@@ -55,6 +58,12 @@ export interface HudExtras {
   darts?: Dart[]
   /** The personal best for this drill, shown as a PB chip when known. */
   personalBest?: number | null
+  /**
+   * The best JDC attempt's running score by dart index, so the band can
+   * show whether this attempt is ahead of it (spec 0011). Index i is the
+   * score after i+1 darts.
+   */
+  pbCumulative?: number[] | null
 }
 
 const MAX_CHIPS = 3
@@ -208,12 +217,38 @@ function buildHud(
     }
 
     case "jdc-challenge": {
+      const part = s.part ?? 0
+      const inDoubles = part === 1
+      const chips: HudChip[] = [{ label: "Darts", value: `${s.dartsThrown} of ${TOTAL_DARTS}` }]
+
+      // Part 2 is one dart per double, so the count of hits is the figure
+      // that matters; parts 1 and 3 show the shanghai rings instead.
+      if (inDoubles) {
+        const hit = doublesHitSoFar(extras.darts, s.dartsThrown)
+        chips.push({ label: "Doubles", value: `${hit} of ${PART_DARTS[1]}` })
+      }
+
+      // Ahead of or behind the best attempt at this exact dart.
+      const pace = paceAgainstBest(s.score, s.dartsThrown, extras.pbCumulative)
+      if (pace !== null && chips.length < MAX_CHIPS) {
+        chips.push({ label: "PB pace", value: `${pace >= 0 ? "+" : ""}${pace}` })
+      }
+
       return {
         eyebrow: s.progressLabel,
         hero: { label: "Points", value: String(s.score) },
         sub: `On for ${gradeForJdcScore(s.score)}`,
-        chips: [{ label: "Darts", value: `${s.dartsThrown} of 57` }],
-        progress: { done: Math.min(s.dartsThrown, 57), total: 57 },
+        chips,
+        pips: inDoubles
+          ? undefined
+          : {
+              label: "Shanghai",
+              pips: (["S", "D", "T"] as const).map((r) => ({
+                label: r,
+                on: (s.ringsHit ?? []).includes(r),
+              })),
+            },
+        progress: { done: Math.min(s.dartsThrown, TOTAL_DARTS), total: TOTAL_DARTS },
       }
     }
 
@@ -261,4 +296,32 @@ function lastCompleteVisitScore(darts: Dart[] | undefined, dartsThrown: number):
   const visit = darts.slice(end - 3, end)
   if (visit.length < 3) return null
   return visit.reduce((sum, d) => sum + d.score, 0)
+}
+
+/**
+ * Doubles hit in part 2 so far, counted from the log: one dart per target,
+ * in PART2_TARGETS order, starting at the dart after part 1.
+ */
+function doublesHitSoFar(darts: Dart[] | undefined, dartsThrown: number): number {
+  if (!darts) return 0
+  let hit = 0
+  const thrownInPart = Math.min(dartsThrown - PART_DARTS[0], PART_DARTS[1])
+  for (let i = 0; i < thrownInPart; i++) {
+    const target = PART2_TARGETS[i]
+    const dart = darts[PART_DARTS[0] + i]
+    if (!dart || target.type !== "segment") continue
+    if (dart.ring === "D" && dart.segment === target.segment) hit += 1
+  }
+  return hit
+}
+
+/** Running difference against the best attempt at the same dart. */
+function paceAgainstBest(
+  score: number,
+  dartsThrown: number,
+  pbCumulative: number[] | null | undefined
+): number | null {
+  if (!pbCumulative || pbCumulative.length === 0 || dartsThrown === 0) return null
+  const at = pbCumulative[Math.min(dartsThrown, pbCumulative.length) - 1]
+  return at === undefined ? null : score - at
 }

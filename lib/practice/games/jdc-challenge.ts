@@ -7,7 +7,8 @@ import { labelForTarget } from "../types"
  * assessment routine, used fortnightly as the programme's fitness test.
  *
  * Part 1: Shanghai 10-15 — three darts per number; hits score face value,
- *         single + double + treble of the number in one round scores 100.
+ *         and single + double + treble of the number in one round adds a
+ *         further 100 on top of those three darts.
  * Part 2: one dart at every double D1-D20 then bull — 50 points per
  *         double hit, 100 for the bull.
  * Part 3: Shanghai 15-20, as part 1.
@@ -16,9 +17,9 @@ import { labelForTarget } from "../types"
  * Green -599, Blue -699, Red -849, Black 850+.
  */
 
-const PART1 = [10, 11, 12, 13, 14, 15]
-const PART3 = [15, 16, 17, 18, 19, 20]
-const PART2_TARGETS: PracticeTarget[] = [
+export const PART1 = [10, 11, 12, 13, 14, 15]
+export const PART3 = [15, 16, 17, 18, 19, 20]
+export const PART2_TARGETS: PracticeTarget[] = [
   ...Array.from({ length: 20 }, (_, i): PracticeTarget => ({
     type: "segment",
     segment: i + 1,
@@ -108,7 +109,7 @@ export const jdcChallenge: PracticeEngine = {
       if (roundDarts === 3) {
         const shanghai =
           ringsHit.includes("S") && ringsHit.includes("D") && ringsHit.includes("T")
-        score += shanghai ? 100 : roundPoints
+        score += roundPoints + (shanghai ? 100 : 0)
         roundDarts = 0
         roundPoints = 0
         ringsHit = []

@@ -234,7 +234,10 @@ describe("seed content checklist", () => {
     expect(dates.size).toBeGreaterThanOrEqual(3)
   })
 
-  test("the doubles heatmap gets real variation: 5+ attempts on some doubles, zero on at least three", () => {
+  // The JDC Challenge's part 2 throws one dart at every double (spec 0011),
+  // so the seed no longer leaves any double untried. The heatmap's sparse
+  // path is instead covered by doubles attempted but never hit.
+  test("the doubles heatmap gets real variation: a spread of attempts, and cold doubles", () => {
     const attempts: Record<number, { attempts: number; hits: number }> = {}
     for (const d of data.darts) {
       if (d.targetRing === "D" && d.targetSegment !== null) {
@@ -245,10 +248,10 @@ describe("seed content checklist", () => {
     }
     const withEnough = Object.values(attempts).filter((a) => a.attempts >= 5)
     expect(withEnough.length).toBeGreaterThanOrEqual(3)
-    const zeroAttemptDoubles = Array.from({ length: 20 }, (_, i) => i + 1).filter(
-      (n) => !attempts[n]
-    )
-    expect(zeroAttemptDoubles.length).toBeGreaterThanOrEqual(3)
+    const counts = Object.values(attempts).map((a) => a.attempts)
+    expect(Math.max(...counts) - Math.min(...counts)).toBeGreaterThanOrEqual(5)
+    const neverHit = Object.values(attempts).filter((a) => a.attempts > 0 && a.hits === 0)
+    expect(neverHit.length).toBeGreaterThanOrEqual(3)
     const rates = withEnough.map((a) => a.hits / a.attempts)
     expect(Math.max(...rates) - Math.min(...rates)).toBeGreaterThan(0.15)
   })

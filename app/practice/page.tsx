@@ -55,6 +55,21 @@ export default function PracticePage() {
         })}
         {!data && <div className="h-[512px] bg-bed" />}
       </div>
+
+      {/* The assessment is not a drill, so it sits outside the grid (spec 0011). */}
+      <Link
+        href="/jdc"
+        className="mt-px flex items-center justify-between bg-bed px-4 py-3 hover:brightness-110"
+        data-testid="practice-row-jdc-challenge"
+      >
+        <span>
+          <span className="block font-semibold">JDC Challenge</span>
+          <span className="block text-sm text-tung">
+            The graded assessment. Fifty-seven darts, one belt
+          </span>
+        </span>
+        <span className="font-mono text-xs text-wire">Record</span>
+      </Link>
     </div>
   )
 }

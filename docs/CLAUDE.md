@@ -244,6 +244,8 @@ The existing ADRs are:
 - **ADR 0004** — Modifier pad as the only input method
 - **ADR 0005** — Phase 2 backend: Neon + Drizzle behind the unchanged contract, mocks retained as a test fixture
 - **ADR 0006** — Single-user posture: no Clerk, no Resend, no PostHog
+- **ADR 0007** — The training programme: PRD reversal, fitness-app framing
+- **ADR 0008** — The JDC Challenge gets its own area, and the belt follows your best
 
 When making any non-trivial decision (choice of library, architecture pattern, data model change), create an ADR. They live forever and explain the "why" behind the code. Use `docs/decisions/TEMPLATE.md` as the starting point.
 

@@ -2,6 +2,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } fr
 import { setupServer } from "msw/node"
 import { handlers } from "@/mocks/handlers"
 import { resetStore } from "@/mocks/data/store"
+import seed from "@/mocks/data/seed.json"
 import {
   getTraining,
   getTrainingSession,
@@ -45,7 +46,10 @@ async function playBlock(block: TrainingBlock, sessionId: string, blockIndex: nu
 }
 
 describe("the training programme", () => {
-  test("summary starts empty with the first scoring session queued", async () => {
+  // The queue starts empty on a fresh seed. The assessments array is not
+  // part of that: it carries every completed JDC attempt, ad-hoc ones
+  // included (spec 0011), and the seed ships five.
+  test("the session queue starts empty with the first scoring session queued", async () => {
     const summary = await getTraining()
     expect(summary.program.id).toBe("foundation")
     expect(summary.completedCount).toBe(0)
@@ -55,7 +59,9 @@ describe("the training programme", () => {
     expect(summary.nextSession?.template.kind).toBe("scoring")
     expect(summary.sessionsThisWeek).toBe(0)
     expect(summary.weekStreak).toBe(0)
-    expect(summary.assessments).toEqual([])
+    expect(summary.assessments.length).toBe(
+      seed.games.filter((g) => g.mode === "jdc-challenge" && g.endedAt && !g.abandoned).length
+    )
   })
 
   test("starting a session is idempotent", async () => {
@@ -102,15 +108,17 @@ describe("the training programme", () => {
   })
 
   test("a completed JDC game surfaces as a graded assessment", async () => {
+    const before = (await getTraining()).assessments.length
     const { game } = await createGame("jdc-challenge", {}, ["player-tom"])
     // 57 darts: six T10 rounds would shanghai nothing; throw hits on part 1
     for (let i = 0; i < 18; i++) await throwDart(game.id, input("10"))
     for (let i = 0; i < 21; i++) await throwDart(game.id, input("D1"))
     for (let i = 0; i < 18; i++) await throwDart(game.id, input("15"))
     const summary = await getTraining()
-    expect(summary.assessments).toHaveLength(1)
-    expect(summary.assessments[0].score).toBeGreaterThan(0)
-    expect(typeof summary.assessments[0].grade).toBe("string")
+    expect(summary.assessments).toHaveLength(before + 1)
+    const newest = summary.assessments[summary.assessments.length - 1]
+    expect(newest.score).toBeGreaterThan(0)
+    expect(typeof newest.grade).toBe("string")
   })
 
   test("a PATCH on a completed session is a 409, a bad block index a 400", async () => {
