@@ -62,6 +62,23 @@ export async function getBotProfiles(): Promise<{ profiles: BotProfile[] }> {
   return apiClient("/api/bot-profiles")
 }
 
+export async function createPlayer(displayName: string): Promise<{ player: Player }> {
+  return apiClient("/api/players", {
+    method: "POST",
+    body: JSON.stringify({ displayName }),
+  })
+}
+
+export async function renamePlayer(
+  playerId: string,
+  displayName: string
+): Promise<{ player: Player }> {
+  return apiClient(`/api/players/${playerId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ displayName }),
+  })
+}
+
 export async function getPlayers(): Promise<{ players: Player[] }> {
   return apiClient("/api/players")
 }

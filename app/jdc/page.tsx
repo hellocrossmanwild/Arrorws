@@ -1,14 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
+import Link from "next/link"
 import { createGame } from "@/lib/api/games"
 import { getJdc } from "@/lib/api/jdc"
 import { usePlayerId } from "@/lib/auth"
+import { usePlayersStore } from "@/lib/players/store"
 import type { JdcSummary } from "@/lib/types"
 import { GAME_GUIDES } from "@/lib/content/guides"
 import { beltColour } from "@/lib/jdc/belts"
 import { BeltLadder } from "@/components/jdc/BeltLadder"
+import { FamilyBoard } from "@/components/jdc/FamilyBoard"
 import { PartBars } from "@/components/jdc/PartBars"
 import { TrendChart } from "@/components/jdc/TrendChart"
 import { Button } from "@/components/ui/button"
@@ -21,13 +24,16 @@ import { toast } from "@/components/ui/toaster"
  */
 export default function JdcPage() {
   const router = useRouter()
+  const pathname = usePathname()
   const playerId = usePlayerId()
+  const players = usePlayersStore((s) => s.players)
+  const loadPlayers = usePlayersStore((s) => s.load)
   const [data, setData] = useState<JdcSummary | null>(null)
   const [starting, setStarting] = useState(false)
 
   useEffect(() => {
     let cancelled = false
-    getJdc()
+    getJdc(playerId)
       .then((res) => {
         if (!cancelled) setData(res)
       })
@@ -35,7 +41,7 @@ export default function JdcPage() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [playerId])
 
   async function start() {
     if (starting) return
@@ -49,7 +55,12 @@ export default function JdcPage() {
     }
   }
 
+  useEffect(() => {
+    loadPlayers()
+  }, [loadPlayers])
+
   const guide = GAME_GUIDES["jdc-challenge"]
+  const playerName = players?.find((p) => p.id === playerId)?.displayName ?? ""
   const belt = data?.belt ?? null
   const best = data?.best ?? null
   const latest = data?.latest ?? null
@@ -59,7 +70,7 @@ export default function JdcPage() {
     <div className="mx-auto w-full max-w-xl flex-1 px-4 py-6">
       <div className="flex items-baseline justify-between">
         <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-wire">
-          JDC Challenge
+          JDC Challenge{playerName ? ` · ${playerName}` : ""}
         </p>
         <span className="font-mono text-xs text-tung" data-testid="jdc-attempt-count">
           {data ? `${data.attempts.length} attempt${data.attempts.length === 1 ? "" : "s"}` : ""}
@@ -116,7 +127,19 @@ export default function JdcPage() {
         )}
       </section>
 
-      <Button className="mt-3 w-full" onClick={start} data-testid="jdc-start">
+      <div className="mt-3 flex items-center justify-between bg-bed px-4 py-2">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-tung">
+          Throwing as <span className="text-chalk">{playerName || "\u2014"}</span>
+        </span>
+        <Link
+          href={`/players?next=${encodeURIComponent(pathname ?? "/jdc")}`}
+          className="font-mono text-[10px] uppercase tracking-widest text-wire"
+          data-testid="jdc-change-player"
+        >
+          Change
+        </Link>
+      </div>
+      <Button className="mt-px w-full" onClick={start} data-testid="jdc-start">
         Throw the challenge
       </Button>
 
@@ -127,6 +150,16 @@ export default function JdcPage() {
             Belts
           </p>
           <BeltLadder belts={data.belts} />
+        </section>
+      )}
+
+      {/* ── the family ───────────────────────────────────────────────── */}
+      {data && data.family.length > 1 && (
+        <section className="mt-6">
+          <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.16em] text-wire">
+            The family
+          </p>
+          <FamilyBoard rows={data.family} currentPlayerId={playerId} />
         </section>
       )}
 

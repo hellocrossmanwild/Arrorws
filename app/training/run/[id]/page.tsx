@@ -10,6 +10,7 @@ import {
 } from "@/lib/api/training"
 import { createGame } from "@/lib/api/games"
 import { usePlayerId } from "@/lib/auth"
+import { usePlayersStore } from "@/lib/players/store"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils/cn"
@@ -29,12 +30,18 @@ export default function TrainingRunPage({
   const [error, setError] = useState(false)
   const [busy, setBusy] = useState(false)
   const [helpMode, setHelpMode] = useState<GameMode | null>(null)
+  const players = usePlayersStore((s) => s.players)
+  const loadPlayers = usePlayersStore((s) => s.load)
 
   const load = useCallback(() => {
     getTrainingSession(id)
       .then(setData)
       .catch(() => setError(true))
   }, [id])
+
+  useEffect(() => {
+    loadPlayers()
+  }, [loadPlayers])
 
   useEffect(() => {
     let cancelled = false
@@ -55,13 +62,18 @@ export default function TrainingRunPage({
 
   const { session, template } = data
   const currentIndex = session.blockGameIds.findIndex((g) => g === null)
+  const ownerName = players?.find((p) => p.id === session.playerId)?.displayName ?? ""
 
   async function throwBlock(blockIndex: number) {
     if (busy || !data) return
     setBusy(true)
     const block = data.template.blocks[blockIndex]
     try {
-      const participants = block.withBot ? [playerId, block.withBot] : [playerId]
+      // The session's owner throws it, not whoever happens to be selected.
+      // Switching profile mid-session used to record the game against the
+      // new player while advancing the old player's queue (spec 0012).
+      const owner = data.session.playerId
+      const participants = block.withBot ? [owner, block.withBot] : [owner]
       const { game } = await createGame(block.mode, block.config, participants)
       router.push(`/play/${game.id}?trainingSession=${session.id}&block=${blockIndex}`)
     } catch {
@@ -91,6 +103,13 @@ export default function TrainingRunPage({
       <h1 className="mt-1 font-display text-3xl">
         {session.completedAt ? "Session complete" : "Session"}
       </h1>
+      {session.playerId !== playerId && (
+        <p className="mt-2 bg-bed px-4 py-2 text-sm text-tung" data-testid="session-owner-warning">
+          This is{" "}
+          <span className="text-chalk">{ownerName || "another player"}</span>&apos;s session.
+          Anything thrown here is recorded against them, not you.
+        </p>
+      )}
 
       <div className="mt-4 flex flex-col gap-px bg-wire/40" data-testid="block-list">
         {template.blocks.map((block, i) => {

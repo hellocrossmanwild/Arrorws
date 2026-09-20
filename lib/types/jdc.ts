@@ -25,6 +25,18 @@ export interface JdcBelt {
   current: boolean
 }
 
+/** One player's line on the family board. */
+export interface JdcFamilyRow {
+  playerId: string
+  displayName: string
+  attempts: number
+  /** Null until they have thrown one. */
+  belt: string | null
+  best: number | null
+  latest: number | null
+  lastThrownAt: string | null
+}
+
 /** The `/jdc` screen's whole view model. Derived, never stored. */
 export interface JdcSummary {
   attempts: JdcAttempt[]
@@ -49,4 +61,8 @@ export interface JdcSummary {
    * be shown against it ("PB pace"). Null until an attempt exists.
    */
   bestCumulative: number[] | null
+  /** Whose record this is. */
+  playerId: string
+  /** Every player's headline, best first. The family board (spec 0012). */
+  family: JdcFamilyRow[]
 }

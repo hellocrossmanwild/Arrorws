@@ -154,6 +154,8 @@ import { useUser } from '@/lib/auth'
 
 In Phase 1, `/lib/auth` exports a hook backed by a dev toggle. In Phase 2, the same module exports a hook backed by Clerk. Components don't change.
 
+`/lib/auth` also exports `usePlayerId()` — who is currently throwing. That is a selection, not a login (ADR 0009), but it lives behind the same barrel for the same reason: components ask "who is this?" in one way and never learn how it is answered.
+
 ### Rule 4: The `/mocks` folder is fully deletable
 
 When Phase 2 begins, deleting `/mocks` must not break the build. If anything outside `/mocks` ever needs to reach into it, that's a leak. Fix it.
@@ -246,6 +248,7 @@ The existing ADRs are:
 - **ADR 0006** — Single-user posture: no Clerk, no Resend, no PostHog
 - **ADR 0007** — The training programme: PRD reversal, fitness-app framing
 - **ADR 0008** — The JDC Challenge gets its own area, and the belt follows your best
+- **ADR 0009** — Player profiles are a name on the chalkboard, not an account
 
 When making any non-trivial decision (choice of library, architecture pattern, data model change), create an ADR. They live forever and explain the "why" behind the code. Use `docs/decisions/TEMPLATE.md` as the starting point.
 
@@ -260,7 +263,7 @@ When making any non-trivial decision (choice of library, architecture pattern, d
 | Hosting | Vercel |
 | Database (Phase 2) | Neon Postgres |
 | ORM (Phase 2) | Drizzle |
-| Auth | None — single-user, Vercel Deployment Protection (ADR 0006) |
+| Auth | None — player profiles are a tap-your-name selection, not accounts (ADRs 0006, 0009) |
 | Billing | None. The product is free |
 | UI components | shadcn/ui (copied into `/components/ui`) |
 | Styling | Tailwind CSS |
@@ -300,9 +303,14 @@ Tests live in `/tests`. Mirror the source structure.
 pnpm test          # all tests
 pnpm test:unit     # unit only
 pnpm test:e2e      # playwright
+pnpm typecheck     # tsc --noEmit
 ```
 
-Tests must pass before any PR is merged.
+Tests must pass before any PR is merged. CI enforces it: `.github/workflows/ci.yml`
+runs lint, typecheck, the Vitest suite, a production build and the Playwright
+e2e suite on every pull request, and checks that `mocks/data/seed.json` still
+matches its generator. Before that workflow existed the only check on a PR was
+the Vercel deployment, which builds but never runs a test.
 
 ---
 

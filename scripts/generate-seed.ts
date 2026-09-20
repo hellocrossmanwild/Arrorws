@@ -50,6 +50,10 @@ function seg(label: string): { segment: number; ring: Ring } {
 const players: Player[] = [
   { id: "player-tom", displayName: "Tom", isBot: false, botProfileId: null, userId: null, createdAt: "2026-06-20T09:00:00.000Z" },
   { id: "player-guest", displayName: "Player 2", isBot: false, botProfileId: null, userId: null, createdAt: "2026-06-20T09:00:00.000Z" },
+  // Demo children so the family board and per-player scoping have something
+  // to show. Real profiles are added in the app (spec 0012).
+  { id: "player-alfie", displayName: "Alfie", isBot: false, botProfileId: null, userId: null, createdAt: "2026-08-01T09:00:00.000Z" },
+  { id: "player-maisie", displayName: "Maisie", isBot: false, botProfileId: null, userId: null, createdAt: "2026-08-01T09:00:00.000Z" },
   { id: "bot-pub", displayName: "Pub player", isBot: true, botProfileId: "pub", userId: null, createdAt: "2026-06-20T09:00:00.000Z" },
   { id: "bot-county", displayName: "County", isBot: true, botProfileId: "county", userId: null, createdAt: "2026-06-20T09:00:00.000Z" },
   { id: "bot-tour-card", displayName: "Tour card", isBot: true, botProfileId: "tour-card", userId: null, createdAt: "2026-06-20T09:00:00.000Z" },
@@ -324,8 +328,10 @@ function buildPracticeGame(opts: {
   labels: string[]
   startedAtMs: number
   abandoned?: boolean
+  playerId?: string
 }) {
   const { id, sessionId, key, config, labels } = opts
+  const player = opts.playerId ?? "player-tom"
   const engine = getEngine(key)
   const clock: Clock = { at: opts.startedAtMs }
   let state = engine.initial(config, makeRng(config.rngSeed ?? 1))
@@ -337,7 +343,7 @@ function buildPracticeGame(opts: {
     const s = seg(label)
     if (i % 3 === 0) {
       visitId = `visit-${id}-${i / 3 + 1}`
-      visits.push({ id: visitId, legId, playerId: "player-tom", index: i / 3, bust: false })
+      visits.push({ id: visitId, legId, playerId: player, index: i / 3, bust: false })
     }
     const target = dartTargetFor(state)
     const t = nextDartTime(clock, i % 3 === 0)
@@ -364,8 +370,8 @@ function buildPracticeGame(opts: {
     gameId: id,
     index: 0,
     startingScore,
-    startingPlayerId: "player-tom",
-    winnerPlayerId: state.complete && !opts.abandoned ? "player-tom" : null,
+    startingPlayerId: player,
+    winnerPlayerId: state.complete && !opts.abandoned ? player : null,
   })
 
   const complete = state.complete && !opts.abandoned
@@ -375,19 +381,19 @@ function buildPracticeGame(opts: {
     sessionId,
     mode: key,
     config,
-    participantPlayerIds: ["player-tom"],
+    participantPlayerIds: [player],
     startedAt: new Date(opts.startedAtMs).toISOString(),
     endedAt,
     abandoned: Boolean(opts.abandoned),
   })
 
   if (complete) {
-    const deriveCfg = { startingScore: 501, legsToWin: 1, players: ["player-tom"] }
-    const metrics = computeStats(rawDarts, "player-tom", deriveCfg)
+    const deriveCfg = { startingScore: 501, legsToWin: 1, players: [player] }
+    const metrics = computeStats(rawDarts, player, deriveCfg)
     results.push({
-      id: `result-${id}-player-tom`,
+      id: `result-${id}-${player}`,
       gameId: id,
-      playerId: "player-tom",
+      playerId: player,
       metrics: toResultMetrics(metrics, state.finalScore),
       computedAt: endedAt!,
     })
@@ -440,11 +446,17 @@ function labelFor(landed: { segment: number; ring: Ring }): string {
   return landed.ring === "S" ? String(landed.segment) : `${landed.ring}${landed.segment}`
 }
 
-function sessionAt(id: string, iso: string, minutes: number, note: string | null): number {
+function sessionAt(
+  id: string,
+  iso: string,
+  minutes: number,
+  note: string | null,
+  playerId = "player-tom"
+): number {
   const start = Date.parse(iso)
   sessions.push({
     id,
-    playerId: "player-tom",
+    playerId,
     startedAt: iso,
     endedAt: new Date(start + minutes * 60_000).toISOString(),
     note,
@@ -658,16 +670,26 @@ const JDC_ATTEMPTS: Array<{
   scoringSigmaMm: number
   doubleSigmaMm: number
   seed: number
+  playerId: string
 }> = [
-  { id: "game-jdc-1", sessionId: "session-6", iso: "2026-08-04T18:30:00.000Z", scoringSigmaMm: 36.0, doubleSigmaMm: 26.0, seed: 0x75 },
-  { id: "game-jdc-2", sessionId: "session-7", iso: "2026-08-18T18:30:00.000Z", scoringSigmaMm: 33.0, doubleSigmaMm: 23.0, seed: 0x34 },
-  { id: "game-jdc-3", sessionId: "session-8", iso: "2026-09-01T18:30:00.000Z", scoringSigmaMm: 30.0, doubleSigmaMm: 20.0, seed: 0x2c },
-  { id: "game-jdc-4", sessionId: "session-9", iso: "2026-09-08T19:15:00.000Z", scoringSigmaMm: 31.0, doubleSigmaMm: 21.0, seed: 0xa },
-  { id: "game-jdc-5", sessionId: "session-10", iso: "2026-09-15T18:30:00.000Z", scoringSigmaMm: 27.0, doubleSigmaMm: 17.0, seed: 0xdac9 },
+  { id: "game-jdc-1", sessionId: "session-6", iso: "2026-08-04T18:30:00.000Z", scoringSigmaMm: 36.0, doubleSigmaMm: 26.0, seed: 0x75, playerId: "player-tom" },
+  { id: "game-jdc-2", sessionId: "session-7", iso: "2026-08-18T18:30:00.000Z", scoringSigmaMm: 33.0, doubleSigmaMm: 23.0, seed: 0x34, playerId: "player-tom" },
+  { id: "game-jdc-3", sessionId: "session-8", iso: "2026-09-01T18:30:00.000Z", scoringSigmaMm: 30.0, doubleSigmaMm: 20.0, seed: 0x2c, playerId: "player-tom" },
+  { id: "game-jdc-4", sessionId: "session-9", iso: "2026-09-08T19:15:00.000Z", scoringSigmaMm: 31.0, doubleSigmaMm: 21.0, seed: 0xa, playerId: "player-tom" },
+  { id: "game-jdc-5", sessionId: "session-10", iso: "2026-09-15T18:30:00.000Z", scoringSigmaMm: 27.0, doubleSigmaMm: 17.0, seed: 0xdac9, playerId: "player-tom" },
+  // Alfie: four attempts, White up to Yellow.
+  { id: "game-jdc-a1", sessionId: "session-a1", iso: "2026-08-06T17:00:00.000Z", scoringSigmaMm: 46.0, doubleSigmaMm: 34.0, seed: 0x18, playerId: "player-alfie" },
+  { id: "game-jdc-a2", sessionId: "session-a2", iso: "2026-08-20T17:00:00.000Z", scoringSigmaMm: 44.0, doubleSigmaMm: 32.0, seed: 0x3, playerId: "player-alfie" },
+  { id: "game-jdc-a3", sessionId: "session-a3", iso: "2026-09-03T17:00:00.000Z", scoringSigmaMm: 42.0, doubleSigmaMm: 30.0, seed: 0x15, playerId: "player-alfie" },
+  { id: "game-jdc-a4", sessionId: "session-a4", iso: "2026-09-17T17:00:00.000Z", scoringSigmaMm: 39.0, doubleSigmaMm: 28.0, seed: 0xa, playerId: "player-alfie" },
+  // Maisie: younger, three attempts, still climbing out of White.
+  { id: "game-jdc-m1", sessionId: "session-m1", iso: "2026-08-13T17:20:00.000Z", scoringSigmaMm: 52.0, doubleSigmaMm: 40.0, seed: 0x3b, playerId: "player-maisie" },
+  { id: "game-jdc-m2", sessionId: "session-m2", iso: "2026-09-03T17:20:00.000Z", scoringSigmaMm: 50.0, doubleSigmaMm: 38.0, seed: 0x1, playerId: "player-maisie" },
+  { id: "game-jdc-m3", sessionId: "session-m3", iso: "2026-09-17T17:20:00.000Z", scoringSigmaMm: 47.0, doubleSigmaMm: 35.0, seed: 0xe, playerId: "player-maisie" },
 ]
 
 for (const attempt of JDC_ATTEMPTS) {
-  const start = sessionAt(attempt.sessionId, attempt.iso, 30, null)
+  const start = sessionAt(attempt.sessionId, attempt.iso, 30, null, attempt.playerId)
   const state = buildPracticeGame({
     id: attempt.id,
     sessionId: attempt.sessionId,
@@ -675,8 +697,9 @@ for (const attempt of JDC_ATTEMPTS) {
     config: {},
     labels: jdcLabels(attempt.scoringSigmaMm, attempt.doubleSigmaMm, attempt.seed),
     startedAtMs: start + 2 * 60_000,
+    playerId: attempt.playerId,
   })
-  console.log(`  ${attempt.id}: ${state.finalScore} pts`)
+  console.log(`  ${attempt.id} (${attempt.playerId}): ${state.finalScore} pts`)
 }
 
 // ── write ──────────────────────────────────────────────────────────────────

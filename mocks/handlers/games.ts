@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw"
-import type { Dart, DartInput, Game, GameMode, PracticeConfig, Ring } from "@/lib/types"
+import type { Dart, DartInput, Game, GameMode, PracticeConfig, Player, Ring } from "@/lib/types"
 import { annotateGame, isLegalSegment, scoreOf } from "@/lib/scoring"
 import { dartTargetFor, derivePracticeState, isPracticeKey } from "@/lib/practice"
 import type { PracticeGameKey } from "@/lib/types"
@@ -40,6 +40,9 @@ export const gameHandlers = [
     }
     if (!body.participantPlayerIds?.length) {
       return error(400, "participantPlayerIds is required")
+    }
+    if (new Set(body.participantPlayerIds).size !== body.participantPlayerIds.length) {
+      return error(400, "A player cannot appear twice in one game")
     }
     for (const id of body.participantPlayerIds) {
       if (!store.players.get(id)) return error(400, `Unknown player ${id}`)
@@ -246,4 +249,45 @@ export const gameHandlers = [
   http.get("/api/players", () => {
     return HttpResponse.json({ players: store.players.list() })
   }),
+
+  // Adding a player is a name on the chalkboard, not an account (spec 0012).
+  http.post("/api/players", async ({ request }) => {
+    const body = (await request.json().catch(() => ({}))) as { displayName?: unknown }
+    const name = cleanName(body?.displayName)
+    if (!name) return error(400, "A name is required")
+    if (name.length > 24) return error(400, "That name is too long")
+    if (store.players.list().some((p) => sameName(p.displayName, name))) {
+      return error(409, "There is already a player with that name")
+    }
+    const player = store.players.create({
+      displayName: name,
+      isBot: false,
+      botProfileId: null,
+      userId: null,
+      createdAt: new Date().toISOString(),
+    } as Omit<Player, "id">)
+    return HttpResponse.json({ player }, { status: 201 })
+  }),
+
+  http.patch("/api/players/:playerId", async ({ params, request }) => {
+    const body = (await request.json().catch(() => ({}))) as { displayName?: unknown }
+    const name = cleanName(body?.displayName)
+    if (!name) return error(400, "A name is required")
+    if (name.length > 24) return error(400, "That name is too long")
+    const player = store.players.get(params.playerId as string)
+    if (!player) return error(404, "Player not found")
+    if (player.isBot) return error(400, "Bots cannot be renamed")
+    const clash = store.players
+      .list()
+      .some((p) => p.id !== player.id && sameName(p.displayName, name))
+    if (clash) return error(409, "There is already a player with that name")
+    store.players.update(player.id, { displayName: name })
+    return HttpResponse.json({ player: store.players.get(player.id) })
+  }),
 ]
+
+function cleanName(value: unknown): string {
+  return typeof value === "string" ? value.trim().replace(/\s+/g, " ") : ""
+}
+
+const sameName = (a: string, b: string) => a.toLowerCase() === b.toLowerCase()

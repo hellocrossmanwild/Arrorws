@@ -6,10 +6,14 @@ import { FOUNDATION, sessionTemplate, weekOf } from "@/lib/training/program"
 import { buildTrainingSummary, type TrainingSummary } from "@/lib/training/summary"
 import { HttpError } from "./errors"
 
-async function jdcScores(db: ReturnType<typeof getDb>) {
-  const games = (await db.select().from(tables.games)).filter(
-    (g) => g.mode === "jdc-challenge" && g.endedAt && !g.abandoned
-  ) as Game[]
+async function jdcScores(db: ReturnType<typeof getDb>, playerId: string) {
+  const games = ((await db.select().from(tables.games)) as Game[]).filter(
+    (g) =>
+      g.mode === "jdc-challenge" &&
+      g.endedAt &&
+      !g.abandoned &&
+      g.participantPlayerIds.includes(playerId)
+  )
   if (games.length === 0) return []
   const results = await db.select().from(tables.results)
   return games.flatMap((game) => {
@@ -19,16 +23,25 @@ async function jdcScores(db: ReturnType<typeof getDb>) {
   })
 }
 
-async function loadSessions(db: ReturnType<typeof getDb>): Promise<TrainingSession[]> {
+/** One player's programme. Each player walks their own queue (spec 0012). */
+async function loadSessions(
+  db: ReturnType<typeof getDb>,
+  playerId: string
+): Promise<TrainingSession[]> {
   return (await db
     .select()
     .from(tables.trainingSessions)
+    .where(eq(tables.trainingSessions.playerId, playerId))
     .orderBy(asc(tables.trainingSessions.sessionIndex))) as TrainingSession[]
 }
 
-export async function trainingSummary(): Promise<TrainingSummary> {
+export async function trainingSummary(playerId: string): Promise<TrainingSummary> {
   const db = getDb()
-  return buildTrainingSummary(await loadSessions(db), await jdcScores(db), Date.now())
+  return buildTrainingSummary(
+    await loadSessions(db, playerId),
+    await jdcScores(db, playerId),
+    Date.now()
+  )
 }
 
 export async function getTrainingSession(id: string) {
@@ -42,9 +55,9 @@ export async function getTrainingSession(id: string) {
   return { session, template: sessionTemplate(session.sessionIndex) }
 }
 
-export async function startTrainingSession() {
+export async function startTrainingSession(playerId: string) {
   const db = getDb()
-  const current = buildTrainingSummary(await loadSessions(db), [], Date.now())
+  const current = buildTrainingSummary(await loadSessions(db, playerId), [], Date.now())
   if (current.active) {
     return {
       session: current.active,
@@ -59,6 +72,7 @@ export async function startTrainingSession() {
   const template = sessionTemplate(index)
   const session: TrainingSession = {
     id: `training-${randomUUID()}`,
+    playerId,
     programId: FOUNDATION.id,
     sessionIndex: index,
     week: weekOf(index),

@@ -1,15 +1,16 @@
 import { http, HttpResponse } from "msw"
-import type { Game, JdcAttempt } from "@/lib/types"
+import type { Game, JdcAttempt, Player } from "@/lib/types"
 import { jdcReport } from "@/lib/practice"
-import { buildJdcSummary } from "@/lib/jdc/summary"
+import { buildFamilyBoard, buildJdcSummary } from "@/lib/jdc/summary"
 import { store } from "../data/store"
 import { getGameDarts } from "./helpers"
 
 /** The mock twin of lib/server/jdc.ts — same derivation, same shape. */
-function summary() {
+function summary(playerId: string) {
   const games = store.games
     .list()
     .filter((g) => g.mode === "jdc-challenge" && g.endedAt && !g.abandoned) as Game[]
+  const players = (store.players.list() as Player[]).filter((p) => !p.isBot)
 
   const programmeGameIds = new Set(
     store.trainingSessions
@@ -18,7 +19,7 @@ function summary() {
   )
 
   const cumulatives: Record<string, number[]> = {}
-  const attempts = games.map((game): JdcAttempt => {
+  const all: Array<JdcAttempt & { thrownBy: string }> = games.map((game) => {
     const report = jdcReport(getGameDarts(game.id))
     cumulatives[game.id] = report.cumulative
     return {
@@ -30,10 +31,21 @@ function summary() {
       shanghais: report.shanghais,
       doublesHit: report.doublesHit,
       fromProgramme: programmeGameIds.has(game.id),
+      thrownBy: game.participantPlayerIds[0] ?? "",
     }
   })
 
-  return buildJdcSummary(attempts, cumulatives)
+  const mine = all.filter((a) => a.thrownBy === playerId)
+  return {
+    ...buildJdcSummary(mine, cumulatives),
+    playerId,
+    family: buildFamilyBoard(players, all),
+  }
 }
 
-export const jdcHandlers = [http.get("/api/jdc", () => HttpResponse.json(summary()))]
+export const jdcHandlers = [
+  http.get("/api/jdc", ({ request }) => {
+    const playerId = new URL(request.url).searchParams.get("playerId") ?? "player-tom"
+    return HttpResponse.json(summary(playerId))
+  }),
+]

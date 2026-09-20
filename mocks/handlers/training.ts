@@ -8,10 +8,14 @@ function error(status: number, message: string) {
   return HttpResponse.json({ message }, { status })
 }
 
-function jdcScores() {
-  const games = store.games
-    .list()
-    .filter((g) => g.mode === "jdc-challenge" && g.endedAt && !g.abandoned) as Game[]
+function jdcScores(playerId: string) {
+  const games = (store.games.list() as Game[]).filter(
+    (g) =>
+      g.mode === "jdc-challenge" &&
+      g.endedAt &&
+      !g.abandoned &&
+      g.participantPlayerIds.includes(playerId)
+  )
   return games.flatMap((game) => {
     const result = store.results.list({ gameId: game.id } as { gameId: string })[0]
     const score = (result?.metrics as ResultMetrics | undefined)?.gameScore
@@ -19,12 +23,17 @@ function jdcScores() {
   })
 }
 
-function summary() {
-  return buildTrainingSummary(store.trainingSessions.list(), jdcScores(), Date.now())
+/** One player's programme — each walks their own queue (spec 0012). */
+function summary(playerId: string) {
+  const sessions = store.trainingSessions.list().filter((s) => s.playerId === playerId)
+  return buildTrainingSummary(sessions, jdcScores(playerId), Date.now())
 }
 
 export const trainingHandlers = [
-  http.get("/api/training", () => HttpResponse.json(summary())),
+  http.get("/api/training", ({ request }) => {
+    const playerId = new URL(request.url).searchParams.get("playerId") ?? "player-tom"
+    return HttpResponse.json(summary(playerId))
+  }),
 
   http.get("/api/training/sessions/:id", ({ params }) => {
     const session = store.trainingSessions.get(params.id as string)
@@ -32,8 +41,10 @@ export const trainingHandlers = [
     return HttpResponse.json({ session, template: sessionTemplate(session.sessionIndex) })
   }),
 
-  http.post("/api/training/sessions", () => {
-    const current = summary()
+  http.post("/api/training/sessions", async ({ request }) => {
+    const body = (await request.json().catch(() => ({}))) as { playerId?: string }
+    const playerId = body.playerId ?? "player-tom"
+    const current = summary(playerId)
     if (current.active) {
       return HttpResponse.json(
         { session: current.active, template: sessionTemplate(current.active.sessionIndex) },
@@ -46,6 +57,7 @@ export const trainingHandlers = [
     const index = current.nextSession.index
     const template = sessionTemplate(index)
     const session = store.trainingSessions.create({
+      playerId,
       programId: FOUNDATION.id,
       sessionIndex: index,
       week: weekOf(index),

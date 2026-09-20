@@ -5,11 +5,15 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { createGame } from "@/lib/api/games"
 import { getSessions } from "@/lib/api/stats"
-import { usePlayerId, useUser } from "@/lib/auth"
+import { DEFAULT_PLAYER_ID, usePlayerId, useUser } from "@/lib/auth"
+import { humansOf, usePlayersStore } from "@/lib/players/store"
 import { toast } from "@/components/ui/toaster"
 
+/** The seeded spare profile the second seat defaults to. */
+const GUEST_PLAYER_ID = "player-guest"
+
 /**
- * Home. Four entry points, thumb sized, nothing else. This screen exists
+ * Home. Five entry points, thumb sized, nothing else. This screen exists
  * to get out of the way (PRD 7.1).
  */
 export default function HomePage() {
@@ -18,10 +22,23 @@ export default function HomePage() {
   const user = useUser()
   const [lastSession, setLastSession] = useState<{ date: string; average: number | null } | null>(null)
   const [starting, setStarting] = useState(false)
+  const players = usePlayersStore((s) => s.players)
+  const loadPlayers = usePlayersStore((s) => s.load)
+
+  useEffect(() => {
+    loadPlayers()
+  }, [loadPlayers])
+
+  // The second seat is the spare guest profile, unless that is who is
+  // throwing — a game may not carry the same player twice (spec 0012).
+  const opponentId =
+    playerId === GUEST_PLAYER_ID
+      ? (humansOf(players).find((p) => p.id !== playerId)?.id ?? DEFAULT_PLAYER_ID)
+      : GUEST_PLAYER_ID
 
   useEffect(() => {
     const controller = new AbortController()
-    getSessions(5)
+    getSessions(5, undefined, playerId)
       .then(({ sessions }) => {
         if (controller.signal.aborted) return
         const withGames = sessions.find((s) => s.gameCount > 0)
@@ -71,7 +88,7 @@ export default function HomePage() {
       </Link>
       <button
         className="min-h-[72px] px-6 text-left font-display text-2xl shadow-[inset_0_0_0_1px_theme(colors.wire)]"
-        onClick={() => start([playerId, "player-guest"])}
+        onClick={() => start([playerId, opponentId])}
       >
         Two player
       </button>

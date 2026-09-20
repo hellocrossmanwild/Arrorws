@@ -3,20 +3,22 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { getPracticeGames, type PracticeGamesResponse } from "@/lib/api/practice"
+import { usePlayerId } from "@/lib/auth"
 
 /** The eight games, personal best against each. No categories, no search. */
 export default function PracticePage() {
+  const playerId = usePlayerId()
   const [data, setData] = useState<PracticeGamesResponse | null>(null)
 
   useEffect(() => {
     let cancelled = false
-    getPracticeGames().then((res) => {
+    getPracticeGames(playerId).then((res) => {
       if (!cancelled) setData(res)
     }).catch(() => {})
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [playerId])
 
   return (
     <div className="mx-auto w-full max-w-xl flex-1 px-4 py-6">

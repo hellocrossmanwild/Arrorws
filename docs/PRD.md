@@ -228,7 +228,8 @@ A derived cache, written when a game ends. Never the source of truth. Must be re
 | `/signup` | Create account |
 | `/admin` | Admin dashboard |
 | `/training` | Training programme overview, streak, next session |
-| `/jdc` | The JDC Challenge record: belt ladder, score trend, part breakdown (spec 0011, ADR 0008) |
+| `/jdc` | The JDC Challenge record: belt ladder, score trend, part breakdown, family board (specs 0011, 0012) |
+| `/players` | Who is throwing: the profile picker, add and rename (spec 0012, ADR 0009) |
 | `/training/run/[id]` | Session runner: block-by-block progress |
 
 ---

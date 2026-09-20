@@ -96,6 +96,7 @@ export const practiceGameDefinitions = pgTable("practice_game_definitions", {
 
 export const trainingSessions = pgTable("training_sessions", {
   id: text("id").primaryKey(),
+  playerId: text("player_id").notNull(),
   programId: text("program_id").notNull(),
   sessionIndex: integer("session_index").notNull(),
   week: integer("week").notNull(),

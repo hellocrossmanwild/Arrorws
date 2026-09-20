@@ -2,8 +2,9 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useIsAdmin, useUser } from "@/lib/auth"
+import { useIsAdmin } from "@/lib/auth"
 import { cn } from "@/lib/utils/cn"
+import { PlayerChip } from "./PlayerChip"
 
 const NAV = [
   { href: "/", label: "Play" },
@@ -15,7 +16,6 @@ const NAV = [
 
 export function Header() {
   const pathname = usePathname()
-  const user = useUser()
   const isAdmin = useIsAdmin()
 
   // The live game owns the whole viewport; no chrome on top of the pad.
@@ -51,13 +51,7 @@ export function Header() {
               Admin
             </Link>
           )}
-          <Link
-            href="/account"
-            className="min-h-[44px] max-w-[72px] content-center truncate text-wire"
-            aria-label="Account"
-          >
-            {user ? user.displayName : "Account"}
-          </Link>
+          <PlayerChip />
         </nav>
       </div>
     </header>

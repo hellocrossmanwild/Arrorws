@@ -5,6 +5,7 @@ import { resetStore } from "@/mocks/data/store"
 import { getJdc } from "@/lib/api/jdc"
 import { createGame, throwDart } from "@/lib/api/games"
 import { recordTrainingBlock, startTrainingSession } from "@/lib/api/training"
+import { createPlayer } from "@/lib/api/games"
 import type { DartInput, Ring } from "@/lib/types"
 
 const server = setupServer(...handlers)
@@ -28,7 +29,7 @@ const input = (label: string): DartInput => {
 
 describe("GET /api/jdc", () => {
   test("serves the seeded record: five attempts, best sets the belt", async () => {
-    const summary = await getJdc()
+    const summary = await getJdc("player-tom")
 
     expect(summary.attempts).toHaveLength(5)
     // Oldest first, so the trend chart reads left to right.
@@ -43,7 +44,7 @@ describe("GET /api/jdc", () => {
   })
 
   test("seeded attempts are ad-hoc, and an assessment block marks one", async () => {
-    const before = await getJdc()
+    const before = await getJdc("player-tom")
     expect(before.attempts.every((a) => !a.fromProgramme)).toBe(true)
 
     // Recording a JDC game against a training block is what makes it an
@@ -51,13 +52,13 @@ describe("GET /api/jdc", () => {
     const { session } = await startTrainingSession()
     await recordTrainingBlock(session.id, 0, before.latest!.gameId)
 
-    const after = await getJdc()
+    const after = await getJdc("player-tom")
     const marked = after.attempts.filter((a) => a.fromProgramme)
     expect(marked.map((a) => a.gameId)).toEqual([before.latest!.gameId])
   })
 
   test("every attempt carries its three part totals, summing to its score", async () => {
-    const summary = await getJdc()
+    const summary = await getJdc("player-tom")
     for (const attempt of summary.attempts) {
       expect(attempt.parts).toHaveLength(3)
       expect(attempt.parts[0] + attempt.parts[1] + attempt.parts[2]).toBe(attempt.score)
@@ -66,7 +67,7 @@ describe("GET /api/jdc", () => {
   })
 
   test("part bests are at least as good as any single attempt", async () => {
-    const summary = await getJdc()
+    const summary = await getJdc("player-tom")
     for (const attempt of summary.attempts) {
       for (const i of [0, 1, 2]) {
         expect(summary.partBests[i]).toBeGreaterThanOrEqual(attempt.parts[i])
@@ -75,7 +76,7 @@ describe("GET /api/jdc", () => {
   })
 
   test("an ad-hoc attempt thrown now joins the record and can take the belt", async () => {
-    const before = await getJdc()
+    const before = await getJdc("player-tom")
 
     const { game } = await createGame("jdc-challenge", {}, ["player-tom"])
     // A near-perfect run: shanghai every number, every double, the bull.
@@ -87,7 +88,7 @@ describe("GET /api/jdc", () => {
     ]
     for (const label of labels) await throwDart(game.id, input(label))
 
-    const after = await getJdc()
+    const after = await getJdc("player-tom")
     expect(after.attempts).toHaveLength(before.attempts.length + 1)
 
     const latest = after.latest!
@@ -101,5 +102,104 @@ describe("GET /api/jdc", () => {
     expect(after.best!.gameId).toBe(game.id)
     expect(after.belt?.name).toBe("Black")
     expect(after.nextBelt).toBeNull()
+  })
+})
+
+describe("the record is per player", () => {
+  test("each player sees only their own attempts", async () => {
+    const [tom, alfie, maisie] = await Promise.all([
+      getJdc("player-tom"),
+      getJdc("player-alfie"),
+      getJdc("player-maisie"),
+    ])
+
+    expect(tom.playerId).toBe("player-tom")
+    expect(tom.attempts).toHaveLength(5)
+    expect(alfie.attempts).toHaveLength(4)
+    expect(maisie.attempts).toHaveLength(3)
+
+    // No attempt appears in two records.
+    const ids = [tom, alfie, maisie].flatMap((s) => s.attempts.map((a) => a.gameId))
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  test("belts and part bests are the player's own, not the board's", async () => {
+    const tom = await getJdc("player-tom")
+    const maisie = await getJdc("player-maisie")
+
+    expect(tom.best!.score).toBeGreaterThan(maisie.best!.score)
+    expect(tom.belt?.name).not.toBe(maisie.belt?.name)
+    for (const i of [0, 1, 2]) {
+      expect(maisie.partBests[i]).toBeLessThanOrEqual(tom.partBests[i])
+    }
+  })
+
+  test("an attempt lands only in the record of whoever threw it", async () => {
+    const before = await Promise.all([getJdc("player-tom"), getJdc("player-alfie")])
+
+    const { game } = await createGame("jdc-challenge", {}, ["player-alfie"])
+    for (let i = 0; i < 57; i++) await throwDart(game.id, input("MISS"))
+
+    const [tom, alfie] = await Promise.all([getJdc("player-tom"), getJdc("player-alfie")])
+    expect(tom.attempts).toHaveLength(before[0].attempts.length)
+    expect(alfie.attempts).toHaveLength(before[1].attempts.length + 1)
+    expect(alfie.latest!.gameId).toBe(game.id)
+  })
+
+  test("a player with no attempts gets an empty record, not someone else's", async () => {
+    const { player } = await createPlayer("Rosie")
+    const summary = await getJdc(player.id)
+
+    expect(summary.playerId).toBe(player.id)
+    expect(summary.attempts).toEqual([])
+    expect(summary.best).toBeNull()
+    expect(summary.belt).toBeNull()
+    expect(summary.bestCumulative).toBeNull()
+    expect(summary.nextBelt).toEqual({ name: "Purple", pointsAway: 150 })
+  })
+})
+
+describe("the family board", () => {
+  test("carries every human player, best score first", async () => {
+    const { family } = await getJdc("player-tom")
+
+    const names = family.map((r) => r.displayName)
+    expect(names).toContain("Tom")
+    expect(names).toContain("Alfie")
+    expect(names).toContain("Maisie")
+    expect(names).not.toContain("County") // bots never appear
+
+    const scored = family.filter((r) => r.best !== null).map((r) => r.best!)
+    expect([...scored].sort((a, b) => b - a)).toEqual(scored)
+    expect(family[0].displayName).toBe("Tom")
+  })
+
+  test("is the same board whoever is looking at it", async () => {
+    const tom = await getJdc("player-tom")
+    const maisie = await getJdc("player-maisie")
+    expect(maisie.family).toEqual(tom.family)
+  })
+
+  test("a player who has never thrown it still appears, last and unbelted", async () => {
+    const { player } = await createPlayer("Rosie")
+    const { family } = await getJdc("player-tom")
+
+    const row = family.find((r) => r.playerId === player.id)!
+    expect(row).toBeDefined()
+    expect(row.belt).toBeNull()
+    expect(row.best).toBeNull()
+    expect(row.attempts).toBe(0)
+    expect(family[family.length - 1].playerId).toBe(player.id)
+  })
+
+  test("each row's best and belt match that player's own record", async () => {
+    const { family } = await getJdc("player-tom")
+    for (const row of family.filter((r) => r.attempts > 0)) {
+      const theirs = await getJdc(row.playerId)
+      expect(row.best).toBe(theirs.best!.score)
+      expect(row.belt).toBe(theirs.belt!.name)
+      expect(row.latest).toBe(theirs.latest!.score)
+      expect(row.attempts).toBe(theirs.attempts.length)
+    }
   })
 })

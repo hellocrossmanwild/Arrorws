@@ -1,0 +1,91 @@
+name: CI
+
+# The repo had no CI: the only check on a PR was the Vercel deployment, which
+# runs `next build` but never the tests, the linter or the type checker. A PR
+# could go green with a failing suite.
+on:
+  pull_request:
+  push:
+    # The default branch. GitHub has no variable for it in a trigger, so if
+    # the default is ever renamed (or a `main` appears), update this line or
+    # pushes to it stop being checked.
+    branches: [claude/build-request-kwxmcp]
+
+# A new push supersedes the run in flight for the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint, types, tests, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit and integration tests
+        run: pnpm test
+
+      - name: Production build
+        run: pnpm build
+
+      # mocks/data/seed.json is generated, not hand-edited (spec 0001), and
+      # the generator is deterministic. A diff here means someone changed the
+      # seed by hand or changed the generator without regenerating.
+      - name: Seed is in sync with its generator
+        run: |
+          pnpm seed:generate
+          git diff --exit-code mocks/data/seed.json \
+            || (echo "::error::mocks/data/seed.json is out of sync. Run 'pnpm seed:generate' and commit the result." && exit 1)
+
+  e2e:
+    name: End-to-end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Playwright starts the dev server itself against the mock backend
+      # (playwright.config.ts), so no database is needed.
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Playwright
+        run: pnpm test:e2e
+
+      - name: Upload report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

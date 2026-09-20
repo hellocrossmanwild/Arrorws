@@ -7,6 +7,8 @@ export interface StatsFilters {
   includeBots?: boolean
   includeTwoPlayer?: boolean
   source?: "practice" | "all"
+  /** Whose stats. Omitted only in tests; screens always pass the current player. */
+  playerId?: string
 }
 
 export interface StatsResponse {
@@ -45,6 +47,7 @@ export async function getStats(filters: StatsFilters = {}): Promise<StatsRespons
   if (filters.includeBots === false) params.set("includeBots", "false")
   if (filters.includeTwoPlayer === false) params.set("includeTwoPlayer", "false")
   if (filters.source) params.set("source", filters.source)
+  if (filters.playerId) params.set("playerId", filters.playerId)
   const qs = params.toString()
   return apiClient(`/api/stats${qs ? `?${qs}` : ""}`)
 }
@@ -68,10 +71,12 @@ export interface SessionSummary extends Session {
 
 export async function getSessions(
   limit = 20,
-  cursor?: string
+  cursor?: string,
+  playerId?: string
 ): Promise<{ sessions: SessionSummary[]; nextCursor: string | null }> {
   const params = new URLSearchParams({ limit: String(limit) })
   if (cursor) params.set("cursor", cursor)
+  if (playerId) params.set("playerId", playerId)
   return apiClient(`/api/sessions?${params}`)
 }
 
