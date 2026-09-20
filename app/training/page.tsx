@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { getTraining, startTrainingSession, type TrainingSummary } from "@/lib/api/training"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils/cn"
 import { TRAINING_EXPLAINER } from "@/lib/content/guides"
+import { beltColour } from "@/lib/jdc/belts"
 
 /** The training programme overview (spec 0008): queue model, no guilt mechanics. */
 export default function TrainingPage() {
@@ -39,6 +41,13 @@ export default function TrainingPage() {
   }
 
   const week = data?.nextSession?.week ?? data?.program.weeks ?? 1
+  const assessments = data?.assessments ?? []
+  const latest = assessments.length > 0 ? assessments[assessments.length - 1] : null
+  // The card shows the belt held, which follows the best attempt (spec 0011).
+  const belt = assessments.reduce(
+    (acc, a) => (a.score > (acc.score ?? -1) ? a : acc),
+    { score: -1, grade: "White" } as { score: number; grade: string }
+  ).grade
 
   return (
     <div className="mx-auto w-full max-w-xl flex-1 px-4 py-6">
@@ -130,28 +139,45 @@ export default function TrainingPage() {
         </ul>
       </details>
 
-      {/* ── assessments ──────────────────────────────────────────────── */}
+      {/* ── the assessment ──────────────────────────────────────────── */}
       <section className="mt-6">
         <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.16em] text-wire">
           JDC Challenge
         </p>
-        {data && data.assessments.length === 0 ? (
-          <p className="bg-bed px-4 py-4 text-sm text-tung">
-            No assessments yet. The JDC Challenge arrives in week two.
-          </p>
-        ) : (
-          <div className="flex flex-col gap-px bg-wire/40" data-testid="assessments">
-            {data?.assessments.map((a, i) => (
-              <div key={i} className="flex items-baseline justify-between bg-bed px-4 py-2.5">
-                <span className="font-display text-lg">{a.grade}</span>
-                <span className="font-mono text-xs text-tung">
-                  {a.score} pts ·{" "}
-                  {new Date(a.date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+        <Link
+          href="/jdc"
+          className="flex items-center justify-between bg-bed px-4 py-3.5 hover:brightness-110"
+          data-testid="jdc-card"
+        >
+          {latest ? (
+            <>
+              <span className="flex items-center gap-3">
+                <span
+                  className="h-8 w-8 shrink-0 ring-1 ring-wire/40"
+                  style={{ backgroundColor: beltColour(belt).swatch }}
+                  aria-hidden
+                />
+                <span>
+                  <span className="block font-display text-xl">{belt}</span>
+                  <span className="block font-mono text-[10px] uppercase tracking-widest text-tung">
+                    Best of {data?.assessments.length ?? 0} attempts
+                  </span>
                 </span>
-              </div>
-            ))}
-          </div>
-        )}
+              </span>
+              <span className="text-right font-mono text-xs text-tung">
+                <span className="block text-base text-chalk">{latest.score} pts</span>
+                last attempt
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="text-sm text-tung">
+                No attempts yet. The assessment arrives in week two.
+              </span>
+              <span className="font-mono text-xs text-wire">Throw it now</span>
+            </>
+          )}
+        </Link>
       </section>
     </div>
   )

@@ -132,12 +132,45 @@ describe("scoring-drill", () => {
 })
 
 describe("jdc-challenge", () => {
+  const part1Blank = Array.from({ length: 6 }, () => "MISS MISS MISS").join(" ")
+
   test("points hero with the provisional grade as the stake line", () => {
     const h = hud("jdc-challenge", "")
     expect(h.hero).toMatchObject({ label: "Points", value: "0" })
     expect(h.sub).toBe("On for White")
     expect(chip(h, "Darts")).toBe("0 of 57")
     expect(h.progress).toEqual({ done: 0, total: 57 })
+  })
+
+  test("parts 1 and 3 light the shanghai rings as they land", () => {
+    const h = hud("jdc-challenge", "10 D10")
+    expect(h.pips?.label).toBe("Shanghai")
+    expect(h.pips?.pips.map((p) => p.on)).toEqual([true, true, false])
+  })
+
+  test("the rings reset when the round rolls over", () => {
+    const h = hud("jdc-challenge", "10 D10 T10")
+    expect(h.pips?.pips.every((p) => !p.on)).toBe(true)
+    expect(h.hero.value).toBe("160")
+  })
+
+  test("part 2 counts doubles hit instead of rings", () => {
+    const h = hud("jdc-challenge", `${part1Blank} D1 MISS D3`)
+    expect(h.pips).toBeUndefined()
+    expect(chip(h, "Doubles")).toBe("2 of 21")
+  })
+
+  test("the pace chip compares with the best attempt at the same dart", () => {
+    // The best attempt banked 100 after three darts; this one banks 160.
+    const pbCumulative = [0, 0, 100, 100, 100, 100]
+    const h = hud("jdc-challenge", "10 D10 T10", {}, { pbCumulative })
+    expect(chip(h, "PB pace")).toBe("+60")
+  })
+
+  test("a behind-pace attempt reads negative, and no pace shows without a best", () => {
+    const pbCumulative = [0, 0, 200]
+    expect(chip(hud("jdc-challenge", "10 D10 T10", {}, { pbCumulative }), "PB pace")).toBe("-40")
+    expect(chip(hud("jdc-challenge", "10 D10 T10"), "PB pace")).toBeUndefined()
   })
 })
 

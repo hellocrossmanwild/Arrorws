@@ -25,11 +25,12 @@ import type {
   Ring,
   SeedData,
   Session,
+  TrainingSession,
   Visit,
 } from "../lib/types"
 import { annotateGame, computeStats, findCheckout, scoreOf } from "../lib/scoring"
 import { dartTargetFor, getEngine } from "../lib/practice"
-import { chooseTarget } from "../lib/bot"
+import { chooseTarget, simulateThrow } from "../lib/bot"
 import { CALIBRATED_SIGMAS } from "../lib/bot/calibration"
 import { makeRng } from "../lib/utils/rng"
 
@@ -185,6 +186,7 @@ const legs: Leg[] = []
 const visits: Visit[] = []
 const darts: Dart[] = []
 const results: GameResult[] = []
+const trainingSessions: TrainingSession[] = []
 
 function toResultMetrics(m: Metrics, gameScore: number | null): ResultMetrics {
   return {
@@ -393,6 +395,51 @@ function buildPracticeGame(opts: {
   return state
 }
 
+
+// ── JDC Challenge attempts (spec 0011) ─────────────────────────────────────
+/**
+ * Generate a plausible 57-dart JDC log by throwing at each target through
+ * the same scatter model the bots use. Deterministic: same rng, same seed,
+ * same attempt every run. Parts 1 and 3 aim the treble (a player going for
+ * the shanghai); part 2 aims the double.
+ */
+function jdcLabels(scoringSigmaMm: number, doubleSigmaMm: number, seed: number): string[] {
+  const attemptRng = makeRng(seed)
+  const engine = getEngine("jdc-challenge")
+  let state = engine.initial({}, attemptRng)
+  const labels: string[] = []
+
+  for (let i = 0; i < 57; i++) {
+    const target = state.currentTarget
+    if (!target || target.type !== "segment") break
+    const isDouble = target.ring === "D"
+    const aim = { segment: target.segment, ring: (isDouble ? "D" : "T") as Ring }
+    const landed = simulateThrow(aim, isDouble ? doubleSigmaMm : scoringSigmaMm, attemptRng)
+    const label = labelFor(landed)
+    labels.push(label)
+    const s = seg(label)
+    state = engine.onDart(state, {
+      id: `probe-${i}`,
+      visitId: "",
+      index: (i % 3) as 0 | 1 | 2,
+      segment: s.segment,
+      ring: s.ring,
+      score: scoreOf(s),
+      targetSegment: null,
+      targetRing: null,
+      thrownAt: "",
+      latencyMs: null,
+    })
+  }
+  return labels
+}
+
+function labelFor(landed: { segment: number; ring: Ring }): string {
+  if (landed.ring === "MISS" || landed.segment === 0) return "MISS"
+  if (landed.segment === 25) return landed.ring === "D" ? "BULL" : "25"
+  return landed.ring === "S" ? String(landed.segment) : `${landed.ring}${landed.segment}`
+}
+
 function sessionAt(id: string, iso: string, minutes: number, note: string | null): number {
   const start = Date.parse(iso)
   sessions.push({
@@ -598,6 +645,40 @@ buildPracticeGame({
 // ── Session 5: opened the app, threw nothing ──────────────────────────────
 sessionAt("session-5", "2026-07-28T18:15:00.000Z", 5, null)
 
+
+// ── Sessions 6-10: the JDC Challenge record, a fortnight apart ─────────────
+// Five attempts on an improving arc, thrown ad hoc. The programme's own
+// assessment rows are not seeded: a fresh seed starts the Foundation queue
+// empty (spec 0008), and `fromProgramme` lights up on its own once a real
+// assessment block records one of these games.
+const JDC_ATTEMPTS: Array<{
+  id: string
+  sessionId: string
+  iso: string
+  scoringSigmaMm: number
+  doubleSigmaMm: number
+  seed: number
+}> = [
+  { id: "game-jdc-1", sessionId: "session-6", iso: "2026-08-04T18:30:00.000Z", scoringSigmaMm: 36.0, doubleSigmaMm: 26.0, seed: 0x75 },
+  { id: "game-jdc-2", sessionId: "session-7", iso: "2026-08-18T18:30:00.000Z", scoringSigmaMm: 33.0, doubleSigmaMm: 23.0, seed: 0x34 },
+  { id: "game-jdc-3", sessionId: "session-8", iso: "2026-09-01T18:30:00.000Z", scoringSigmaMm: 30.0, doubleSigmaMm: 20.0, seed: 0x2c },
+  { id: "game-jdc-4", sessionId: "session-9", iso: "2026-09-08T19:15:00.000Z", scoringSigmaMm: 31.0, doubleSigmaMm: 21.0, seed: 0xa },
+  { id: "game-jdc-5", sessionId: "session-10", iso: "2026-09-15T18:30:00.000Z", scoringSigmaMm: 27.0, doubleSigmaMm: 17.0, seed: 0xdac9 },
+]
+
+for (const attempt of JDC_ATTEMPTS) {
+  const start = sessionAt(attempt.sessionId, attempt.iso, 30, null)
+  const state = buildPracticeGame({
+    id: attempt.id,
+    sessionId: attempt.sessionId,
+    key: "jdc-challenge",
+    config: {},
+    labels: jdcLabels(attempt.scoringSigmaMm, attempt.doubleSigmaMm, attempt.seed),
+    startedAtMs: start + 2 * 60_000,
+  })
+  console.log(`  ${attempt.id}: ${state.finalScore} pts`)
+}
+
 // ── write ──────────────────────────────────────────────────────────────────
 const seed: SeedData = {
   players,
@@ -609,7 +690,7 @@ const seed: SeedData = {
   darts,
   practiceGameDefinitions,
   results,
-  trainingSessions: [],
+  trainingSessions,
 }
 
 const out = join(__dirname, "..", "mocks", "data", "seed.json")

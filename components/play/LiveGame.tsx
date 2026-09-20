@@ -9,6 +9,7 @@ import type { GameResponse } from "@/lib/api/games"
 import { abandonGame, startNextLeg, throwDart, undoDart } from "@/lib/api/games"
 import { deriveGameState, findCheckout, labelOf, scoreOf } from "@/lib/scoring"
 import { dartTargetFor, derivePracticeState, hudFor, isPracticeKey } from "@/lib/practice"
+import { getJdc } from "@/lib/api/jdc"
 import { GAME_GUIDES } from "@/lib/content/guides"
 import { chooseTarget, sigmaFor, simulateThrow } from "@/lib/bot"
 import { toast } from "@/components/ui/toaster"
@@ -89,6 +90,7 @@ export function LiveGame({
   })
   const [showHelp, setShowHelp] = useState(false)
   const [personalBest, setPersonalBest] = useState<number | null>(null)
+  const [pbCumulative, setPbCumulative] = useState<number[] | null>(null)
   const [trainingLabel, setTrainingLabel] = useState<string | null>(null)
 
   // The PB chip (spec 0010): fetched once, absent until it resolves.
@@ -98,6 +100,21 @@ export function LiveGame({
     getPracticeGames()
       .then(({ personalBests }) => {
         if (!cancelled) setPersonalBest(personalBests[practiceKey]?.score ?? null)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [practiceKey])
+
+  // The JDC "PB pace" line (spec 0011): the best attempt's running score,
+  // fetched once so the band can show whether this run is ahead of it.
+  useEffect(() => {
+    if (practiceKey !== "jdc-challenge") return
+    let cancelled = false
+    getJdc()
+      .then(({ bestCumulative }) => {
+        if (!cancelled) setPbCumulative(bestCumulative)
       })
       .catch(() => {})
     return () => {
@@ -143,9 +160,9 @@ export function LiveGame({
   const practiceHud = useMemo(
     () =>
       practiceKey && practiceState
-        ? hudFor(practiceKey, practiceState, { darts: state.darts, personalBest })
+        ? hudFor(practiceKey, practiceState, { darts: state.darts, personalBest, pbCumulative })
         : null,
-    [practiceKey, practiceState, state.darts, personalBest]
+    [practiceKey, practiceState, state.darts, personalBest, pbCumulative]
   )
 
   const complete = practiceState ? practiceState.complete : gameState.gameComplete
