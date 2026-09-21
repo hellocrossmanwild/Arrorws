@@ -377,6 +377,12 @@ React Hook Form for the form layer, Zod for validation schemas. There are almost
 - API client functions throw on non-2xx responses
 - Components use error boundaries for catastrophic failures
 - User-facing errors use the shadcn `<Toast>` component
+- **A screen that fetches must show when the fetch failed.** Never
+  `.catch(() => {})` on a load and leave the skeleton in place: a 500 then
+  looks exactly like a slow network, and the screen sits blank forever with
+  no way forward. Set a failed flag, render `<LoadError>` with a retry, and
+  `console.error` the cause. This is how a missing database migration
+  presented as "the JDC page will not load" instead of as an error.
 
 ---
 

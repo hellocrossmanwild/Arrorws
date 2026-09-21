@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { getTraining, startTrainingSession, type TrainingSummary } from "@/lib/api/training"
 import { Button } from "@/components/ui/button"
+import { LoadError } from "@/components/ui/LoadError"
 import { toast } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils/cn"
 import { TRAINING_EXPLAINER } from "@/lib/content/guides"
@@ -16,19 +17,25 @@ export default function TrainingPage() {
   const playerId = usePlayerId()
   const router = useRouter()
   const [data, setData] = useState<TrainingSummary | null>(null)
+  const [failed, setFailed] = useState(false)
+  const [reloadKey, setReloadKey] = useState(0)
   const [starting, setStarting] = useState(false)
 
   useEffect(() => {
     let cancelled = false
+    setFailed(false)
     getTraining(playerId)
       .then((res) => {
         if (!cancelled) setData(res)
       })
-      .catch(() => {})
+      .catch((err) => {
+        console.error("Could not load the training programme", err)
+        if (!cancelled) setFailed(true)
+      })
     return () => {
       cancelled = true
     }
-  }, [playerId])
+  }, [playerId, reloadKey])
 
   async function start() {
     if (starting) return
@@ -64,6 +71,12 @@ export default function TrainingPage() {
           {data ? `${data.completedCount} of ${data.totalSessions} sessions` : ""}
         </span>
       </div>
+
+      {failed && (
+        <div className="mt-4">
+          <LoadError what="your programme" onRetry={() => setReloadKey((n) => n + 1)} />
+        </div>
+      )}
 
       {/* ── this week + streak ───────────────────────────────────────── */}
       <section className="mt-4 grid grid-cols-2 gap-px bg-wire/40">

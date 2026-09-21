@@ -15,6 +15,7 @@ import { FamilyBoard } from "@/components/jdc/FamilyBoard"
 import { PartBars } from "@/components/jdc/PartBars"
 import { TrendChart } from "@/components/jdc/TrendChart"
 import { Button } from "@/components/ui/button"
+import { LoadError } from "@/components/ui/LoadError"
 import { toast } from "@/components/ui/toaster"
 
 /**
@@ -29,19 +30,27 @@ export default function JdcPage() {
   const players = usePlayersStore((s) => s.players)
   const loadPlayers = usePlayersStore((s) => s.load)
   const [data, setData] = useState<JdcSummary | null>(null)
+  const [failed, setFailed] = useState(false)
+  const [reloadKey, setReloadKey] = useState(0)
   const [starting, setStarting] = useState(false)
 
   useEffect(() => {
     let cancelled = false
+    setFailed(false)
     getJdc(playerId)
       .then((res) => {
         if (!cancelled) setData(res)
       })
-      .catch(() => {})
+      .catch((err) => {
+        // Never swallow this: a blank record and a broken server looked
+        // identical before, which is how a missing migration went unnoticed.
+        console.error("Could not load the JDC record", err)
+        if (!cancelled) setFailed(true)
+      })
     return () => {
       cancelled = true
     }
-  }, [playerId])
+  }, [playerId, reloadKey])
 
   async function start() {
     if (starting) return
@@ -77,7 +86,14 @@ export default function JdcPage() {
         </span>
       </div>
 
+      {failed && (
+        <div className="mt-3">
+          <LoadError what="the record" onRetry={() => setReloadKey((n) => n + 1)} />
+        </div>
+      )}
+
       {/* ── the belt ─────────────────────────────────────────────────── */}
+      {!failed && (
       <section className="mt-3 bg-bed p-4" data-testid="jdc-headline">
         {best && belt ? (
           <>
@@ -126,6 +142,7 @@ export default function JdcPage() {
           </p>
         )}
       </section>
+      )}
 
       <div className="mt-3 flex items-center justify-between bg-bed px-4 py-2">
         <span className="font-mono text-[10px] uppercase tracking-widest text-tung">
